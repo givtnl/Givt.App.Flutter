@@ -16,7 +16,7 @@ class SquareButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox.fromSize(
-        size: const Size(120, 120), // button width and height
+        size: const Size(100, 100), // button width and height
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30.0),
           child: Material(
@@ -35,7 +35,7 @@ class SquareButton extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Palette.white,
-                        fontSize: 13,
+                        fontSize: 11,
                       ),
                     ),
                   ), // text

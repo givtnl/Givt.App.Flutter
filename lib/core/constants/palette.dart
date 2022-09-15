@@ -8,6 +8,8 @@ class Palette {
   static Color lightOrange = HexColor('EAAC8B');
   static Color background = HexColor('F8F8F8');
   static Color white = HexColor('FFFFFF');
+  static Color greyBlue = HexColor('AEB9C6');
+  static Color greyBlueTone = Color(0x99AEB9C6);
 }
 
 class HexColor extends Color {
