@@ -9,6 +9,7 @@ class Palette {
   static Color background = HexColor('F8F8F8');
   static Color white = HexColor('FFFFFF');
   static Color greyBlue = HexColor('AEB9C6');
+  static Color mintGreen = HexColor('7DBDA1');
   static Color greyBlueTone = Color(0x99AEB9C6);
 }
 

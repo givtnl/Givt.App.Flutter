@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 
-class BarButton extends StatelessWidget {
+class BarButtonOnCard extends StatelessWidget {
   final String title;
-  const BarButton({
+  const BarButtonOnCard({
     super.key,
     required this.title,
   });

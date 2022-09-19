@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
-import 'package:givt_mobile_apps/features/flowTwo/presentation/components/core/navigation/appbar_bottom.dart';
-import 'package:givt_mobile_apps/features/flowTwo/presentation/components/pages/home/button_add_charity.dart';
-import 'package:givt_mobile_apps/features/flowTwo/presentation/components/core/buttons/button_center_float.dart';
-import 'package:givt_mobile_apps/features/flowTwo/presentation/components/core/buttons/button_square.dart';
-import 'package:givt_mobile_apps/features/flowTwo/presentation/components/core/buttons/button_square_updt.dart';
-import 'package:givt_mobile_apps/features/flowTwo/presentation/components/pages/home/card_of_organization.dart';
+import 'package:givt_mobile_apps/features/presentation/components/core/navigation/appbar_bottom.dart';
+import 'package:givt_mobile_apps/features/presentation/components/pages/home/button_add_charity.dart';
+import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_center_float.dart';
+import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_square.dart';
+import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_square_updt.dart';
+import 'package:givt_mobile_apps/features/presentation/components/pages/home/card_of_organization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatelessWidget {

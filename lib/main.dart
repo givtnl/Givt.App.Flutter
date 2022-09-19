@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'features/flowTwo/presentation/pages/home_page.dart';
+import 'features/presentation/pages/home_page.dart';
+import 'features/presentation/pages/usp.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Mulish',
       ),
-      home: const HomePage(),
+      home: const UspPage(),
     );
   }
 }

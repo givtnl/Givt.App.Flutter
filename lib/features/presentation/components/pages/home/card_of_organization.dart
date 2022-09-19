@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
-import 'package:givt_mobile_apps/features/flowTwo/presentation/components/core/buttons/button_bar.dart';
+import 'package:givt_mobile_apps/features/presentation/components/pages/home/button_bar_oncard.dart';
 
 class CardOrganization extends StatelessWidget {
   const CardOrganization({super.key});
@@ -40,13 +40,13 @@ class CardOrganization extends StatelessWidget {
                 ],
               ),
             ),
-            const BarButton(
+            const BarButtonOnCard(
               title: "tithes and offerings",
             ),
-            const BarButton(
+            const BarButtonOnCard(
               title: "building fund",
             ),
-            const BarButton(
+            const BarButtonOnCard(
               title: "mission and development",
             ),
             TextButton(
