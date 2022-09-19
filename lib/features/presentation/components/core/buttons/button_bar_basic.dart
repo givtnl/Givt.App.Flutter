@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
+import 'package:givt_mobile_apps/features/presentation/pages/location_permission_page.dart';
+import 'package:givt_mobile_apps/features/presentation/pages/usp.dart';
 
 class BarButtonBasic extends StatelessWidget {
   final String title;
-  const BarButtonBasic({super.key, required this.title});
+  final Widget where;
+  const BarButtonBasic({super.key, required this.title, required this.where});
+
+  // should this widget actually take more then the route target?
+  void navigate(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => where),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +22,7 @@ class BarButtonBasic extends StatelessWidget {
       color: Palette.mintGreen,
       child: InkWell(
         splashColor: Palette.darkBlue,
-        onTap: () {},
+        onTap: () => navigate(context),
         child: SizedBox(
           width: double.infinity,
           child: Padding(
