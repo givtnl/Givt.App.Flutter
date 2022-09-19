@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Mulish',
       ),
-      home: const LocationPermissionPage(),
+      home: const UspPage(),
     );
   }
 }

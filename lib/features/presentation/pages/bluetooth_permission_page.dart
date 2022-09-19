@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_basic.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/bluetooth_permission_page.dart';
 import 'package:givt_mobile_apps/features/presentation/pages/home_page.dart';
 
-class CameraPermissionPage extends StatelessWidget {
-  const CameraPermissionPage({super.key});
+class BluetoothPermissionPage extends StatelessWidget {
+  const BluetoothPermissionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class CameraPermissionPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Allow Givt to access your camera so you can scan QR codes.',
+                  'Allow Givt to use bluetooth to connect to nearby collection beacons.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Palette.darkBlue,
@@ -47,19 +46,21 @@ class CameraPermissionPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 30),
-                  child: Image.asset('assets/images/camera.png'),
+                  child: SvgPicture.asset(
+                    'assets/svg/connection_dark.svg',
+                    height: 100,
+                  ),
                 ),
               ],
             ),
           ),
-          //const SizedBox(height: 45),
           Column(
             children: [
               const Padding(
                 padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
                 child: BarButtonBasic(
-                  title: 'Enable Camera',
-                  where: BluetoothPermissionPage(),
+                  title: 'Enable bluetooth',
+                  where: HomePage(),
                 ),
               ),
               Padding(
