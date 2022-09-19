@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
-import 'package:givt_mobile_apps/features/flowTwo/presentation/components/button_bar.dart';
+import 'package:givt_mobile_apps/features/flowTwo/presentation/components/core/buttons/button_bar.dart';
 
 class CardOrganization extends StatelessWidget {
   const CardOrganization({super.key});

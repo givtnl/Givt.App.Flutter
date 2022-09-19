@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 
 class BottomBarCustom extends StatelessWidget {
@@ -11,41 +12,31 @@ class BottomBarCustom extends StatelessWidget {
       color: Palette.background,
       child: Row(
         children: <Widget>[
-          SizedBox(
-            height: 65,
-            child: Column(
-              children: [
-                IconButton(
-                  tooltip: 'my church overview',
-                  icon: const Icon(Icons.church),
-                  onPressed: () {},
-                ),
-                Text(
-                  'church',
-                  style: TextStyle(
-                    color: Palette.greyBlue,
-                    fontSize: 11,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ],
-            ),
+          IconButton(
+            tooltip: 'my church overview',
+            icon: SvgPicture.asset('assets/svg/church.svg'),
+            //icon: const Icon(Icons.church),
+            onPressed: () {},
+            color: Palette.darkBlue,
           ),
           IconButton(
             tooltip: 'my profile',
-            icon: const Icon(Icons.person),
+            icon: SvgPicture.asset('assets/svg/user.svg'),
             onPressed: () {},
+            color: Palette.darkBlue,
           ),
           const Spacer(),
           IconButton(
             tooltip: 'Search',
-            icon: const Icon(Icons.menu_outlined),
+            icon: SvgPicture.asset('assets/svg/overview.svg'),
             onPressed: () {},
+            color: Palette.darkBlue,
           ),
           IconButton(
             tooltip: 'Favorite',
-            icon: const Icon(Icons.settings),
+            icon: SvgPicture.asset('assets/svg/settings.svg'),
             onPressed: () {},
+            color: Palette.darkBlue,
           ),
         ],
       ),

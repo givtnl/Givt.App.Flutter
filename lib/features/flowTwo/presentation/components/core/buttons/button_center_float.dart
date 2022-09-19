@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CenteredFloatingButton extends StatelessWidget {
   const CenteredFloatingButton({super.key});
@@ -19,10 +20,11 @@ class CenteredFloatingButton extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
             child: Column(
               children: [
-                Icon(
-                  Icons.volunteer_activism,
-                  size: 25,
-                  color: Palette.greyBlueTone,
+                SvgPicture.asset(
+                  'assets/svg/giving_hand.svg',
+                  semanticsLabel: 'no label',
+                  //width: 20,
+                  height: 30,
                 ),
                 Text(
                   'give',
