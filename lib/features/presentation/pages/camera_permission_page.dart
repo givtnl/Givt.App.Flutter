@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_basic.dart';
+import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_permissions.dart';
 import 'package:givt_mobile_apps/features/presentation/pages/location_permission_page.dart';
 import 'package:givt_mobile_apps/features/presentation/pages/home_page.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +53,6 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
     }
   }
 
-// this the UI and the place for ChangeNotifier
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
@@ -64,43 +64,47 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
           switch (model.cameraSelection) {
             case CameraSelection.noCameraPermission:
               widget = CameraPermissions(
-                  isPermanent: false, onPressed: _checkPermissions);
+                  isPermanent: false,
+                  onPressed: () =>
+                      _checkPermissions(context, LocationPermissionPage()));
               break;
             case CameraSelection.noCameraPermissionPermanent:
               widget = CameraPermissions(
-                  isPermanent: true, onPressed: _checkPermissions);
+                  isPermanent: true,
+                  onPressed: () =>
+                      _checkPermissions(context, LocationPermissionPage()));
               break;
             case CameraSelection.yesCameraAccess:
-              // TODO: Navigate to next screen
-              widget = CameraAccepted();
+              // this should actually never get executed since we will be navigating
+              // to the next page
+              // or should it be
+              // widget = LocationPermissionPage();
+              widget = const Text('the Navigator didnt execute');
               break;
           }
 
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Handle permissions'),
-            ),
-            body: widget,
-          );
+          return widget;
         },
       ),
     );
   }
 
-  /// Check if permission is granted,
-  /// if it's not granted then request it.
-  /// If it's granted then nothing happens hhah
-  Future<void> _checkPermissions() async {
-    final hasCameraPermission = await _model.requestCameraPermission();
-    if (hasCameraPermission) {
-      // i think the navigation should happen here
-    }
+  /// Check if permission
+  /// Navigate to next page once the user decided
+  Future<void> _checkPermissions(context, where) async {
+    await _model.requestCameraPermission();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => where),
+    );
   }
 }
 
 class CameraPermissions extends StatelessWidget {
   final bool isPermanent;
   final VoidCallback onPressed;
+
   const CameraPermissions({
     required this.isPermanent,
     required this.onPressed,
@@ -154,11 +158,12 @@ class CameraPermissions extends StatelessWidget {
           //const SizedBox(height: 45),
           Column(
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
-                child: BarButtonBasic(
+                child: BarButtonPermissions(
+                  onPressed: onPressed,
+                  isPermanent: isPermanent,
                   title: 'Enable Camera',
-                  where: LocationPermissionPage(),
                 ),
               ),
               Padding(
@@ -182,14 +187,5 @@ class CameraPermissions extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class CameraAccepted extends StatelessWidget {
-  const CameraAccepted({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text('Hey you did it!');
   }
 }

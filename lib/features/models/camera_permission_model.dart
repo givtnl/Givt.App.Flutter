@@ -29,6 +29,7 @@ class CameraModel extends ChangeNotifier {
   Future<bool> requestCameraPermission() async {
     PermissionStatus result;
     result = await Permission.camera.request();
+    print('result is ${result}');
 
     if (result.isGranted) {
       cameraSelection = CameraSelection.yesCameraAccess;
