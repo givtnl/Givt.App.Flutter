@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_basic.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/camera_permission_page.dart';
+import 'package:givt_mobile_apps/features/presentation/pages/home_page.dart';
 
 class LocationPermissionPage extends StatelessWidget {
   const LocationPermissionPage({super.key});
@@ -58,7 +58,7 @@ class LocationPermissionPage extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
                 child: BarButtonBasic(
                   title: 'Enable location',
-                  where: CameraPermissionPage(),
+                  where: HomePage(),
                 ),
               ),
               Padding(

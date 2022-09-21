@@ -3,6 +3,7 @@ import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_basic.dart';
 import 'package:givt_mobile_apps/features/presentation/components/pages/usp/benefit_row.dart';
+import 'package:givt_mobile_apps/features/presentation/pages/camera_permission_page.dart';
 import 'package:givt_mobile_apps/features/presentation/pages/location_permission_page.dart';
 
 class UspPage extends StatelessWidget {
@@ -49,7 +50,7 @@ class UspPage extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(35, 0, 35, 45),
             child: BarButtonBasic(
               title: 'Give now',
-              where: LocationPermissionPage(),
+              where: CameraPermissionPage(),
             ),
           )
         ],

@@ -2,11 +2,110 @@ import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_basic.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/bluetooth_permission_page.dart';
+import 'package:givt_mobile_apps/features/presentation/pages/location_permission_page.dart';
 import 'package:givt_mobile_apps/features/presentation/pages/home_page.dart';
+import 'package:provider/provider.dart';
 
-class CameraPermissionPage extends StatelessWidget {
+import '../../models/camera_permission_model.dart';
+
+class CameraPermissionPage extends StatefulWidget {
   const CameraPermissionPage({super.key});
+
+  @override
+  State<CameraPermissionPage> createState() => _CameraPermissionPageState();
+}
+
+class _CameraPermissionPageState extends State<CameraPermissionPage>
+    with WidgetsBindingObserver {
+  late final CameraModel _model;
+  bool _detectPermission = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    _model = CameraModel();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  // This block of code is used in the event that the user
+  // has denied the permission forever. Detects if the permission
+  // has been granted when the user returns from the
+  // permission system screen.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed &&
+        _detectPermission &&
+        (_model.cameraSelection ==
+            CameraSelection.noCameraPermissionPermanent)) {
+      _detectPermission = false;
+      _model.requestCameraPermission();
+    } else if (state == AppLifecycleState.paused &&
+        _model.cameraSelection == CameraSelection.noCameraPermissionPermanent) {
+      _detectPermission = true;
+    }
+  }
+
+// this the UI and the place for ChangeNotifier
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider.value(
+      value: _model,
+      child: Consumer<CameraModel>(
+        builder: (context, model, child) {
+          Widget widget;
+
+          switch (model.cameraSelection) {
+            case CameraSelection.noCameraPermission:
+              widget = CameraPermissions(
+                  isPermanent: false, onPressed: _checkPermissions);
+              break;
+            case CameraSelection.noCameraPermissionPermanent:
+              widget = CameraPermissions(
+                  isPermanent: true, onPressed: _checkPermissions);
+              break;
+            case CameraSelection.yesCameraAccess:
+              // TODO: Navigate to next screen
+              widget = CameraAccepted();
+              break;
+          }
+
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Handle permissions'),
+            ),
+            body: widget,
+          );
+        },
+      ),
+    );
+  }
+
+  /// Check if permission is granted,
+  /// if it's not granted then request it.
+  /// If it's granted then nothing happens hhah
+  Future<void> _checkPermissions() async {
+    final hasCameraPermission = await _model.requestCameraPermission();
+    if (hasCameraPermission) {
+      // i think the navigation should happen here
+    }
+  }
+}
+
+class CameraPermissions extends StatelessWidget {
+  final bool isPermanent;
+  final VoidCallback onPressed;
+  const CameraPermissions({
+    required this.isPermanent,
+    required this.onPressed,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +158,7 @@ class CameraPermissionPage extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
                 child: BarButtonBasic(
                   title: 'Enable Camera',
-                  where: BluetoothPermissionPage(),
+                  where: LocationPermissionPage(),
                 ),
               ),
               Padding(
@@ -83,5 +182,14 @@ class CameraPermissionPage extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class CameraAccepted extends StatelessWidget {
+  const CameraAccepted({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('Hey you did it!');
   }
 }
