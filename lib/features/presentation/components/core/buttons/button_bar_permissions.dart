@@ -45,15 +45,15 @@ class BarButtonPermissions extends StatelessWidget {
 // the abothe thing works anw
 
 // ElevatedButton(
-                    //   onPressed: () =>
-                    //       isPermanent ? openAppSettings() : onPressed(),
-                    //   style: ButtonStyle(
-                    //     backgroundColor:
-                    //         MaterialStateProperty.all(Palette.mintGreen),
-                    //     textStyle: MaterialStateProperty.all(TextStyle(
-                    //         color: Palette.white,
-                    //         fontSize: 23,
-                    //         fontWeight: FontWeight.w700)),
-                    //   ),
-                    //   child: Text(isPermanent ? 'Open settings' : 'Allow access'),
-                    // ),
+//                       onPressed: () =>
+//                           isPermanent ? openAppSettings() : onPressed(),
+//                       style: ButtonStyle(
+//                         backgroundColor:
+//                             MaterialStateProperty.all(Palette.mintGreen),
+//                         textStyle: MaterialStateProperty.all(TextStyle(
+//                             color: Palette.white,
+//                             fontSize: 23,
+//                             fontWeight: FontWeight.w700)),
+//                       ),
+//                       child: Text(isPermanent ? 'Open settings' : 'Allow access'),
+//                     ),

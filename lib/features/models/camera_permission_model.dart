@@ -14,6 +14,8 @@ enum CameraSelection {
 //undetermined, granted, denied, restricted, permanentlyDenied
 
 class CameraModel extends ChangeNotifier {
+  /// this does not get remebered/ overriden  if app is restarted
+  /// need some sort of localStorage
   CameraSelection _cameraSelection = CameraSelection.noCameraPermission;
 
   CameraSelection get cameraSelection => _cameraSelection;
