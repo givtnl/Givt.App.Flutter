@@ -64,36 +64,37 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
           switch (model.cameraSelection) {
             case CameraSelection.noCameraPermission:
               widget = CameraPermissions(
-                  isPermanent: false,
+                  //isPermanent: false,
                   onPressed: () =>
                       _checkPermissions(context, LocationPermissionPage()));
               break;
             case CameraSelection.noCameraPermissionPermanent:
               widget = CameraPermissions(
-                  isPermanent: true,
+                  //isPermanent: true,
                   onPressed: () =>
                       _checkPermissions(context, LocationPermissionPage()));
               break;
             case CameraSelection.yesCameraAccess:
-              // this should actually never get executed since we will be navigating
-              // to the next page
-              // or should it be
-              // widget = LocationPermissionPage();
-              widget = const Text('the Navigator didnt execute');
+
+              /// this will get executed if the permissions were
+              /// approved from settings and the user returns to app
+              widget = LocationPermissionPage();
               break;
           }
-
           return widget;
         },
       ),
     );
   }
 
-  /// Check if permission
+  /// Request permission
   /// Navigate to next page once the user decided
+  /// Regardless of decision
   Future<void> _checkPermissions(context, where) async {
     await _model.requestCameraPermission();
 
+    /// this returns a bool but since we arent changing the UI based
+    /// on the response then its unused.
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => where),
@@ -102,11 +103,13 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
 }
 
 class CameraPermissions extends StatelessWidget {
-  final bool isPermanent;
+  /// not currently useful since we wont
+  /// be changing the state if the user decide to refuse
+  //final bool isPermanent;
   final VoidCallback onPressed;
 
   const CameraPermissions({
-    required this.isPermanent,
+    //required this.isPermanent,
     required this.onPressed,
     super.key,
   });
@@ -159,10 +162,10 @@ class CameraPermissions extends StatelessWidget {
           Column(
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
+                padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
                 child: BarButtonPermissions(
                   onPressed: onPressed,
-                  isPermanent: isPermanent,
+                  //isPermanent: isPermanent,
                   title: 'Enable Camera',
                 ),
               ),

@@ -7,25 +7,12 @@ import 'package:givt_mobile_apps/features/presentation/pages/usp.dart';
 
 class BarButtonPermissions extends StatelessWidget {
   final String title;
-  // since we are not calling navigate then this might be useless. lets cheeeck
-  //final Widget where;
-  final bool isPermanent;
   final VoidCallback onPressed;
-  const BarButtonPermissions(
-      {super.key,
-      required this.onPressed,
-      required this.title,
-      //required this.where,
-      required this.isPermanent});
-
-  // since we are not calling navigate then this might be useless. lets cheeeck
-  // should this widget actually take more then the route target?
-  // void navigate(context) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => where),
-  //   );
-  // }
+  const BarButtonPermissions({
+    super.key,
+    required this.onPressed,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +20,13 @@ class BarButtonPermissions extends StatelessWidget {
       color: Palette.mintGreen,
       child: InkWell(
         splashColor: Palette.darkBlue,
-        onTap: () {
-          isPermanent ? openAppSettings() : onPressed();
-        },
+        onTap: () => onPressed(),
         child: SizedBox(
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 13.0),
             child: Text(
-              isPermanent ? 'Open Settings' : title,
+              title,
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Palette.white,
