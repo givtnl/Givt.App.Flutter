@@ -26,6 +26,7 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
     WidgetsBinding.instance.addObserver(this);
 
     _controller = LocationController();
+    _checkPermissions(context, HomePage());
   }
 
   @override
