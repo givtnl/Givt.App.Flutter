@@ -4,44 +4,44 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // This enum will manage the overall state
-enum CameraSelection {
-  noCameraPermission, // Permission denied, but not forever
-  noCameraPermissionPermanent, // Permission denied forever
-  yesCameraAccess //Yay
+enum LocationSelection {
+  noLocationPermission, // Permission denied, but not forever
+  noLocationPermissionPermanent, // Permission denied forever
+  yesLocationAccess //Yay
 }
 
-//Permission.camera.status --> will return current status
+//Permission.location.status --> will return current status
 //undetermined, granted, denied, restricted, permanentlyDenied
 
-class CameraModel extends ChangeNotifier {
+class LocationModel extends ChangeNotifier {
   /// this does not get remebered/ overriden  if app is restarted
   /// so it should be determied we app opens instead of hardcoded here
-  CameraSelection _cameraSelection = CameraSelection.noCameraPermission;
+  LocationSelection _locationSelection = LocationSelection.noLocationPermission;
 
-  CameraSelection get cameraSelection => _cameraSelection;
+  LocationSelection get locationSelection => _locationSelection;
 
-  set cameraSelection(CameraSelection value) {
-    if (value != _cameraSelection) {
-      _cameraSelection = value;
+  set locationSelection(LocationSelection value) {
+    if (value != _locationSelection) {
+      _locationSelection = value;
       notifyListeners();
     }
   }
 
   /// Request the files permission and updates the UI accordingly
-  Future<bool> requestCameraPermission() async {
+  Future<bool> requestLocationPermission() async {
     PermissionStatus result;
-    result = await Permission.camera.request();
+    result = await Permission.location.request();
     if (result.isGranted) {
-      cameraSelection = CameraSelection.yesCameraAccess;
+      locationSelection = LocationSelection.yesLocationAccess;
       print('succes, the result is: ${result}');
       return true;
     } else if (Platform.isIOS || result.isPermanentlyDenied) {
       //Ios only allows to check permissions once
-      cameraSelection = CameraSelection.noCameraPermissionPermanent;
+      locationSelection = LocationSelection.noLocationPermissionPermanent;
       print('oh no, the result is: ${result}, gotta go open settings');
     } else {
       // only executes on android
-      cameraSelection = CameraSelection.noCameraPermission;
+      locationSelection = LocationSelection.noLocationPermission;
       print('oh bummer, the result is: ${result}, try again?');
     }
     return false;

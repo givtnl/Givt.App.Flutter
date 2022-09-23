@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import 'package:givt_mobile_apps/core/constants/palette.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/location_permission_page.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/usp.dart';
 
 class BarButtonPermissions extends StatelessWidget {
   final String title;

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-
-import 'package:givt_mobile_apps/core/constants/palette.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_permissions.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/location_permission_page.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/home_page.dart';
 import 'package:provider/provider.dart';
 
+import '../../presentation/pages/location_permission_page.dart';
 import '../../models/camera_permission_model.dart';
+import '../components/pages/permissions_pages/camera_permissions_check.dart';
 
 class CameraPermissionPage extends StatefulWidget {
   const CameraPermissionPage({super.key});
@@ -53,6 +49,20 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
     }
   }
 
+  /// Request permission
+  /// Navigate to next page once the user decided
+  /// Regardless of decision
+  Future<void> _checkPermissions(context, where) async {
+    await _model.requestCameraPermission();
+
+    /// await returns a bool but since we arent changing the UI based
+    /// on the response then its unused.
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => where),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
@@ -63,131 +73,26 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
 
           switch (model.cameraSelection) {
             case CameraSelection.noCameraPermission:
-              widget = CameraPermissions(
+              widget = CameraPermissionsCheck(
                   //isPermanent: false,
-                  onPressed: () =>
-                      _checkPermissions(context, LocationPermissionPage()));
+                  onPressed: () => _checkPermissions(
+                      context, const LocationPermissionPage()));
               break;
             case CameraSelection.noCameraPermissionPermanent:
-              widget = CameraPermissions(
+              widget = CameraPermissionsCheck(
                   //isPermanent: true,
-                  onPressed: () =>
-                      _checkPermissions(context, LocationPermissionPage()));
+                  onPressed: () => _checkPermissions(
+                      context, const LocationPermissionPage()));
               break;
             case CameraSelection.yesCameraAccess:
 
               /// this will get executed if the permissions were
               /// approved from settings and the user returns to app
-              widget = LocationPermissionPage();
+              widget = const LocationPermissionPage();
               break;
           }
           return widget;
         },
-      ),
-    );
-  }
-
-  /// Request permission
-  /// Navigate to next page once the user decided
-  /// Regardless of decision
-  Future<void> _checkPermissions(context, where) async {
-    await _model.requestCameraPermission();
-
-    /// this returns a bool but since we arent changing the UI based
-    /// on the response then its unused.
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => where),
-    );
-  }
-}
-
-class CameraPermissions extends StatelessWidget {
-  /// not currently useful since we wont
-  /// be changing the state if the user decide to refuse
-  //final bool isPermanent;
-  final VoidCallback onPressed;
-
-  const CameraPermissions({
-    //required this.isPermanent,
-    required this.onPressed,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Palette.background,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-            child: SvgPicture.asset(
-              'assets/svg/logo.svg',
-              height: 22,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 35),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Allow Givt to access your camera so you can scan QR codes.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Palette.darkBlue,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                Text(
-                  'Only enabled while you use the app.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Palette.darkGrey,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Image.asset('assets/images/camera.png'),
-                ),
-              ],
-            ),
-          ),
-          //const SizedBox(height: 45),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
-                child: BarButtonPermissions(
-                  onPressed: onPressed,
-                  //isPermanent: isPermanent,
-                  title: 'Enable Camera',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'continue using the app without the permission',
-                    style: TextStyle(
-                      color: Palette.darkBlue,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      decoration: TextDecoration.underline,
-                      decorationThickness: 1.5,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
       ),
     );
   }
