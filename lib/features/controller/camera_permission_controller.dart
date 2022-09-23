@@ -13,7 +13,7 @@ enum CameraSelection {
 //Permission.camera.status --> will return current status
 //undetermined, granted, denied, restricted, permanentlyDenied
 
-class CameraModel extends ChangeNotifier {
+class CameraController extends ChangeNotifier {
   /// this does not get remebered/ overriden  if app is restarted
   /// so it should be determied we app opens instead of hardcoded here
   CameraSelection _cameraSelection = CameraSelection.noCameraPermission;

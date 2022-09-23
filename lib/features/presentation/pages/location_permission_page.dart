@@ -6,7 +6,7 @@ import 'package:givt_mobile_apps/features/presentation/components/core/buttons/b
 import 'package:givt_mobile_apps/features/presentation/pages/home_page.dart';
 import '../components/pages/permissions_pages/loctaion_permission_check.dart';
 
-import '../../models/location_permission_model.dart';
+import '../../controller/location_permission_controller.dart';
 
 class LocationPermissionPage extends StatefulWidget {
   const LocationPermissionPage({super.key});
@@ -17,7 +17,7 @@ class LocationPermissionPage extends StatefulWidget {
 
 class _LocationPermissionPageState extends State<LocationPermissionPage>
     with WidgetsBindingObserver {
-  late final LocationModel _model;
+  late final LocationController _controller;
   bool _detectPermission = false;
 
   @override
@@ -25,7 +25,7 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    _model = LocationModel();
+    _controller = LocationController();
   }
 
   @override
@@ -42,12 +42,12 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed &&
         _detectPermission &&
-        (_model.locationSelection ==
+        (_controller.locationSelection ==
             LocationSelection.noLocationPermissionPermanent)) {
       _detectPermission = false;
-      _model.requestLocationPermission();
+      _controller.requestLocationPermission();
     } else if (state == AppLifecycleState.paused &&
-        _model.locationSelection ==
+        _controller.locationSelection ==
             LocationSelection.noLocationPermissionPermanent) {
       _detectPermission = true;
     }
@@ -57,7 +57,7 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
   /// Navigate to next page once the user decided
   /// Regardless of decision
   Future<void> _checkPermissions(context, where) async {
-    await _model.requestLocationPermission();
+    await _controller.requestLocationPermission();
 
     /// await returns a bool but since we arent changing the UI based
     /// on the response then its unused.
@@ -70,8 +70,8 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: _model,
-      child: Consumer<LocationModel>(
+      value: _controller,
+      child: Consumer<LocationController>(
         builder: (context, model, child) {
           Widget widget;
 

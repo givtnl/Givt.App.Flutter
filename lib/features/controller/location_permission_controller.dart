@@ -13,7 +13,7 @@ enum LocationSelection {
 //Permission.location.status --> will return current status
 //undetermined, granted, denied, restricted, permanentlyDenied
 
-class LocationModel extends ChangeNotifier {
+class LocationController extends ChangeNotifier {
   /// this does not get remebered/ overriden  if app is restarted
   /// so it should be determied we app opens instead of hardcoded here
   LocationSelection _locationSelection = LocationSelection.noLocationPermission;

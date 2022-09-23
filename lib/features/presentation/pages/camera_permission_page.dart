@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../presentation/pages/location_permission_page.dart';
-import '../../models/camera_permission_model.dart';
+import '../../controller/camera_permission_controller.dart';
 import '../components/pages/permissions_pages/camera_permissions_check.dart';
 
 class CameraPermissionPage extends StatefulWidget {
@@ -14,7 +14,7 @@ class CameraPermissionPage extends StatefulWidget {
 
 class _CameraPermissionPageState extends State<CameraPermissionPage>
     with WidgetsBindingObserver {
-  late final CameraModel _model;
+  late final CameraController _controller;
   bool _detectPermission = false;
 
   @override
@@ -22,7 +22,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    _model = CameraModel();
+    _controller = CameraController();
   }
 
   @override
@@ -39,12 +39,13 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed &&
         _detectPermission &&
-        (_model.cameraSelection ==
+        (_controller.cameraSelection ==
             CameraSelection.noCameraPermissionPermanent)) {
       _detectPermission = false;
-      _model.requestCameraPermission();
+      _controller.requestCameraPermission();
     } else if (state == AppLifecycleState.paused &&
-        _model.cameraSelection == CameraSelection.noCameraPermissionPermanent) {
+        _controller.cameraSelection ==
+            CameraSelection.noCameraPermissionPermanent) {
       _detectPermission = true;
     }
   }
@@ -53,7 +54,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
   /// Navigate to next page once the user decided
   /// Regardless of decision
   Future<void> _checkPermissions(context, where) async {
-    await _model.requestCameraPermission();
+    await _controller.requestCameraPermission();
 
     /// await returns a bool but since we arent changing the UI based
     /// on the response then its unused.
@@ -66,8 +67,8 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: _model,
-      child: Consumer<CameraModel>(
+      value: _controller,
+      child: Consumer<CameraController>(
         builder: (context, model, child) {
           Widget widget;
 
