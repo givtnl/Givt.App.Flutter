@@ -33,16 +33,16 @@ class CameraModel extends ChangeNotifier {
     result = await Permission.camera.request();
     if (result.isGranted) {
       cameraSelection = CameraSelection.yesCameraAccess;
-      print('succes, the result is: ${result}');
+      print('succes, the camera access is: ${result}');
       return true;
     } else if (Platform.isIOS || result.isPermanentlyDenied) {
       //Ios only allows to check permissions once
       cameraSelection = CameraSelection.noCameraPermissionPermanent;
-      print('oh no, the result is: ${result}, gotta go open settings');
+      print('oh no, the camera result is: ${result}, gotta go open settings');
     } else {
       // only executes on android
       cameraSelection = CameraSelection.noCameraPermission;
-      print('oh bummer, the result is: ${result}, try again?');
+      print('oh bummer, the camra result is: ${result}, try again?');
     }
     return false;
   }

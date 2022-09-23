@@ -5,6 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_basic.dart';
 import 'package:givt_mobile_apps/features/presentation/pages/home_page.dart';
 
+import '../../core/buttons/button_bar_permissions.dart';
+
 class LocationPermissionsCheck extends StatelessWidget {
   final VoidCallback onPressed;
 
@@ -60,11 +62,12 @@ class LocationPermissionsCheck extends StatelessWidget {
           //const SizedBox(height: 45),
           Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
-                child: BarButtonBasic(
-                  title: 'Enable location',
-                  where: HomePage(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+                child: BarButtonPermissions(
+                  onPressed: onPressed,
+                  //isPermanent: isPermanent,
+                  title: 'Enable Location',
                 ),
               ),
               Padding(

@@ -79,14 +79,14 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
             case LocationSelection.noLocationPermission:
               widget = LocationPermissionsCheck(
                   //isPermanent: false,
-                  onPressed: () => _checkPermissions(
-                      context, const LocationPermissionPage()));
+                  onPressed: () =>
+                      _checkPermissions(context, const HomePage()));
               break;
             case LocationSelection.noLocationPermissionPermanent:
               widget = LocationPermissionsCheck(
                   //isPermanent: true,
-                  onPressed: () => _checkPermissions(
-                      context, const LocationPermissionPage()));
+                  onPressed: () =>
+                      _checkPermissions(context, const HomePage()));
               break;
             case LocationSelection.yesLocationAccess:
 

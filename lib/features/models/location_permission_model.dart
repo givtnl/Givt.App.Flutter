@@ -33,16 +33,16 @@ class LocationModel extends ChangeNotifier {
     result = await Permission.location.request();
     if (result.isGranted) {
       locationSelection = LocationSelection.yesLocationAccess;
-      print('succes, the result is: ${result}');
+      print('succes, location permission is ${result}');
       return true;
     } else if (Platform.isIOS || result.isPermanentlyDenied) {
       //Ios only allows to check permissions once
       locationSelection = LocationSelection.noLocationPermissionPermanent;
-      print('oh no, the result is: ${result}, gotta go open settings');
+      print('oh no, location permission is: ${result}, gotta go open settings');
     } else {
       // only executes on android
       locationSelection = LocationSelection.noLocationPermission;
-      print('oh bummer, the result is: ${result}, try again?');
+      print('oh bummer, location permission is: ${result}, try again?');
     }
     return false;
   }
