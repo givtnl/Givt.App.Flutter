@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
-import '../../constants/theme.dart';
+import '../../theme/theme.dart';
 
 class GenericButton extends StatelessWidget {
   final String text;

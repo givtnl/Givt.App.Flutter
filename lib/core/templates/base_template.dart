@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/buttons/generic_button.dart';
-import '../constants/theme.dart';
+import '../theme/theme.dart';
 
 class BaseTemplate extends StatelessWidget {
   final Widget pageContent;
