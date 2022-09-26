@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_basic.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/home_page.dart';
+import 'package:givt_mobile_apps/core/widgets/buttons/button_bar_basic.dart';
 
-import '../../core/buttons/button_bar_permissions.dart';
+import '../../../core/widgets/buttons/button_bar_permissions.dart';
 
 class LocationPermissionsCheck extends StatelessWidget {
   final VoidCallback onPressed;

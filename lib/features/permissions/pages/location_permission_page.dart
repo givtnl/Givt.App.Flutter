@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:givt_mobile_apps/features/benefits/usp.dart';
 import 'package:provider/provider.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_basic.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/home_page.dart';
-import '../components/pages/permissions_pages/loctaion_permission_check.dart';
+import 'package:givt_mobile_apps/core/widgets/buttons/button_bar_basic.dart';
+import '../widgets/loctaion_permission_check.dart';
 
-import '../../controller/location_permission_controller.dart';
+import '../controller/location_permission_controller.dart';
 
 class LocationPermissionPage extends StatefulWidget {
   const LocationPermissionPage({super.key});
@@ -26,7 +26,7 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
     WidgetsBinding.instance.addObserver(this);
 
     _controller = LocationController();
-    _checkPermissions(context, HomePage());
+    _checkPermissions(context, UspPage());
   }
 
   @override
@@ -80,20 +80,18 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
             case LocationSelection.noLocationPermission:
               widget = LocationPermissionsCheck(
                   //isPermanent: false,
-                  onPressed: () =>
-                      _checkPermissions(context, const HomePage()));
+                  onPressed: () => _checkPermissions(context, const UspPage()));
               break;
             case LocationSelection.noLocationPermissionPermanent:
               widget = LocationPermissionsCheck(
                   //isPermanent: true,
-                  onPressed: () =>
-                      _checkPermissions(context, const HomePage()));
+                  onPressed: () => _checkPermissions(context, const UspPage()));
               break;
             case LocationSelection.yesLocationAccess:
 
               /// this will get executed if the permissions were
               /// approved from settings and the user returns to app
-              widget = const HomePage();
+              widget = const UspPage();
               break;
           }
           return widget;

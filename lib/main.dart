@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/location_permission_page.dart';
+import 'package:givt_mobile_apps/features/permissions/pages/location_permission_page.dart';
 
-import 'features/presentation/pages/home_page.dart';
-import 'features/presentation/pages/usp.dart';
+import 'features/benefits/usp.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Mulish',
       ),
-      home: const HomePage(),
+      home: const UspPage(),
     );
   }
 }

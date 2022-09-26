@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../presentation/pages/location_permission_page.dart';
-import '../../controller/camera_permission_controller.dart';
-import '../components/pages/permissions_pages/camera_permissions_check.dart';
+import '../controller/camera_permission_controller.dart';
+import '../widgets/camera_permissions_check.dart';
+import 'location_permission_page.dart';
 
 class CameraPermissionPage extends StatefulWidget {
   const CameraPermissionPage({super.key});

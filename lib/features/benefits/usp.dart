@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_basic.dart';
-import 'package:givt_mobile_apps/features/presentation/components/pages/usp/benefit_row.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/camera_permission_page.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/location_permission_page.dart';
+import 'package:givt_mobile_apps/core/widgets/buttons/button_bar_basic.dart';
+import 'package:givt_mobile_apps/features/benefits/widget/benefit_row.dart';
+import 'package:givt_mobile_apps/features/permissions/pages/camera_permission_page.dart';
+import 'package:givt_mobile_apps/features/permissions/pages/location_permission_page.dart';
 
 class UspPage extends StatelessWidget {
   const UspPage({super.key});

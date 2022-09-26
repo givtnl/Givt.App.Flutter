@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/usp.dart';
+import 'package:givt_mobile_apps/features/benefits/usp.dart';
 
 class CenteredFloatingButton extends StatelessWidget {
   const CenteredFloatingButton({super.key});
