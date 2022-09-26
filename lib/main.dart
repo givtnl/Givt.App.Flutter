@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/features/permissions/pages/location_permission_page.dart';
+import './features/registration/pages/first_time_registration_page.dart';
 
 import 'features/benefits/usp.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Mulish',
       ),
-      home: const UspPage(),
+      home: const FirstTimeRegistrationPage(),
     );
   }
 }
