@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:givt_mobile_apps/core/constants/routes.dart';
 
 import 'features/benefits/usp.dart';
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Mulish',
       ),
       home: const UspPage(),
+      routes: routes,
     );
   }
 }

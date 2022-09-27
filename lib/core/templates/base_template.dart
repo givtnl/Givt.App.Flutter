@@ -7,12 +7,18 @@ import '../theme/theme.dart';
 class BaseTemplate extends StatelessWidget {
   final Widget pageContent;
   final Function onBtnClick;
+  final String title;
+  Widget? bypassBtn;
   bool isBtnDisabled;
+  double? logoHeight;
 
   BaseTemplate(
       {required this.pageContent,
       required this.onBtnClick,
-      required this.isBtnDisabled});
+      required this.title,
+      required this.isBtnDisabled,
+      this.bypassBtn,
+      this.logoHeight});
 
   @override
   Widget build(BuildContext context) {
@@ -26,21 +32,22 @@ class BaseTemplate extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
               child: SvgPicture.asset(
                 'assets/svg/logo.svg',
-                height: AppTheme.theme.logoSize,
+                height: logoHeight ?? AppTheme.theme.logoSize,
               ),
             ),
           ),
           Container(child: pageContent),
           Padding(
-            padding: EdgeInsets.fromLTRB(35, 0, 35, 35),
+            padding: const EdgeInsets.fromLTRB(35, 0, 35, 35),
             child: GenericButton(
-              text: 'Continue',
+              text: title,
               disabled: isBtnDisabled,
               onClicked: () {
                 onBtnClick();
               },
             ),
-          )
+          ),
+          if (bypassBtn != null) bypassBtn!,
         ],
       ),
     );

@@ -26,7 +26,7 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
     WidgetsBinding.instance.addObserver(this);
 
     _controller = LocationController();
-    _checkPermissions(context, UspPage());
+    //_checkPermissions(context, UspPage());
   }
 
   @override
@@ -62,10 +62,7 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
 
     /// await returns a bool but since we arent changing the UI based
     /// on the response then its unused.
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => where),
-    );
+    Navigator.pushNamed(context, where);
   }
 
   @override
@@ -80,12 +77,12 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
             case LocationSelection.noLocationPermission:
               widget = LocationPermissionsCheck(
                   //isPermanent: false,
-                  onPressed: () => _checkPermissions(context, const UspPage()));
+                  onPressed: () => _checkPermissions(context, '/usp'));
               break;
             case LocationSelection.noLocationPermissionPermanent:
               widget = LocationPermissionsCheck(
                   //isPermanent: true,
-                  onPressed: () => _checkPermissions(context, const UspPage()));
+                  onPressed: () => _checkPermissions(context, '/usp'));
               break;
             case LocationSelection.yesLocationAccess:
 

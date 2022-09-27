@@ -18,6 +18,7 @@ class GenericButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        elevation: 0.0,
         backgroundColor:
             disabled ? AppTheme.theme.btnInactive : AppTheme.theme.btnActive,
         minimumSize: Size.fromHeight(50),
@@ -29,6 +30,7 @@ class GenericButton extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             color: AppTheme.theme.btnText,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),
