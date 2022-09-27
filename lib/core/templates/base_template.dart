@@ -8,6 +8,7 @@ class BaseTemplate extends StatelessWidget {
   final Widget pageContent;
   final Function onBtnClick;
   final String title;
+  Widget? bypassBtn;
   bool isBtnDisabled;
   double? logoHeight;
 
@@ -16,6 +17,7 @@ class BaseTemplate extends StatelessWidget {
       required this.onBtnClick,
       required this.title,
       required this.isBtnDisabled,
+      this.bypassBtn,
       this.logoHeight});
 
   @override
@@ -44,7 +46,8 @@ class BaseTemplate extends StatelessWidget {
                 onBtnClick();
               },
             ),
-          )
+          ),
+          if (bypassBtn != null) bypassBtn!,
         ],
       ),
     );

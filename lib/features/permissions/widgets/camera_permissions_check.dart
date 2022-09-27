@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/core/theme/theme.dart';
+import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
 
 class CameraPermissionsCheck extends StatelessWidget {
   /// isPermanent not currently useful since we wont
@@ -47,9 +48,9 @@ class CameraPermissionsCheck extends StatelessWidget {
           ],
         ),
       ),
-      //const SizedBox(height: 45),
-      // needs a bypass button
-
+      bypassBtn: const BypassBtn(
+          title: 'continue using the app without the permission',
+          where: '/camera-permission'),
       onBtnClick: () => onPressed(),
       title: 'Enable Location',
       isBtnDisabled: false,
