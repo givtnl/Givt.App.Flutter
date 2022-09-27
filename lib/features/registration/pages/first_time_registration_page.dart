@@ -88,6 +88,7 @@ class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
         ),
       ),
       onBtnClick: buttonClicked,
+      title: 'Continue',
       isBtnDisabled: btnDisabled,
     );
   }
