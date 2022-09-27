@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/core/theme/theme.dart';
 
@@ -51,7 +50,7 @@ class CameraPermissionsCheck extends StatelessWidget {
       //const SizedBox(height: 45),
       // needs a bypass button
 
-      onBtnClick: () {},
+      onBtnClick: () => onPressed(),
       title: 'Enable Location',
       isBtnDisabled: false,
     );

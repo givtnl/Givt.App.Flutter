@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/core/theme/theme.dart';
-import 'package:provider/provider.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/core/widgets/buttons/button_bar_basic.dart';
-
-import '../../../core/widgets/buttons/button_bar_permissions.dart';
 
 class LocationPermissionsCheck extends StatelessWidget {
   final VoidCallback onPressed;
@@ -49,7 +44,7 @@ class LocationPermissionsCheck extends StatelessWidget {
           ),
         ),
         // needs a bypass button
-        onBtnClick: () {},
+        onBtnClick: () => onPressed(),
         title: 'Enable Location',
         isBtnDisabled: false);
   }

@@ -59,10 +59,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
 
     /// await returns a bool but since we arent changing the UI based
     /// on the response then its unused.
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => where),
-    );
+    Navigator.pushNamed(context, where);
   }
 
   @override
@@ -77,14 +74,14 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
             case CameraSelection.noCameraPermission:
               widget = CameraPermissionsCheck(
                   //isPermanent: false,
-                  onPressed: () => _checkPermissions(
-                      context, const LocationPermissionPage()));
+                  onPressed: () =>
+                      _checkPermissions(context, '/location-permission'));
               break;
             case CameraSelection.noCameraPermissionPermanent:
               widget = CameraPermissionsCheck(
                   //isPermanent: true,
-                  onPressed: () => _checkPermissions(
-                      context, const LocationPermissionPage()));
+                  onPressed: () =>
+                      _checkPermissions(context, '/location-permission'));
               break;
             case CameraSelection.yesCameraAccess:
 
