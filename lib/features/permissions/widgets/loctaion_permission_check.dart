@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
-import 'package:givt_mobile_apps/core/theme/theme.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
 
 class LocationPermissionsCheck extends StatelessWidget {
@@ -23,7 +21,7 @@ class LocationPermissionsCheck extends StatelessWidget {
                 'Allow Givt to access your location to know when you are in church.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: AppTheme.theme.textDark,
+                  color: Theme.of(context).textTheme.bodyText1?.color,
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
                 ),
@@ -32,7 +30,7 @@ class LocationPermissionsCheck extends StatelessWidget {
                 'Only enabled while you use the app.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Palette.darkGrey,
+                  color: Theme.of(context).textTheme.bodyText2?.color,
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                 ),
@@ -55,7 +53,7 @@ class LocationPermissionsCheck extends StatelessWidget {
   // @override
   // Widget build(BuildContext context) {
   //   return Scaffold(
-  //     backgroundColor: Palette.background,
+  //     backgroundColor: Theme.of(context).backgroundColor,
   //     body: Column(
   //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
   //       children: [
@@ -85,7 +83,7 @@ class LocationPermissionsCheck extends StatelessWidget {
   //                 child: Text(
   //                   'continue using the app without the permission',
   //                   style: TextStyle(
-  //                     color: Palette.darkBlue,
+  //                     color: Theme.of(context).textTheme.bodyText1?.color,
   //                     fontSize: 13,
   //                     fontWeight: FontWeight.w700,
   //                     decoration: TextDecoration.underline,

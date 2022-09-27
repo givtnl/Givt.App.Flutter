@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
-import 'package:givt_mobile_apps/features/permissions/pages/location_permission_page.dart';
-import 'package:givt_mobile_apps/features/benefits/usp.dart';
 
 class BarButtonBasic extends StatelessWidget {
   final String title;
@@ -19,9 +16,9 @@ class BarButtonBasic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Palette.mintGreen,
+      color: Theme.of(context).primaryColor,
       child: InkWell(
-        splashColor: Palette.darkBlue,
+        splashColor: Theme.of(context).textTheme.bodyText1?.color,
         onTap: () => navigate(context),
         child: SizedBox(
           width: double.infinity,
@@ -31,7 +28,7 @@ class BarButtonBasic extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Palette.white,
+                  color: Colors.white,
                   fontSize: 23,
                   fontWeight: FontWeight.w700),
             ),

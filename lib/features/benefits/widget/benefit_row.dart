@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/core/theme/theme.dart';
 
 class UspRow extends StatelessWidget {
   final String benefit;
@@ -18,7 +15,7 @@ class UspRow extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(0, 1, 0, 0),
             child: Icon(
               Icons.check_circle,
-              color: AppTheme.theme.accentColor,
+              color: Theme.of(context).primaryColor,
               size: 20.0,
             ),
           ),
@@ -29,7 +26,7 @@ class UspRow extends StatelessWidget {
             child: Text(
               benefit,
               style: TextStyle(
-                  color: AppTheme.theme.textDark,
+                  color: Theme.of(context).textTheme.bodyText1?.color,
                   fontSize: 18,
                   fontWeight: FontWeight.w700),
             ),

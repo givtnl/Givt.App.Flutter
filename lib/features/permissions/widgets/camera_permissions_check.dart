@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
-import 'package:givt_mobile_apps/core/theme/theme.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
 
 class CameraPermissionsCheck extends StatelessWidget {
@@ -27,7 +25,7 @@ class CameraPermissionsCheck extends StatelessWidget {
               'Allow Givt to access your camera so you can scan QR codes.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: AppTheme.theme.textDark,
+                color: Theme.of(context).textTheme.bodyText1?.color,
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
               ),
@@ -36,7 +34,7 @@ class CameraPermissionsCheck extends StatelessWidget {
               'Only enabled while you use the app.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: AppTheme.theme.textSemi,
+                color: Theme.of(context).textTheme.bodyText2?.color,
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
               ),
@@ -56,51 +54,4 @@ class CameraPermissionsCheck extends StatelessWidget {
       isBtnDisabled: false,
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     backgroundColor: Palette.background,
-  //     body: Column(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: [
-  //         Padding(
-  //           padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-  //           child: SvgPicture.asset(
-  //             'assets/svg/logo.svg',
-  //             height: 22,
-  //           ),
-  //         ),
-  //          Column(
-  //           children: [
-  //             Padding(
-  //               padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
-  //               child: BarButtonPermissions(
-  //                 onPressed: onPressed,
-  //                 //isPermanent: isPermanent,
-  //                 title: 'Enable Camera',
-  //               ),
-  //             ),
-  //             Padding(
-  //               padding: const EdgeInsets.only(bottom: 5),
-  //               child: TextButton(
-  //                 onPressed: () {},
-  //                 child: Text(
-  //                   'continue using the app without the permission',
-  //                   style: TextStyle(
-  //                     color: Palette.darkBlue,
-  //                     fontSize: 13,
-  //                     fontWeight: FontWeight.w700,
-  //                     decoration: TextDecoration.underline,
-  //                     decorationThickness: 1.5,
-  //                   ),
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
-import '../../theme/theme.dart';
 
 class GenericButton extends StatelessWidget {
   final String text;
@@ -19,8 +17,9 @@ class GenericButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: 0.0,
-        backgroundColor:
-            disabled ? AppTheme.theme.btnInactive : AppTheme.theme.btnActive,
+        backgroundColor: disabled
+            ? Theme.of(context).accentColor
+            : Theme.of(context).primaryColor,
         minimumSize: Size.fromHeight(50),
         shape: ContinuousRectangleBorder(),
       ),
@@ -29,7 +28,7 @@ class GenericButton extends StatelessWidget {
           text,
           style: TextStyle(
             fontSize: 20,
-            color: AppTheme.theme.btnText,
+            color: Theme.of(context).textTheme.button?.color,
             fontWeight: FontWeight.w700,
           ),
         ),

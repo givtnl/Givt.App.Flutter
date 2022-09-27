@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
 
 class BottomBarCustom extends StatelessWidget {
   const BottomBarCustom({super.key});
@@ -9,7 +8,7 @@ class BottomBarCustom extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       shape: const CircularNotchedRectangle(),
-      color: Palette.background,
+      color: Theme.of(context).backgroundColor,
       child: Row(
         children: <Widget>[
           Padding(
@@ -19,7 +18,7 @@ class BottomBarCustom extends StatelessWidget {
               icon: SvgPicture.asset('assets/svg/church.svg'),
               //icon: const Icon(Icons.church),
               onPressed: () {},
-              color: Palette.darkBlue,
+              color: Theme.of(context).textTheme.bodyText1?.color,
             ),
           ),
           Padding(
@@ -28,7 +27,7 @@ class BottomBarCustom extends StatelessWidget {
               tooltip: 'my profile',
               icon: SvgPicture.asset('assets/svg/user.svg'),
               onPressed: () {},
-              color: Palette.darkBlue,
+              color: Theme.of(context).textTheme.bodyText1?.color,
             ),
           ),
           const Spacer(),
@@ -38,7 +37,7 @@ class BottomBarCustom extends StatelessWidget {
               tooltip: 'Search',
               icon: SvgPicture.asset('assets/svg/overview.svg'),
               onPressed: () {},
-              color: Palette.darkBlue,
+              color: Theme.of(context).textTheme.bodyText1?.color,
             ),
           ),
           Padding(
@@ -47,7 +46,7 @@ class BottomBarCustom extends StatelessWidget {
               tooltip: 'Favorite',
               icon: SvgPicture.asset('assets/svg/settings.svg'),
               onPressed: () {},
-              color: Palette.darkBlue,
+              color: Theme.of(context).textTheme.bodyText1?.color,
             ),
           ),
         ],

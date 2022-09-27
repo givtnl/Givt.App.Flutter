@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
-import 'package:givt_mobile_apps/core/theme/theme.dart';
 import 'package:givt_mobile_apps/features/benefits/widget/benefit_row.dart';
 
 class UspPage extends StatelessWidget {
@@ -18,7 +16,7 @@ class UspPage extends StatelessWidget {
             Text(
               'Benefits of Givt',
               style: TextStyle(
-                color: AppTheme.theme.textDark,
+                color: Theme.of(context).textTheme.bodyText1?.color,
                 fontSize: 30,
                 fontWeight: FontWeight.w800,
               ),

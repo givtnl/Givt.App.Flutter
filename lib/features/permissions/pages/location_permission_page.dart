@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/features/benefits/usp.dart';
 import 'package:provider/provider.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/core/widgets/buttons/button_bar_basic.dart';
 import '../widgets/loctaion_permission_check.dart';
 
 import '../controller/location_permission_controller.dart';
@@ -77,12 +74,12 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
             case LocationSelection.noLocationPermission:
               widget = LocationPermissionsCheck(
                   //isPermanent: false,
-                  onPressed: () => _checkPermissions(context, '/usp'));
+                  onPressed: () => _checkPermissions(context, '/registration'));
               break;
             case LocationSelection.noLocationPermissionPermanent:
               widget = LocationPermissionsCheck(
                   //isPermanent: true,
-                  onPressed: () => _checkPermissions(context, '/usp'));
+                  onPressed: () => _checkPermissions(context, '/registration'));
               break;
             case LocationSelection.yesLocationAccess:
 
