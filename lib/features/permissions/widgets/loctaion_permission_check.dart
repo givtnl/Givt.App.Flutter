@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_basic.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/camera_permission_page.dart';
+import 'package:givt_mobile_apps/core/widgets/buttons/button_bar_basic.dart';
 
-class LocationPermissionPage extends StatelessWidget {
-  const LocationPermissionPage({super.key});
+import '../../../core/widgets/buttons/button_bar_permissions.dart';
+
+class LocationPermissionsCheck extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const LocationPermissionsCheck({
+    required this.onPressed,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +61,12 @@ class LocationPermissionPage extends StatelessWidget {
           //const SizedBox(height: 45),
           Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
-                child: BarButtonBasic(
-                  title: 'Enable location',
-                  where: CameraPermissionPage(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+                child: BarButtonPermissions(
+                  onPressed: onPressed,
+                  //isPermanent: isPermanent,
+                  title: 'Enable Location',
                 ),
               ),
               Padding(

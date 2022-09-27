@@ -1,5 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.givt_mobile_apps">
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- Always include this permission -->
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+  <!-- Include only if your app benefits from precise location access. -->
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
    <application
         android:label="givt_mobile_apps"
         android:name="${applicationName}"

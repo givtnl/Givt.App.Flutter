@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/location_permission_page.dart';
 
-import 'features/presentation/pages/home_page.dart';
-import 'features/presentation/pages/usp.dart';
+import 'features/benefits/usp.dart';
 
 void main() {
   runApp(const MyApp());

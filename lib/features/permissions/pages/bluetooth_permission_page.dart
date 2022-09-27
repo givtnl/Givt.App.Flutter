@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_basic.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/home_page.dart';
+import 'package:givt_mobile_apps/core/widgets/buttons/button_bar_basic.dart';
+import 'package:givt_mobile_apps/features/benefits/usp.dart';
 
 class BluetoothPermissionPage extends StatelessWidget {
   const BluetoothPermissionPage({super.key});
@@ -60,7 +60,7 @@ class BluetoothPermissionPage extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
                 child: BarButtonBasic(
                   title: 'Enable bluetooth',
-                  where: HomePage(),
+                  where: UspPage(),
                 ),
               ),
               Padding(

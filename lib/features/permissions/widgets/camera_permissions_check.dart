@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:givt_mobile_apps/features/presentation/components/core/buttons/button_bar_basic.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/bluetooth_permission_page.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/home_page.dart';
+import 'package:givt_mobile_apps/core/widgets/buttons/button_bar_permissions.dart';
 
-class CameraPermissionPage extends StatelessWidget {
-  const CameraPermissionPage({super.key});
+class CameraPermissionsCheck extends StatelessWidget {
+  /// isPermanent not currently useful since we wont
+  /// be changing the state if the user decide to refuse
+  // final bool isPermanent;
+  final VoidCallback onPressed;
+
+  const CameraPermissionsCheck({
+    //required this.isPermanent,
+    required this.onPressed,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +63,12 @@ class CameraPermissionPage extends StatelessWidget {
           //const SizedBox(height: 45),
           Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
-                child: BarButtonBasic(
+              Padding(
+                padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+                child: BarButtonPermissions(
+                  onPressed: onPressed,
+                  //isPermanent: isPermanent,
                   title: 'Enable Camera',
-                  where: BluetoothPermissionPage(),
                 ),
               ),
               Padding(

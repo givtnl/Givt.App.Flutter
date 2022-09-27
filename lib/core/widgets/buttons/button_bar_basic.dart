@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/location_permission_page.dart';
-import 'package:givt_mobile_apps/features/presentation/pages/usp.dart';
+import 'package:givt_mobile_apps/features/permissions/pages/location_permission_page.dart';
+import 'package:givt_mobile_apps/features/benefits/usp.dart';
 
 class BarButtonBasic extends StatelessWidget {
   final String title;
