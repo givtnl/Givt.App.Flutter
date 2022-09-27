@@ -11,6 +11,8 @@ class LightPaletteImpl implements IPalette {
   @override
   Color textDark = Color(0xFF355070);
   @override
+  Color textSemi = Color(0xFF79808B);
+  @override
   Color btnText = Color(0xFFFFFFFF);
   @override
   Color btnActive = Color(0xFF7DBDA1);

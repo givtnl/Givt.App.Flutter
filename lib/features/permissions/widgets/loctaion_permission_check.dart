@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
+import 'package:givt_mobile_apps/core/theme/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,7 +27,7 @@ class LocationPermissionsCheck extends StatelessWidget {
                 'Allow Givt to access your location to know when you are in church.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Palette.darkBlue,
+                  color: AppTheme.theme.textDark,
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
                 ),

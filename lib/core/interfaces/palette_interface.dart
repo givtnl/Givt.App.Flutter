@@ -5,6 +5,7 @@ abstract class IPalette {
   late double logoSize;
   late Color textLight;
   late Color textDark;
+  late Color textSemi;
   late Color btnText;
   late Color btnActive;
   late Color btnInactive;

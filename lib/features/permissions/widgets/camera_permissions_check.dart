@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:givt_mobile_apps/core/constants/palette.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
-import 'package:givt_mobile_apps/core/widgets/buttons/button_bar_permissions.dart';
+import 'package:givt_mobile_apps/core/theme/theme.dart';
 
 class CameraPermissionsCheck extends StatelessWidget {
   /// isPermanent not currently useful since we wont
@@ -28,7 +27,7 @@ class CameraPermissionsCheck extends StatelessWidget {
               'Allow Givt to access your camera so you can scan QR codes.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Palette.darkBlue,
+                color: AppTheme.theme.textDark,
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
               ),
@@ -37,7 +36,7 @@ class CameraPermissionsCheck extends StatelessWidget {
               'Only enabled while you use the app.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Palette.darkGrey,
+                color: AppTheme.theme.textSemi,
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
               ),
