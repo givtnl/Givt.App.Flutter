@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/features/benefits/usp.dart';
+import 'package:givt_mobile_apps/features/registration/pages/first_time_registration_page.dart';
 import 'package:provider/provider.dart';
 import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -77,18 +78,21 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
             case LocationSelection.noLocationPermission:
               widget = LocationPermissionsCheck(
                   //isPermanent: false,
-                  onPressed: () => _checkPermissions(context, '/usp'));
+                  // does one go to the first time registraion always? (after permissions)
+                  onPressed: () =>
+                      _checkPermissions(context, '/first-time-registration'));
               break;
             case LocationSelection.noLocationPermissionPermanent:
               widget = LocationPermissionsCheck(
                   //isPermanent: true,
-                  onPressed: () => _checkPermissions(context, '/usp'));
+                  onPressed: () =>
+                      _checkPermissions(context, '/first-time-registration'));
               break;
             case LocationSelection.yesLocationAccess:
 
               /// this will get executed if the permissions were
               /// approved from settings and the user returns to app
-              widget = const UspPage();
+              widget = const FirstTimeRegistrationPage();
               break;
           }
           return widget;
