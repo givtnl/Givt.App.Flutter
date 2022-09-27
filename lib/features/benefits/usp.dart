@@ -36,7 +36,7 @@ class UspPage extends StatelessWidget {
           ],
         ),
       ),
-      onBtnClick: () => Navigator.pushNamed(context, '/camera-permission'),
+      onBtnClick: () => Navigator.pushNamed(context, '/location-permission'),
       title: 'Give Now',
       isBtnDisabled: false,
       logoHeight: 50,

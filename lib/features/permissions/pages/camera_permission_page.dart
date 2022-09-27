@@ -23,7 +23,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
     WidgetsBinding.instance.addObserver(this);
 
     _controller = CameraController();
-    _checkPermissions(context, LocationPermissionPage());
+    //_checkPermissions(context, LocationPermissionPage());
   }
 
   @override
