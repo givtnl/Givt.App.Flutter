@@ -6,22 +6,13 @@ class GenericButton extends StatelessWidget {
   final String text;
   final VoidCallback onClicked;
   final bool disabled;
-  String? where;
 
   const GenericButton({
     Key? key,
     required this.text,
     required this.disabled,
     required this.onClicked,
-    this.where,
   }) : super(key: key);
-
-  void navigate(context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => where),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
