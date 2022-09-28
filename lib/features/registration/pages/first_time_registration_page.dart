@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import '../../../core/templates/base_template.dart';
 import '../widgets/email_field.dart';
+import '../../../models/user.dart';
+import '../controller/registration_controller.dart';
 
 class FirstTimeRegistrationPage extends StatefulWidget {
   const FirstTimeRegistrationPage({super.key});
@@ -15,8 +18,6 @@ class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
   bool btnDisabled = true;
   final _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  void _submitData() {}
 
   @override
   void initState() {
@@ -45,16 +46,27 @@ class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
   buttonClicked() {
     btnClicked = true;
     final form = _formKey.currentState;
+    FocusManager.instance.primaryFocus?.unfocus();
 
     if (form != null && form.validate()) {
       final email = _emailController.text;
-
-      ScaffoldMessenger.of(context)
-        ..removeCurrentSnackBar()
-        ..showSnackBar(SnackBar(
-          content: Text('Your email is $email'),
-        ));
+      final controller = RegistrationController();
+      controller
+          .checkTLDAndCreateTempUser(email)
+          .then((response) => showSnackBarMessage(
+              'Temp User created successfully!', Colors.green))
+          .catchError(
+              (error) => showSnackBarMessage(error.toString(), Colors.red));
     }
+  }
+
+  void showSnackBarMessage(String message, Color color) {
+    ScaffoldMessenger.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(
+        backgroundColor: color,
+        content: Text(message),
+      ));
   }
 
   @override
