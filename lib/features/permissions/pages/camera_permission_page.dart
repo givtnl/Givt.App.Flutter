@@ -70,7 +70,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
     progressModel.realm.write(() {
       OnboardingProgress localCurrent =
           progressModel.realm.all<OnboardingProgress>().first;
-      localCurrent.locationAsked = true;
+      localCurrent.cameraAsked = true;
     });
     print(
         'camera has been asked ${current.cameraAsked}; and location has been asked ${current.locationAsked}');
