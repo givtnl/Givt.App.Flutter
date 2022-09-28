@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:givt_mobile_apps/core/models/permission_models.dart';
+import 'package:givt_mobile_apps/core/models/progress.dart';
 import 'package:provider/provider.dart';
 
-import '../controller/camera_permission_controller.dart';
+import '../../../core/controllers/camera_permission_controller.dart';
 import '../widgets/camera_permissions_check.dart';
 import 'location_permission_page.dart';
 
@@ -23,7 +25,6 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
     WidgetsBinding.instance.addObserver(this);
 
     _controller = CameraController();
-    //_checkPermissions(context, LocationPermissionPage());
   }
 
   @override
@@ -54,16 +55,17 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
   /// Request permission
   /// Navigate to next page once the user decided
   /// Regardless of decision
-  Future<void> _checkPermissions(context, where) async {
-    await _controller.requestCameraPermission();
-
+  Future<void> _checkPermissions() async {
     /// await returns a bool but since we arent changing the UI based
     /// on the response then its unused.
-    Navigator.pushNamed(context, where);
+    await _controller.requestCameraPermission();
   }
 
   @override
   Widget build(BuildContext context) {
+    var progressModel = context.read<OnboardingProgressModel>();
+    OnboardingProgress current =
+        progressModel.realm.all<OnboardingProgress>().first;
     return ChangeNotifierProvider.value(
       value: _controller,
       child: Consumer<CameraController>(
@@ -74,14 +76,20 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
             case CameraSelection.noCameraPermission:
               widget = CameraPermissionsCheck(
                   //isPermanent: false,
-                  onPressed: () =>
-                      _checkPermissions(context, '/location-permission'));
+                  onPressed: () {
+                _checkPermissions();
+                current.cameraAsked = true;
+                Navigator.pushNamed(context, '/registration');
+              });
               break;
             case CameraSelection.noCameraPermissionPermanent:
               widget = CameraPermissionsCheck(
                   //isPermanent: true,
-                  onPressed: () =>
-                      _checkPermissions(context, '/location-permission'));
+                  onPressed: () {
+                _checkPermissions();
+                current.cameraAsked = true;
+                Navigator.pushNamed(context, '/registration');
+              });
               break;
             case CameraSelection.yesCameraAccess:
 
