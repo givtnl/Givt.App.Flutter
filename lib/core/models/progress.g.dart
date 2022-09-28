@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'realm_model.dart';
+part of 'progress.dart';
 
 // **************************************************************************
 // RealmObjectGenerator

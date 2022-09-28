@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/features/benefits/usp.dart';
+import 'package:givt_mobile_apps/core/models/permission_models.dart';
+import 'package:givt_mobile_apps/core/models/progress.dart';
 import 'package:givt_mobile_apps/features/registration/pages/first_time_registration_page.dart';
 import 'package:provider/provider.dart';
 import '../widgets/loctaion_permission_check.dart';
 
-import '../controller/location_permission_controller.dart';
+import '../../../core/controllers/location_permission_controller.dart';
 
 class LocationPermissionPage extends StatefulWidget {
   const LocationPermissionPage({super.key});
@@ -24,7 +25,6 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
     WidgetsBinding.instance.addObserver(this);
 
     _controller = LocationController();
-    //_checkPermissions(context, UspPage());
   }
 
   @override
@@ -55,16 +55,17 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
   /// Request permission
   /// Navigate to next page once the user decided
   /// Regardless of decision
-  Future<void> _checkPermissions(context, where) async {
-    await _controller.requestLocationPermission();
-
+  Future<void> _checkPermissions() async {
     /// await returns a bool but since we arent changing the UI based
     /// on the response then its unused.
-    Navigator.pushNamed(context, where);
+    await _controller.requestLocationPermission();
   }
 
   @override
   Widget build(BuildContext context) {
+    var progressModel = context.read<OnboardingProgressModel>();
+    OnboardingProgress current =
+        progressModel.realm.all<OnboardingProgress>().first;
     return ChangeNotifierProvider.value(
       value: _controller,
       child: Consumer<LocationController>(
@@ -75,12 +76,28 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
             case LocationSelection.noLocationPermission:
               widget = LocationPermissionsCheck(
                   //isPermanent: false,
-                  onPressed: () => _checkPermissions(context, '/registration'));
+                  onPressed: () {
+                _checkPermissions();
+                current.locationAsked = true;
+                if (current.cameraAsked) {
+                  Navigator.pushNamed(context, '/registration');
+                } else {
+                  Navigator.pushNamed(context, '/camera-permission');
+                }
+              });
               break;
             case LocationSelection.noLocationPermissionPermanent:
               widget = LocationPermissionsCheck(
                   //isPermanent: true,
-                  onPressed: () => _checkPermissions(context, '/registration'));
+                  onPressed: () {
+                _checkPermissions();
+                current.locationAsked = true;
+                if (current.cameraAsked) {
+                  Navigator.pushNamed(context, '/registration');
+                } else {
+                  Navigator.pushNamed(context, '/camera-permission');
+                }
+              });
               break;
             case LocationSelection.yesLocationAccess:
 
