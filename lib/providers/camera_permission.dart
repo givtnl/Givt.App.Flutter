@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../models/permission_models.dart';
+import '../core/models/permission_models.dart';
 
 //Permission.camera.status --> will return current status
 //undetermined, granted, denied, restricted, permanentlyDenied

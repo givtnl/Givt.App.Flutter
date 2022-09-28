@@ -6,6 +6,7 @@ import 'package:realm/realm.dart';
 part 'progress.g.dart';
 
 // Realm: Creating a Realm object data model class
+// this defines a schema, needs thinking
 @RealmModel()
 class _OnboardingProgress {
   bool locationAsked = false;
@@ -16,6 +17,7 @@ class _OnboardingProgress {
 
 @RealmModel()
 class _OnboardedUser {
+  // could store more data
   late String email;
 }
 

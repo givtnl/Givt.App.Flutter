@@ -5,7 +5,7 @@ import 'package:givt_mobile_apps/features/registration/pages/first_time_registra
 import 'package:provider/provider.dart';
 import '../widgets/loctaion_permission_check.dart';
 
-import '../../../core/controllers/location_permission_controller.dart';
+import '../../../providers/location_permission.dart';
 
 class LocationPermissionPage extends StatefulWidget {
   const LocationPermissionPage({super.key});

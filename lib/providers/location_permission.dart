@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../models/permission_models.dart';
+import '../core/models/permission_models.dart';
 
 class LocationController extends ChangeNotifier {
   /// this does not get remebered/ overriden  if app is restarted

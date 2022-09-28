@@ -5,35 +5,15 @@ import 'package:givt_mobile_apps/core/constants/routes.dart';
 import 'features/benefits/usp.dart';
 import 'core/themes/primary_theme.dart';
 import 'core/models/progress.dart';
-import 'core/controllers/camera_permission_controller.dart';
-import 'core/controllers/location_permission_controller.dart';
+import 'providers/camera_permission.dart';
+import 'providers/location_permission.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  late final CameraController _cameraController;
-  late final LocationController _locationController;
-  @override
-  void initState() {
-    _cameraController = CameraController();
-    _locationController = LocationController();
-    _checkPermissions();
-  }
-
-// is this necessary? now the flow is controlled by the progress tracker anw
-  Future<void> _checkPermissions() async {
-    await _cameraController.determineStatus();
-    await _locationController.determineStatus();
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:givt_mobile_apps/core/models/permission_models.dart';
 import 'package:givt_mobile_apps/core/models/progress.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/controllers/camera_permission_controller.dart';
+import '../../../providers/camera_permission.dart';
 import '../widgets/camera_permissions_check.dart';
 import 'location_permission_page.dart';
 
