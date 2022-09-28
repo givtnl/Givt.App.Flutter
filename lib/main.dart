@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:givt_mobile_apps/core/constants/routes.dart';
 import 'features/benefits/usp.dart';
 import 'core/themes/primary_theme.dart';
-import 'core/models/progress.dart';
+import 'models/progress.dart';
 import 'providers/camera_permission.dart';
 import 'providers/location_permission.dart';
 

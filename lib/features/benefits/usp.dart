@@ -3,7 +3,7 @@ import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/features/benefits/widget/benefit_row.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/models/progress.dart';
+import '../../models/progress.dart';
 
 class UspPage extends StatelessWidget {
   const UspPage({super.key});
