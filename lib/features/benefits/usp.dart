@@ -13,10 +13,11 @@ class UspPage extends StatelessWidget {
     var progressModel = context.read<OnboardingProgressModel>();
     OnboardingProgress current =
         progressModel.realm.all<OnboardingProgress>().first;
+    print(current.toString());
     String where = '/';
-    if (!current.locationAsked) {
+    if (!current.locationAsked && !current.cameraAsked) {
       where = '/location-permission';
-    } else if (!current.cameraAsked) {
+    } else if (current.locationAsked && !current.cameraAsked) {
       where = '/camera-permission';
     } else if (current.locationAsked && current.cameraAsked) {
       where = '/registration';

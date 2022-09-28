@@ -66,19 +66,21 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
     var progressModel = context.read<OnboardingProgressModel>();
     OnboardingProgress current =
         progressModel.realm.all<OnboardingProgress>().first;
+    //because the user has landed on this page, it was asked.
+    current.cameraAsked = true;
     return ChangeNotifierProvider.value(
       value: _controller,
       child: Consumer<CameraController>(
         builder: (context, model, child) {
           Widget widget;
 
+// this switch statement might be redundant in the current flow
           switch (model.cameraSelection) {
             case CameraSelection.noCameraPermission:
               widget = CameraPermissionsCheck(
                   //isPermanent: false,
                   onPressed: () {
                 _checkPermissions();
-                current.cameraAsked = true;
                 Navigator.pushNamed(context, '/registration');
               });
               break;
@@ -87,7 +89,6 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
                   //isPermanent: true,
                   onPressed: () {
                 _checkPermissions();
-                current.cameraAsked = true;
                 Navigator.pushNamed(context, '/registration');
               });
               break;

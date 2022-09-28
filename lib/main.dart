@@ -29,6 +29,7 @@ class _MyAppState extends State<MyApp> {
     _checkPermissions();
   }
 
+// is this necessary? now the flow is controlled by the progress tracker anw
   Future<void> _checkPermissions() async {
     await _cameraController.determineStatus();
     await _locationController.determineStatus();

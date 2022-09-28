@@ -66,19 +66,21 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
     var progressModel = context.read<OnboardingProgressModel>();
     OnboardingProgress current =
         progressModel.realm.all<OnboardingProgress>().first;
+    //because the user has landed on this page, it was asked.
+    current.locationAsked = true;
     return ChangeNotifierProvider.value(
       value: _controller,
       child: Consumer<LocationController>(
         builder: (context, model, child) {
           Widget widget;
 
+// this switch statement might be redundant in the current flow
           switch (model.locationSelection) {
             case LocationSelection.noLocationPermission:
               widget = LocationPermissionsCheck(
                   //isPermanent: false,
                   onPressed: () {
                 _checkPermissions();
-                current.locationAsked = true;
                 if (current.cameraAsked) {
                   Navigator.pushNamed(context, '/registration');
                 } else {
@@ -91,7 +93,6 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
                   //isPermanent: true,
                   onPressed: () {
                 _checkPermissions();
-                current.locationAsked = true;
                 if (current.cameraAsked) {
                   Navigator.pushNamed(context, '/registration');
                 } else {

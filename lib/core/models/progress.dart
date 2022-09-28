@@ -20,6 +20,7 @@ class _OnboardedUser {
 }
 
 /// A proxy of the data
+/// should this be a separate file? i like it here but maybeee
 class OnboardingProgressModel {
   late Realm realm;
 
