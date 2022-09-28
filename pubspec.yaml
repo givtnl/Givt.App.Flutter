@@ -40,6 +40,8 @@ dependencies:
   permission_handler: ^10.0.1
   provider: ^6.0.3
   email_validator: '^2.1.16'
+  http: ^0.13.5
+  realm: ^0.4.0+beta
 
 dev_dependencies:
   flutter_test:

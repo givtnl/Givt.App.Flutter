@@ -2,16 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-// This enum will manage the overall state
-enum LocationSelection {
-  noLocationPermission, // Permission denied, but not forever
-  noLocationPermissionPermanent, // Permission denied forever
-  yesLocationAccess //Yay
-}
-
-//Permission.location.status --> will return current status
-//undetermined, granted, denied, restricted, permanentlyDenied
+import '../models/permission_models.dart';
 
 class LocationController extends ChangeNotifier {
   /// this does not get remebered/ overriden  if app is restarted
@@ -25,6 +16,22 @@ class LocationController extends ChangeNotifier {
       _locationSelection = value;
       notifyListeners();
     }
+  }
+
+  Future<bool> determineStatus() async {
+    PermissionStatus result;
+    result = await Permission.location.status;
+    if (result.isGranted) {
+      locationSelection = LocationSelection.yesLocationAccess;
+      return true;
+    } else if (Platform.isIOS || result.isPermanentlyDenied) {
+      //Ios only allows to check permissions once
+      locationSelection = LocationSelection.noLocationPermissionPermanent;
+    } else {
+      // only executes on android
+      locationSelection = LocationSelection.noLocationPermission;
+    }
+    return false;
   }
 
   /// Request the files permission and updates the UI accordingly
