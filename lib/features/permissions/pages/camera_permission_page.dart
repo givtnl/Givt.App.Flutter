@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:givt_mobile_apps/core/templates/base_template.dart';
+import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
 import 'package:givt_mobile_apps/models/permission_models.dart';
 import 'package:givt_mobile_apps/models/progress.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/camera_permission.dart';
-import '../widgets/camera_permissions_check.dart';
-import 'location_permission_page.dart';
 
 class CameraPermissionPage extends StatefulWidget {
   const CameraPermissionPage({super.key});
@@ -23,7 +23,12 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-
+    var progressModel = context.read<OnboardingProgressModel>();
+    progressModel.realm.write(() {
+      OnboardingProgress localCurrent =
+          progressModel.realm.all<OnboardingProgress>().first;
+      localCurrent.cameraAsked = true;
+    });
     _controller = CameraController();
   }
 
@@ -63,51 +68,46 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
 
   @override
   Widget build(BuildContext context) {
-    var progressModel = context.read<OnboardingProgressModel>();
-    OnboardingProgress current =
-        progressModel.realm.all<OnboardingProgress>().first;
-    //because the user has landed on this page, it was asked.
-    progressModel.realm.write(() {
-      OnboardingProgress localCurrent =
-          progressModel.realm.all<OnboardingProgress>().first;
-      localCurrent.cameraAsked = true;
-    });
-    print(
-        'camera has been asked ${current.cameraAsked}; and location has been asked ${current.locationAsked}');
-    return ChangeNotifierProvider.value(
-      value: _controller,
-      child: Consumer<CameraController>(
-        builder: (context, model, child) {
-          Widget widget;
-
-// this switch statement might be redundant in the current flow
-          switch (model.cameraSelection) {
-            case CameraSelection.noCameraPermission:
-              widget = CameraPermissionsCheck(
-                  //isPermanent: false,
-                  onPressed: () {
-                _checkPermissions();
-                Navigator.pushNamed(context, '/registration');
-              });
-              break;
-            case CameraSelection.noCameraPermissionPermanent:
-              widget = CameraPermissionsCheck(
-                  //isPermanent: true,
-                  onPressed: () {
-                _checkPermissions();
-                Navigator.pushNamed(context, '/registration');
-              });
-              break;
-            case CameraSelection.yesCameraAccess:
-
-              /// this will get executed if the permissions were
-              /// approved from settings and the user returns to app
-              widget = const LocationPermissionPage();
-              break;
-          }
-          return widget;
-        },
+    return BaseTemplate(
+      pageContent: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 35),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Allow Givt to access your camera so you can scan QR codes.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodyText1?.color,
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            Text(
+              'Only enabled while you use the app.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodyText2?.color,
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: Image.asset('assets/images/camera.png'),
+            ),
+          ],
+        ),
       ),
+      bypassBtn: const BypassBtn(
+          title: 'continue using the app without the permission',
+          where: '/registration'),
+      onBtnClick: () {
+        _checkPermissions();
+        Navigator.pushNamed(context, '/registration');
+      },
+      title: 'Enable Location',
+      isBtnDisabled: false,
     );
   }
 }

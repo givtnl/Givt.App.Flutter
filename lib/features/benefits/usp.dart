@@ -5,17 +5,22 @@ import 'package:provider/provider.dart';
 
 import '../../models/progress.dart';
 
-class UspPage extends StatelessWidget {
+class UspPage extends StatefulWidget {
   const UspPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<UspPage> createState() => _UspPageState();
+}
+
+class _UspPageState extends State<UspPage> {
+  String where = '/';
+
+  @override
+  void initState() {
     var progressModel = context.read<OnboardingProgressModel>();
     OnboardingProgress current =
         progressModel.realm.all<OnboardingProgress>().first;
-    print(
-        'camera has been asked ${current.cameraAsked}; and location has been asked ${current.locationAsked}');
-    String where = '/';
+
     if (!current.locationAsked && !current.cameraAsked) {
       where = '/location-permission';
     } else if (current.locationAsked && !current.cameraAsked) {
@@ -23,6 +28,10 @@ class UspPage extends StatelessWidget {
     } else if (current.locationAsked && current.cameraAsked) {
       where = '/registration';
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BaseTemplate(
       pageContent: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -50,6 +59,7 @@ class UspPage extends StatelessWidget {
           ],
         ),
       ),
+      // define this function somewhere else that would contain
       onBtnClick: () => Navigator.pushNamed(context, where),
       title: 'Give Now',
       isBtnDisabled: false,

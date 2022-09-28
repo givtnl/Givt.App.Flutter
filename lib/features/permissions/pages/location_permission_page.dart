@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:givt_mobile_apps/core/templates/base_template.dart';
+import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
 import 'package:givt_mobile_apps/models/permission_models.dart';
 import 'package:givt_mobile_apps/models/progress.dart';
 import 'package:givt_mobile_apps/features/registration/pages/first_time_registration_page.dart';
@@ -18,11 +20,29 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
     with WidgetsBindingObserver {
   late final LocationController _controller;
   bool _detectPermission = false;
+  OnboardingProgressModel? progressModel;
+  String where = '/';
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
+    progressModel = context.read<OnboardingProgressModel>();
+    OnboardingProgress current =
+        progressModel!.realm.all<OnboardingProgress>().first;
+    //because the user has landed on this page, it was asked.
+    progressModel!.realm.write(() {
+      OnboardingProgress localCurrent =
+          progressModel!.realm.all<OnboardingProgress>().first;
+      localCurrent.locationAsked = true;
+
+      if (current.cameraAsked) {
+        where = '/registration';
+      } else {
+        where = '/camera-permission';
+      }
+    });
 
     _controller = LocationController();
   }
@@ -63,59 +83,45 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
 
   @override
   Widget build(BuildContext context) {
-    var progressModel = context.read<OnboardingProgressModel>();
-    OnboardingProgress current =
-        progressModel.realm.all<OnboardingProgress>().first;
-    //because the user has landed on this page, it was asked.
-    progressModel.realm.write(() {
-      OnboardingProgress localCurrent =
-          progressModel.realm.all<OnboardingProgress>().first;
-      localCurrent.locationAsked = true;
-    });
-    print(
-        'camera has been asked ${current.cameraAsked}; and location has been asked ${current.locationAsked}');
-    return ChangeNotifierProvider.value(
-      value: _controller,
-      child: Consumer<LocationController>(
-        builder: (context, model, child) {
-          Widget widget;
-
-// this switch statement might be redundant in the current flow
-          switch (model.locationSelection) {
-            case LocationSelection.noLocationPermission:
-              widget = LocationPermissionsCheck(
-                  //isPermanent: false,
-                  onPressed: () {
-                _checkPermissions();
-                if (current.cameraAsked) {
-                  Navigator.pushNamed(context, '/registration');
-                } else {
-                  Navigator.pushNamed(context, '/camera-permission');
-                }
-              });
-              break;
-            case LocationSelection.noLocationPermissionPermanent:
-              widget = LocationPermissionsCheck(
-                  //isPermanent: true,
-                  onPressed: () {
-                _checkPermissions();
-                if (current.cameraAsked) {
-                  Navigator.pushNamed(context, '/registration');
-                } else {
-                  Navigator.pushNamed(context, '/camera-permission');
-                }
-              });
-              break;
-            case LocationSelection.yesLocationAccess:
-
-              /// this will get executed if the permissions were
-              /// approved from settings and the user returns to app
-              widget = const FirstTimeRegistrationPage();
-              break;
-          }
-          return widget;
+    return BaseTemplate(
+        pageContent: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 35),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Allow Givt to access your location to know when you are in church.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyText1?.color,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              Text(
+                'Only enabled while you use the app.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyText2?.color,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Image.asset('assets/images/location_map.png'),
+              ),
+            ],
+          ),
+        ),
+        bypassBtn: BypassBtn(
+            title: 'continue using the app without the permission',
+            where: where),
+        onBtnClick: () {
+          _checkPermissions();
+          Navigator.pushNamed(context, where);
         },
-      ),
-    );
+        title: 'Enable Location',
+        isBtnDisabled: false);
   }
 }
