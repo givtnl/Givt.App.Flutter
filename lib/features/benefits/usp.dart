@@ -18,9 +18,11 @@ class _UspPageState extends State<UspPage> {
 
   @override
   void initState() {
-    var progressModel = context.read<OnboardingProgressModel>();
-    OnboardingProgress current =
-        progressModel.realm.all<OnboardingProgress>().first;
+    OnboardingProgress current = context
+        .read<OnboardingProgressModel>()
+        .realm
+        .all<OnboardingProgress>()
+        .first;
     where = checkProgress(current);
   }
 
