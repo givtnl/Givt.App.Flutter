@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
+import 'package:givt_mobile_apps/features/permissions/controllers/location_routing_controller.dart';
 import 'package:givt_mobile_apps/models/permission_models.dart';
 import 'package:givt_mobile_apps/models/progress.dart';
-import 'package:givt_mobile_apps/features/registration/pages/first_time_registration_page.dart';
 import 'package:provider/provider.dart';
-import '../widgets/loctaion_permission_check.dart';
 
 import '../../../providers/location_permission.dart';
 
@@ -28,21 +27,9 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    progressModel = context.read<OnboardingProgressModel>();
-    OnboardingProgress current =
-        progressModel!.realm.all<OnboardingProgress>().first;
-    //because the user has landed on this page, it was asked.
-    progressModel!.realm.write(() {
-      OnboardingProgress localCurrent =
-          progressModel!.realm.all<OnboardingProgress>().first;
-      localCurrent.locationAsked = true;
-
-      if (current.cameraAsked) {
-        where = '/registration';
-      } else {
-        where = '/camera-permission';
-      }
-    });
+    OnboardingProgressModel progress = context.read<OnboardingProgressModel>();
+    progress.updateProgress('location');
+    where = getRoute(progress.realm.all<OnboardingProgress>().first);
 
     _controller = LocationController();
   }

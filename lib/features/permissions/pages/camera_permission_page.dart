@@ -23,12 +23,9 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    var progressModel = context.read<OnboardingProgressModel>();
-    progressModel.realm.write(() {
-      OnboardingProgress localCurrent =
-          progressModel.realm.all<OnboardingProgress>().first;
-      localCurrent.cameraAsked = true;
-    });
+
+    context.read<OnboardingProgressModel>().updateProgress('camera');
+
     _controller = CameraController();
   }
 
