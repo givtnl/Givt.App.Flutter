@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/models/permission_models.dart';
-import 'package:givt_mobile_apps/core/models/progress.dart';
+import 'package:givt_mobile_apps/models/permission_models.dart';
+import 'package:givt_mobile_apps/models/progress.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/camera_permission.dart';
