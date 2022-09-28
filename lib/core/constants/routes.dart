@@ -9,5 +9,5 @@ Map<String, WidgetBuilder> routes = {
   '/usp': (context) => const UspPage(),
   '/camera-permission': (context) => const CameraPermissionPage(),
   '/location-permission': (context) => const LocationPermissionPage(),
-  '/first-time-registration': (context) => const FirstTimeRegistrationPage(),
+  '/registration': (context) => const FirstTimeRegistrationPage(),
 };

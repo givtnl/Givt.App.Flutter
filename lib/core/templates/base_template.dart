@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/buttons/generic_button.dart';
-import '../theme/theme.dart';
+import '../themes/primary_theme.dart';
 
 class BaseTemplate extends StatelessWidget {
   final Widget pageContent;
@@ -23,7 +23,6 @@ class BaseTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.theme.background,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -32,7 +31,7 @@ class BaseTemplate extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
               child: SvgPicture.asset(
                 'assets/svg/logo.svg',
-                height: logoHeight ?? AppTheme.theme.logoSize,
+                height: logoHeight ?? 25,
               ),
             ),
           ),

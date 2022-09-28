@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/theme/theme.dart';
+import 'package:givt_mobile_apps/core/themes/primary_theme.dart';
 
 class BypassBtn extends StatelessWidget {
   final String title;
@@ -17,7 +17,7 @@ class BypassBtn extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          color: AppTheme.theme.textDark,
+          color: Theme.of(context).textTheme.bodyText1?.color,
           fontSize: 13,
           fontWeight: FontWeight.w700,
           decoration: TextDecoration.underline,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
 import '../../../core/templates/base_template.dart';
 import '../widgets/email_field.dart';
 
@@ -70,7 +69,7 @@ class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
               'Enter your email address to store your donations and receive your tax statement',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Palette.darkBlue,
+                color: Theme.of(context).textTheme.bodyText1?.color,
                 fontSize: 15,
                 fontWeight: FontWeight.w800,
               ),

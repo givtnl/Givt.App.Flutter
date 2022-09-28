@@ -4,6 +4,9 @@ import 'package:realm/realm.dart';
 import 'package:givt_mobile_apps/core/constants/routes.dart';
 import 'package:givt_mobile_apps/core/models/realm_model.dart';
 import 'features/benefits/usp.dart';
+import 'core/themes/primary_theme.dart';
+import './features/benefits/usp.dart';
+import './core/constants/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,10 +46,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Givt',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Mulish',
-      ),
+      theme: PrimaryTheme.theme,
       home: const UspPage(),
       routes: routes,
     );
