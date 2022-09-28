@@ -67,7 +67,13 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
     OnboardingProgress current =
         progressModel.realm.all<OnboardingProgress>().first;
     //because the user has landed on this page, it was asked.
-    current.locationAsked = true;
+    progressModel.realm.write(() {
+      OnboardingProgress localCurrent =
+          progressModel.realm.all<OnboardingProgress>().first;
+      localCurrent.locationAsked = true;
+    });
+    print(
+        'camera has been asked ${current.cameraAsked}; and location has been asked ${current.locationAsked}');
     return ChangeNotifierProvider.value(
       value: _controller,
       child: Consumer<LocationController>(
