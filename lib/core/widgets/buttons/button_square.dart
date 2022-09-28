@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
 
 class SquareButton extends StatelessWidget {
   final String title;
@@ -22,7 +21,6 @@ class SquareButton extends StatelessWidget {
           child: Material(
             color: background, // button color
             child: InkWell(
-              splashColor: Palette.murkyPink, // splash color
               onTap: () {}, // button pressed
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -34,7 +32,7 @@ class SquareButton extends StatelessWidget {
                       title,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Palette.white,
+                        color: Colors.white,
                         fontSize: 11,
                       ),
                     ),

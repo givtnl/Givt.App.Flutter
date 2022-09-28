@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:givt_mobile_apps/core/constants/palette.dart';
-
 class BarButtonPermissions extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
@@ -14,9 +12,9 @@ class BarButtonPermissions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Palette.mintGreen,
+      color: Theme.of(context).primaryColor,
       child: InkWell(
-        splashColor: Palette.darkBlue,
+        splashColor: Theme.of(context).textTheme.bodyText1?.color,
         onTap: () => onPressed(),
         child: SizedBox(
           width: double.infinity,
@@ -26,7 +24,7 @@ class BarButtonPermissions extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Palette.white,
+                  color: Colors.white,
                   fontSize: 23,
                   fontWeight: FontWeight.w700),
             ),
@@ -36,21 +34,3 @@ class BarButtonPermissions extends StatelessWidget {
     );
   }
 }
-
-  
-// I was trying to make it as an elevated button but the styling was a pain, 
-// the abothe thing works anw
-
-// ElevatedButton(
-//                       onPressed: () =>
-//                           isPermanent ? openAppSettings() : onPressed(),
-//                       style: ButtonStyle(
-//                         backgroundColor:
-//                             MaterialStateProperty.all(Palette.mintGreen),
-//                         textStyle: MaterialStateProperty.all(TextStyle(
-//                             color: Palette.white,
-//                             fontSize: 23,
-//                             fontWeight: FontWeight.w700)),
-//                       ),
-//                       child: Text(isPermanent ? 'Open settings' : 'Allow access'),
-//                     ),

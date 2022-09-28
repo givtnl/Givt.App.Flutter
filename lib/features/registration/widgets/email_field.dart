@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:email_validator/email_validator.dart';
 
 class EmailField extends StatefulWidget {
@@ -19,14 +18,10 @@ class _EmailFieldState extends State<EmailField> {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
-          border: InputBorder.none,
-          filled: true,
-          hintText: 'Email address',
-          hintStyle: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-          ),
-          fillColor: Palette.lightGrey),
+        border: InputBorder.none,
+        filled: true,
+        hintText: 'Email address',
+      ),
       cursorColor: Colors.black,
       controller: widget.controller,
       keyboardType: TextInputType.emailAddress,

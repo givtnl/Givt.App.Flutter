@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SquareButtonE extends StatelessWidget {
@@ -26,7 +25,6 @@ class SquareButtonE extends StatelessWidget {
           //this doesnt do shit haha. gotta clip out the inkwell somehow else
           borderRadius: BorderRadius.circular(40.0),
           child: InkWell(
-            splashColor: Palette.murkyPink,
             onTap: () {
               //To be done
             },
@@ -43,7 +41,7 @@ class SquareButtonE extends StatelessWidget {
                       title,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Palette.white,
+                        color: Colors.white,
                         fontSize: 11,
                       ),
                     ),

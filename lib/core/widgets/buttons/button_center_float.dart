@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_mobile_apps/features/benefits/usp.dart';
 
@@ -13,8 +12,9 @@ class CenteredFloatingButton extends StatelessWidget {
       width: 85.0,
       child: FittedBox(
         child: FloatingActionButton(
-          backgroundColor: Palette.background,
-          splashColor: Palette.murkyPink,
+          backgroundColor:
+              Theme.of(context).floatingActionButtonTheme.backgroundColor,
+          splashColor: Theme.of(context).floatingActionButtonTheme.splashColor,
           onPressed: () {
             // not the right rout or action, just temp stuff
             Navigator.push(
@@ -37,7 +37,7 @@ class CenteredFloatingButton extends StatelessWidget {
                 Text(
                   'give',
                   style: TextStyle(
-                    color: Palette.darkBlue,
+                    color: Theme.of(context).textTheme.bodyText1?.color,
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
                   ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/constants/palette.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/button_bar_basic.dart';
 import 'package:givt_mobile_apps/features/benefits/usp.dart';
@@ -10,7 +9,7 @@ class BluetoothPermissionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Palette.background,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -30,7 +29,7 @@ class BluetoothPermissionPage extends StatelessWidget {
                   'Allow Givt to use bluetooth to connect to nearby collection beacons.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Palette.darkBlue,
+                    color: Theme.of(context).textTheme.bodyText1?.color,
                     fontSize: 18,
                     fontWeight: FontWeight.w800,
                   ),
@@ -39,7 +38,7 @@ class BluetoothPermissionPage extends StatelessWidget {
                   'Only enabled while you use the app.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Palette.darkGrey,
+                    color: Theme.of(context).textTheme.bodyText2?.color,
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
                   ),
@@ -70,7 +69,7 @@ class BluetoothPermissionPage extends StatelessWidget {
                   child: Text(
                     'continue using the app without the permission',
                     style: TextStyle(
-                      color: Palette.darkBlue,
+                      color: Theme.of(context).textTheme.bodyText1?.color,
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                       decoration: TextDecoration.underline,
