@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
+import 'package:givt_mobile_apps/features/benefits/controller/usp_controller.dart';
 import 'package:givt_mobile_apps/features/benefits/widget/benefit_row.dart';
 import 'package:provider/provider.dart';
 
@@ -20,14 +21,7 @@ class _UspPageState extends State<UspPage> {
     var progressModel = context.read<OnboardingProgressModel>();
     OnboardingProgress current =
         progressModel.realm.all<OnboardingProgress>().first;
-
-    if (!current.locationAsked && !current.cameraAsked) {
-      where = '/location-permission';
-    } else if (current.locationAsked && !current.cameraAsked) {
-      where = '/camera-permission';
-    } else if (current.locationAsked && current.cameraAsked) {
-      where = '/registration';
-    }
+    where = checkProgress(current);
   }
 
   @override
