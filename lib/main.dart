@@ -37,15 +37,6 @@ class MyApp extends StatelessWidget {
         ],
         home: const UspPage(),
         routes: routes,
-        localeResolutionCallback: (deviceLocale, supportedLocales) {
-          for (var locale in supportedLocales) {
-            if (locale.languageCode == deviceLocale!.languageCode &&
-                locale.countryCode == deviceLocale.countryCode) {
-              return deviceLocale;
-            }
-          }
-          return supportedLocales.first;
-        },
       ),
     );
   }
