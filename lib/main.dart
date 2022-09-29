@@ -26,17 +26,6 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Givt',
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: [
-          Locale('en', 'US'), // English - USA locale
-          Locale('en', 'GB'), // England Brittish locale
-          Locale('de', 'DE'), // German locale
-          Locale('nl', 'NL'), // Dutch locale
-        ],
         debugShowCheckedModeBanner: false,
         theme: PrimaryTheme.theme,
         supportedLocales: LangIndex.all,
