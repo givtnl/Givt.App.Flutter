@@ -13,6 +13,7 @@ class FirstTimeRegistrationPage extends StatefulWidget {
 
 class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
   bool btnDisabled = true;
+  bool _isLoading = false;
   final _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -38,37 +39,60 @@ class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
     super.dispose();
   }
 
+  void showLoader(bool loadingState) {
+    setState(() {
+      _isLoading = loadingState;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseTemplate(
-      pageContent: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 35),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Enter your email address to store your donations and receive your tax statement',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Theme.of(context).textTheme.bodyText1?.color,
-                fontSize: 15,
-                fontWeight: FontWeight.w800,
+      pageContent: _isLoading
+          ? Center(
+              child: Column(
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Validating Email...',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ))
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 35),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Enter your email address to store your donations and receive your tax statement',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.bodyText1?.color,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              EmailField(controller: _emailController),
+                            ],
+                          ))),
+                ],
               ),
             ),
-            Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        EmailField(controller: _emailController),
-                      ],
-                    ))),
-          ],
-        ),
-      ),
       onBtnClick: () => RegistrationController(
-              btnDisabled, _formKey, _emailController.text, context)
+              btnDisabled, _formKey, _emailController.text, context, showLoader)
           .handleButtonClick(),
       title: 'Continue',
       isBtnDisabled: btnDisabled,

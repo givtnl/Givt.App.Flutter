@@ -31,6 +31,10 @@ class PrimaryTheme {
           color: Colors.white,
         ),
       ),
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Color.fromARGB(255, 125, 189, 161),
+        primary: Color.fromARGB(255, 125, 189, 161),
+      ),
       fontFamily: 'Mulish',
     );
   }
