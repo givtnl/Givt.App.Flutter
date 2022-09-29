@@ -39,4 +39,16 @@ class OnboardingProgressModel {
           )));
     }
   }
+  void updateProgress(String key) {
+    realm.write(() {
+      if (key == 'camera') {
+        OnboardingProgress localCurrent = realm.all<OnboardingProgress>().first;
+        localCurrent.cameraAsked = true;
+      }
+      if (key == 'loctation') {
+        OnboardingProgress localCurrent = realm.all<OnboardingProgress>().first;
+        localCurrent.locationAsked = true;
+      }
+    });
+  }
 }
