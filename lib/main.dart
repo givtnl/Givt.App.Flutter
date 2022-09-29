@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:givt_mobile_apps/core/language/languageIndex.dart';
 import 'package:provider/provider.dart';
 
 import 'package:givt_mobile_apps/core/constants/routes.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         title: 'Givt',
         debugShowCheckedModeBanner: false,
         theme: PrimaryTheme.theme,
+        supportedLocales: LangIndex.all,
         home: const UspPage(),
         routes: routes,
       ),
