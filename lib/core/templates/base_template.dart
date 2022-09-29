@@ -22,6 +22,8 @@ class BaseTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double bottomPadding;
+    (bypassBtn != null) ? bottomPadding = 10 : bottomPadding = 35;
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,16 +39,20 @@ class BaseTemplate extends StatelessWidget {
           ),
           Container(child: pageContent),
           Padding(
-            padding: const EdgeInsets.fromLTRB(35, 0, 35, 35),
-            child: GenericButton(
-              text: title,
-              disabled: isBtnDisabled,
-              onClicked: () {
-                onBtnClick();
-              },
+            padding: EdgeInsets.fromLTRB(35, 0, 35, bottomPadding),
+            child: Column(
+              children: [
+                GenericButton(
+                  text: title,
+                  disabled: isBtnDisabled,
+                  onClicked: () {
+                    onBtnClick();
+                  },
+                ),
+                if (bypassBtn != null) bypassBtn!,
+              ],
             ),
           ),
-          if (bypassBtn != null) bypassBtn!,
         ],
       ),
     );
