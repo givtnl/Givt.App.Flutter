@@ -7,6 +7,9 @@ class PrimaryTheme {
       backgroundColor: const Color.fromARGB(255, 229, 229, 229),
       primaryColor: const Color.fromARGB(255, 125, 189, 161),
       accentColor: const Color.fromARGB(255, 128, 128, 128),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Colors.black,
+      ),
       inputDecorationTheme: const InputDecorationTheme(
         fillColor: Color.fromARGB(255, 244, 244, 244),
         hintStyle: TextStyle(
@@ -27,6 +30,10 @@ class PrimaryTheme {
         button: TextStyle(
           color: Colors.white,
         ),
+      ),
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Color.fromARGB(255, 125, 189, 161),
+        primary: Color.fromARGB(255, 125, 189, 161),
       ),
       fontFamily: 'Mulish',
     );

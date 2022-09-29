@@ -3,6 +3,7 @@ import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/features/benefits/controller/usp_controller.dart';
 import 'package:givt_mobile_apps/features/benefits/widget/benefit_row.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../models/progress.dart';
 
@@ -35,7 +36,7 @@ class _UspPageState extends State<UspPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Benefits of Givt',
+              AppLocalizations.of(context)!.usp_title,
               style: TextStyle(
                 color: Theme.of(context).textTheme.bodyText1?.color,
                 fontSize: 30,

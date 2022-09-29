@@ -1,0 +1,10 @@
+{
+    "language":"English",
+    "@language":{
+        "description": "The current language"
+    },
+    "usp_title":"Benefits of Givt",
+    "@usp_title":{
+        "description":"title -- does this need to exist?"
+    }
+}

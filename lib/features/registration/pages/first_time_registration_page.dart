@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import '../../../core/templates/base_template.dart';
 import '../widgets/email_field.dart';
-import '../../../models/user.dart';
 import '../controller/registration_controller.dart';
 
 class FirstTimeRegistrationPage extends StatefulWidget {
@@ -14,15 +12,14 @@ class FirstTimeRegistrationPage extends StatefulWidget {
 }
 
 class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
-  bool btnClicked = false;
   bool btnDisabled = true;
+  bool _isLoading = false;
   final _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-
     _emailController.addListener(onListen);
   }
 
@@ -39,66 +36,64 @@ class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
   void dispose() {
     _emailController.removeListener(onListen);
     _emailController.dispose();
-
     super.dispose();
   }
 
-  buttonClicked() {
-    btnClicked = true;
-    final form = _formKey.currentState;
-    FocusManager.instance.primaryFocus?.unfocus();
-
-    if (form != null && form.validate()) {
-      final email = _emailController.text;
-      final controller = RegistrationController();
-      controller
-          .checkTLDAndCreateTempUser(email)
-          .then((response) => showSnackBarMessage(
-              'Temp User created successfully!', Colors.green))
-          .catchError(
-              (error) => showSnackBarMessage(error.toString(), Colors.red));
-    }
-  }
-
-  void showSnackBarMessage(String message, Color color) {
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(SnackBar(
-        backgroundColor: color,
-        content: Text(message),
-      ));
+  void showLoader(bool loadingState) {
+    setState(() {
+      _isLoading = loadingState;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return BaseTemplate(
-      pageContent: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 35),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Enter your email address to store your donations and receive your tax statement',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Theme.of(context).textTheme.bodyText1?.color,
-                fontSize: 15,
-                fontWeight: FontWeight.w800,
+      pageContent: _isLoading
+          ? Center(
+              child: Column(
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Validating Email...',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ))
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 35),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Enter your email address to store your donations and receive your tax statement',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.bodyText1?.color,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              EmailField(controller: _emailController),
+                            ],
+                          ))),
+                ],
               ),
             ),
-            Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        EmailField(controller: _emailController),
-                      ],
-                    ))),
-          ],
-        ),
-      ),
-      onBtnClick: buttonClicked,
+      onBtnClick: () => RegistrationController(
+              btnDisabled, _formKey, _emailController.text, context, showLoader)
+          .handleButtonClick(),
       title: 'Continue',
       isBtnDisabled: btnDisabled,
     );
