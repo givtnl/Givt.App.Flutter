@@ -25,8 +25,8 @@ class RegistrationController {
         showLoader(true);
         final response = await checkTLDAndCreateTempUser(email);
         showLoader(false);
-        SnackBarNotifyer(ctx).showSnackBarMessage(
-            'Temp User created successfully!', Colors.green);
+        SnackBarNotifyer(ctx)
+            .showSnackBarMessage('User created successfully!', Colors.green);
       } catch (error) {
         showLoader(false);
         SnackBarNotifyer(ctx).showSnackBarMessage(error.toString(), Colors.red);
@@ -69,7 +69,7 @@ class RegistrationController {
       });
       return await GivtAPI().createUser(encodedUser);
     } else {
-      throw HttpException('Incorect Email domain used!');
+      throw 'Incorect Email domain used!';
     }
   }
 }
