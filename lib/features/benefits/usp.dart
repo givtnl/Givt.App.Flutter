@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
+import 'package:givt_mobile_apps/features/benefits/controller/usp_controller.dart';
 import 'package:givt_mobile_apps/features/benefits/widget/benefit_row.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/progress.dart';
 
-class UspPage extends StatelessWidget {
+class UspPage extends StatefulWidget {
   const UspPage({super.key});
 
   @override
+  State<UspPage> createState() => _UspPageState();
+}
+
+class _UspPageState extends State<UspPage> {
+  String where = '/';
+
+  @override
+  void initState() {
+    OnboardingProgress current = context
+        .read<OnboardingProgressModel>()
+        .realm
+        .all<OnboardingProgress>()
+        .first;
+    where = checkProgress(current);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var progressModel = context.read<OnboardingProgressModel>();
-    OnboardingProgress current =
-        progressModel.realm.all<OnboardingProgress>().first;
-    print(
-        'camera has been asked ${current.cameraAsked}; and location has been asked ${current.locationAsked}');
-    String where = '/';
-    if (!current.locationAsked && !current.cameraAsked) {
-      where = '/location-permission';
-    } else if (current.locationAsked && !current.cameraAsked) {
-      where = '/camera-permission';
-    } else if (current.locationAsked && current.cameraAsked) {
-      where = '/registration';
-    }
     return BaseTemplate(
       pageContent: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -50,6 +55,7 @@ class UspPage extends StatelessWidget {
           ],
         ),
       ),
+      // define this function somewhere else that would contain
       onBtnClick: () => Navigator.pushNamed(context, where),
       title: 'Give Now',
       isBtnDisabled: false,
