@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:givt_mobile_apps/core/constants/routes.dart';
 import 'features/benefits/usp.dart';
 import 'core/themes/primary_theme.dart';
@@ -23,10 +23,30 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Givt',
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('en', 'US'), // English - USA locale
+          Locale('en', 'GB'), // England Brittish locale
+          Locale('de', 'DE'), // German locale
+          Locale('nl', 'NL'), // Dutch locale
+        ],
         debugShowCheckedModeBanner: false,
         theme: PrimaryTheme.theme,
         home: const UspPage(),
         routes: routes,
+        localeResolutionCallback: (deviceLocale, supportedLocales) {
+          for (var locale in supportedLocales) {
+            if (locale.languageCode == deviceLocale!.languageCode &&
+                locale.countryCode == deviceLocale.countryCode) {
+              return deviceLocale;
+            }
+          }
+          return supportedLocales.first;
+        },
       ),
     );
   }

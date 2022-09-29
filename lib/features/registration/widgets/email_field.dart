@@ -22,7 +22,6 @@ class _EmailFieldState extends State<EmailField> {
         filled: true,
         hintText: 'Email address',
       ),
-      cursorColor: Colors.black,
       controller: widget.controller,
       keyboardType: TextInputType.emailAddress,
       validator: (email) => (email != null && !EmailValidator.validate(email))

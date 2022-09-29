@@ -1,11 +1,33 @@
 import 'dart:io';
-
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../../models/user.dart';
 import '../../../core/constants/environment_variables.dart';
+import '../../../core/widgets/notifications/snackbar.dart';
 
 class RegistrationController {
+  bool btnDisabled;
+  String email;
+  GlobalKey<FormState> formKey;
+  BuildContext ctx;
+  late SnackBarNotifyer notifyer;
+  RegistrationController(this.btnDisabled, this.formKey, this.email, this.ctx);
+
+  handleButtonClick() async {
+    final form = formKey.currentState;
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (form != null && form.validate()) {
+      try {
+        final response = await checkTLDAndCreateTempUser(email);
+        SnackBarNotifyer(ctx).showSnackBarMessage(
+            'Temp User created successfully!', Colors.green);
+      } catch (error) {
+        SnackBarNotifyer(ctx).showSnackBarMessage(error.toString(), Colors.red);
+      }
+    }
+  }
+
   Future checkTLDAndCreateTempUser(String email) async {
     var client = http.Client();
     try {
@@ -13,6 +35,7 @@ class RegistrationController {
       var response = await client.get(url);
       var decodedResponse = json.decode(response.body);
       if (decodedResponse) {
+        final locale = Localizations.localeOf(ctx).toString();
         final User tempUser = User(
             Email: email,
             IBAN: 'FB66GIVT12345678',
@@ -25,8 +48,8 @@ class RegistrationController {
             Country: 'NL',
             Password: 'R4nd0mP@s\$w0rd123',
             AmountLimit: 499,
-            AppLanguage: 'en',
-            TimeZoneId: 'Europe/Amsterdam');
+            AppLanguage: locale,
+            TimeZoneId: DateTime.now().timeZoneName);
         final url = Uri.https(baseApiUrl, '/api/v2/users');
         return await client.post(url,
             body: json.encode({

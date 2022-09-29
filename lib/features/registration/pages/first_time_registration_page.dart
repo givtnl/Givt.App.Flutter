@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import '../../../core/templates/base_template.dart';
 import '../widgets/email_field.dart';
-import '../../../models/user.dart';
 import '../controller/registration_controller.dart';
 
 class FirstTimeRegistrationPage extends StatefulWidget {
@@ -14,7 +12,6 @@ class FirstTimeRegistrationPage extends StatefulWidget {
 }
 
 class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
-  bool btnClicked = false;
   bool btnDisabled = true;
   final _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -22,7 +19,6 @@ class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
   @override
   void initState() {
     super.initState();
-
     _emailController.addListener(onListen);
   }
 
@@ -39,34 +35,7 @@ class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
   void dispose() {
     _emailController.removeListener(onListen);
     _emailController.dispose();
-
     super.dispose();
-  }
-
-  buttonClicked() {
-    btnClicked = true;
-    final form = _formKey.currentState;
-    FocusManager.instance.primaryFocus?.unfocus();
-
-    if (form != null && form.validate()) {
-      final email = _emailController.text;
-      final controller = RegistrationController();
-      controller
-          .checkTLDAndCreateTempUser(email)
-          .then((response) => showSnackBarMessage(
-              'Temp User created successfully!', Colors.green))
-          .catchError(
-              (error) => showSnackBarMessage(error.toString(), Colors.red));
-    }
-  }
-
-  void showSnackBarMessage(String message, Color color) {
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(SnackBar(
-        backgroundColor: color,
-        content: Text(message),
-      ));
   }
 
   @override
@@ -98,7 +67,9 @@ class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
           ],
         ),
       ),
-      onBtnClick: buttonClicked,
+      onBtnClick: () => RegistrationController(
+              btnDisabled, _formKey, _emailController.text, context)
+          .handleButtonClick(),
       title: 'Continue',
       isBtnDisabled: btnDisabled,
     );

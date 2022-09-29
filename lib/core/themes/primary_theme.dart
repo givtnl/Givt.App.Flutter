@@ -7,6 +7,9 @@ class PrimaryTheme {
       backgroundColor: Color.fromARGB(255, 229, 229, 229),
       primaryColor: Color.fromARGB(255, 125, 189, 161),
       accentColor: Color.fromARGB(255, 128, 128, 128),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Colors.black,
+      ),
       inputDecorationTheme: InputDecorationTheme(
         fillColor: Color.fromARGB(255, 244, 244, 244),
         hintStyle: TextStyle(
