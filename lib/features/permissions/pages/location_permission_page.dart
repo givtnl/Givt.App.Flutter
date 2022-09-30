@@ -62,10 +62,11 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
   /// Request permission
   /// Navigate to next page once the user decided
   /// Regardless of decision
-  Future<void> _checkPermissions() async {
+  Future<void> _checkPermissions(context, where) async {
     /// await returns a bool but since we arent changing the UI based
     /// on the response then its unused.
     await _controller.requestLocationPermission();
+    Navigator.pushNamed(context, where);
   }
 
   @override
@@ -105,8 +106,7 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
             title: 'continue using the app without the permission',
             where: where),
         onBtnClick: () {
-          _checkPermissions();
-          Navigator.pushNamed(context, where);
+          _checkPermissions(context, where);
         },
         title: 'Enable Location',
         isBtnDisabled: false);
