@@ -98,10 +98,10 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
       ),
       bypassBtn: const BypassBtn(
           title: 'continue using the app without the permission',
-          where: '/registration'),
+          where: 'registration'),
       onBtnClick: () {
         _checkPermissions();
-        Navigator.pushReplacementNamed(context, '/registration');
+        Navigator.pushReplacementNamed(context, 'registration');
       },
       title: 'Enable Location',
       isBtnDisabled: false,
