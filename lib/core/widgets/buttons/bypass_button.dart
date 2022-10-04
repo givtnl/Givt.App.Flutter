@@ -13,7 +13,7 @@ class BypassBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => Navigator.pushNamed(context, where),
+      onPressed: () => Navigator.pushReplacementNamed(context, where),
       child: Text(
         title,
         style: TextStyle(

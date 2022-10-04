@@ -57,7 +57,7 @@ class _UspPageState extends State<UspPage> {
         ),
       ),
       // define this function somewhere else that would contain
-      onBtnClick: () => Navigator.pushNamed(context, where),
+      onBtnClick: () => Navigator.pushReplacementNamed(context, where),
       title: 'Give Now',
       isBtnDisabled: false,
       logoHeight: 50,

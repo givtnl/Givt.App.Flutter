@@ -106,7 +106,7 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
             where: where),
         onBtnClick: () {
           _checkPermissions();
-          Navigator.pushNamed(context, where);
+          Navigator.pushReplacementNamed(context, where);
         },
         title: 'Enable Location',
         isBtnDisabled: false);

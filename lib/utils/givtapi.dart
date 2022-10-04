@@ -14,19 +14,17 @@ class GivtAPI {
   Future<bool> checktld(String email) async {
     final url = Uri.https(baseApiUrl, '/api/checktld', {'email': email});
     final response = await http.get(url);
-    return (response.statusCode == 200 || response.statusCode == 201)
-        ? true
-        : false;
+    return (response.statusCode >= 400) ? false : true;
   }
 
   Future<String> createUser(String jsonUser) async {
     final url = Uri.https(baseApiUrl, '/api/v2/users');
     var response = await http.post(url, body: jsonUser, headers: headers);
     // response.body is plain text of the user ID or an error
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return response.body;
-    } else {
+    if (response.statusCode >= 400) {
       throw response.body;
+    } else {
+      return response.body;
     }
   }
 }

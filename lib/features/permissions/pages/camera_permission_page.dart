@@ -101,7 +101,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
           where: '/registration'),
       onBtnClick: () {
         _checkPermissions();
-        Navigator.pushNamed(context, '/registration');
+        Navigator.pushReplacementNamed(context, '/registration');
       },
       title: 'Enable Location',
       isBtnDisabled: false,
