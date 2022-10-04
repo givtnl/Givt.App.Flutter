@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:givt_mobile_apps/core/language/languageIndex.dart';
+import 'package:givt_mobile_apps/utils/locator.dart';
+import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:givt_mobile_apps/core/constants/routes.dart';
@@ -10,6 +12,8 @@ import 'models/progress.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'providers/camera_permission.dart';
 import 'providers/location_permission.dart';
+import 'utils/locator.dart';
+import 'services/navigation_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +41,7 @@ class MyApp extends StatelessWidget {
         ],
         home: const UspPage(),
         routes: routes,
+        navigatorKey: locator<NavigationService>().navigatorKey,
       ),
     );
   }

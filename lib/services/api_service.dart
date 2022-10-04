@@ -1,11 +1,7 @@
-import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import '../core/constants/environment_variables.dart';
 
-class GivtAPI {
+class APIService {
   Map<String, String> get headers => {
         "Content-Type": "application/json",
         "Accept": "application/json",
