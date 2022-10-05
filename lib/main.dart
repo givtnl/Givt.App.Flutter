@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:givt_mobile_apps/core/language/languageIndex.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/pages/QR_mock_page.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:givt_mobile_apps/core/constants/routes.dart';
 import 'features/benefits/usp.dart';
 import 'core/themes/primary_theme.dart';
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        home: const UspPage(),
+        home: const QRmockPage(),
         routes: routes,
       ),
     );
