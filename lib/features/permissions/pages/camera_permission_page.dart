@@ -57,10 +57,11 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
   /// Request permission
   /// Navigate to next page once the user decided
   /// Regardless of decision
-  Future<void> _checkPermissions() async {
+  Future<void> _checkPermissions(context) async {
     /// await returns a bool but since we arent changing the UI based
     /// on the response then its unused.
     await _controller.requestCameraPermission();
+    Navigator.pushNamed(context, '/registration');
   }
 
   @override
@@ -100,8 +101,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
           title: 'continue using the app without the permission',
           where: 'registration'),
       onBtnClick: () {
-        _checkPermissions();
-        Navigator.pushReplacementNamed(context, 'registration');
+        _checkPermissions(context);
       },
       title: 'Enable Location',
       isBtnDisabled: false,

@@ -51,4 +51,18 @@ class OnboardingProgressModel {
       }
     });
   }
+
+  // this is utility for resetting the flow
+  void downgradeProgress(String key) {
+    realm.write(() {
+      if (key == 'camera') {
+        OnboardingProgress localCurrent = realm.all<OnboardingProgress>().first;
+        localCurrent.cameraAsked = false;
+      }
+      if (key == 'loctation') {
+        OnboardingProgress localCurrent = realm.all<OnboardingProgress>().first;
+        localCurrent.locationAsked = false;
+      }
+    });
+  }
 }
