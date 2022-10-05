@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         home: const UspPage(),
         navigatorKey: locator<NavigationService>().navigatorKey,
         onGenerateRoute: router.generateRoute,
-        initialRoute: routes.UspRoute,
+        initialRoute: routes.StartupRoute,
       ),
     );
   }

@@ -1,3 +1,4 @@
+const String StartupRoute = 'startup';
 const String UspRoute = 'usp';
 const String CameraPermissionRoute = 'camera-permission';
 const String LocationPermissionRoute = 'location-permission';
