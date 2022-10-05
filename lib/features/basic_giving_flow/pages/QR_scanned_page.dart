@@ -21,8 +21,7 @@ class QRScannedPage extends StatelessWidget {
                 fontWeight: FontWeight.w800,
               ),
             ),
-          ],+...
-          
+          ],
         ),
       ),
       // define this function somewhere else that would contain

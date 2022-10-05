@@ -1,13 +1,20 @@
 import 'package:givt_mobile_apps/models/progress.dart';
 
-checkProgress(OnboardingProgress current) {
-  String route = '';
+import '../../../services/navigation_service.dart';
+import '../../../utils/locator.dart';
+import '../../../core/constants/route_paths.dart' as routes;
+
+void checkProgressAndNavigate() {
+  final NavigationService _navigationService = locator<NavigationService>();
+  final OnboardingProgressModel _model = locator<OnboardingProgressModel>();
+
+  OnboardingProgress current = _model.realm.all<OnboardingProgress>().first;
+
   if (!current.locationAsked && !current.cameraAsked) {
-    route = 'location-permission';
+    _navigationService.navigateTo(routes.LocationPermissionRoute);
   } else if (current.locationAsked && !current.cameraAsked) {
-    route = 'camera-permission';
+    _navigationService.navigateTo(routes.CameraPermissionRoute);
   } else if (current.locationAsked && current.cameraAsked) {
-    route = 'registration';
+    _navigationService.navigateTo(routes.RegistrationRoute);
   }
-  return route;
 }

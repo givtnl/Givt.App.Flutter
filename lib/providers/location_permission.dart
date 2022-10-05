@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../models/permission_models.dart';
 
-class LocationController extends ChangeNotifier {
+class LocationService extends ChangeNotifier {
   /// this does not get remebered/ overriden  if app is restarted
   /// so it should be determied we app opens instead of hardcoded here
   LocationSelection _locationSelection = LocationSelection.noLocationPermission;

@@ -45,7 +45,7 @@ class OnboardingProgressModel {
         OnboardingProgress localCurrent = realm.all<OnboardingProgress>().first;
         localCurrent.cameraAsked = true;
       }
-      if (key == 'loctation') {
+      if (key == 'location') {
         OnboardingProgress localCurrent = realm.all<OnboardingProgress>().first;
         localCurrent.locationAsked = true;
       }
@@ -59,7 +59,7 @@ class OnboardingProgressModel {
         OnboardingProgress localCurrent = realm.all<OnboardingProgress>().first;
         localCurrent.cameraAsked = false;
       }
-      if (key == 'loctation') {
+      if (key == 'location') {
         OnboardingProgress localCurrent = realm.all<OnboardingProgress>().first;
         localCurrent.locationAsked = false;
       }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
-import 'package:givt_mobile_apps/features/permissions/controllers/location_routing_controller.dart';
+import 'package:givt_mobile_apps/features/permissions/controllers/location_perm_controller.dart';
 import 'package:givt_mobile_apps/models/permission_models.dart';
 import 'package:givt_mobile_apps/models/progress.dart';
-import 'package:provider/provider.dart';
+import 'package:givt_mobile_apps/providers/location_permission.dart';
 
-import '../../../providers/location_permission.dart';
+import '../../../utils/locator.dart';
 
 class LocationPermissionPage extends StatefulWidget {
   const LocationPermissionPage({super.key});
@@ -17,21 +17,17 @@ class LocationPermissionPage extends StatefulWidget {
 
 class _LocationPermissionPageState extends State<LocationPermissionPage>
     with WidgetsBindingObserver {
-  late final LocationController _controller;
+  final OnboardingProgressModel _model = locator<OnboardingProgressModel>();
+  final LocationService _locationService = locator<LocationService>();
+  final _locationController = LocationController();
   bool _detectPermission = false;
-  OnboardingProgressModel? progressModel;
-  String where = '/';
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    OnboardingProgressModel progress = context.read<OnboardingProgressModel>();
-    progress.updateProgress('location');
-    where = getRoute(progress.realm.all<OnboardingProgress>().first);
-
-    _controller = LocationController();
+    _model.updateProgress('location');
   }
 
   @override
@@ -48,25 +44,15 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed &&
         _detectPermission &&
-        (_controller.locationSelection ==
+        (_locationService.locationSelection ==
             LocationSelection.noLocationPermissionPermanent)) {
       _detectPermission = false;
-      _controller.requestLocationPermission();
+      _locationService.requestLocationPermission();
     } else if (state == AppLifecycleState.paused &&
-        _controller.locationSelection ==
+        _locationService.locationSelection ==
             LocationSelection.noLocationPermissionPermanent) {
       _detectPermission = true;
     }
-  }
-
-  /// Request permission
-  /// Navigate to next page once the user decided
-  /// Regardless of decision
-  Future<void> _checkPermissions(context, where) async {
-    /// await returns a bool but since we arent changing the UI based
-    /// on the response then its unused.
-    await _controller.requestLocationPermission();
-    Navigator.pushNamed(context, where);
   }
 
   @override
@@ -104,9 +90,9 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
         ),
         bypassBtn: BypassBtn(
             title: 'continue using the app without the permission',
-            where: where),
+            where: _locationController.getRoute()),
         onBtnClick: () {
-          _checkPermissions(context, where);
+          _locationController.checkPermissions();
         },
         title: 'Enable Location',
         isBtnDisabled: false);

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
+import 'package:givt_mobile_apps/features/permissions/controllers/camera_perm_controller.dart';
 import 'package:givt_mobile_apps/models/permission_models.dart';
 import 'package:givt_mobile_apps/models/progress.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/route_paths.dart' as routes;
 
 import '../../../providers/camera_permission.dart';
+import '../../../services/navigation_service.dart';
+import '../../../utils/locator.dart';
 
 class CameraPermissionPage extends StatefulWidget {
   const CameraPermissionPage({super.key});
@@ -16,17 +20,16 @@ class CameraPermissionPage extends StatefulWidget {
 
 class _CameraPermissionPageState extends State<CameraPermissionPage>
     with WidgetsBindingObserver {
-  late final CameraController _controller;
+  final OnboardingProgressModel _model = locator<OnboardingProgressModel>();
+  final CameraService _cameraService = locator<CameraService>();
+  final _cameraController = CameraController();
   bool _detectPermission = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-
-    context.read<OnboardingProgressModel>().updateProgress('camera');
-
-    _controller = CameraController();
+    _model.updateProgress('camera');
   }
 
   @override
@@ -43,25 +46,15 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed &&
         _detectPermission &&
-        (_controller.cameraSelection ==
+        (_cameraService.cameraSelection ==
             CameraSelection.noCameraPermissionPermanent)) {
       _detectPermission = false;
-      _controller.requestCameraPermission();
+      _cameraService.requestCameraPermission();
     } else if (state == AppLifecycleState.paused &&
-        _controller.cameraSelection ==
+        _cameraService.cameraSelection ==
             CameraSelection.noCameraPermissionPermanent) {
       _detectPermission = true;
     }
-  }
-
-  /// Request permission
-  /// Navigate to next page once the user decided
-  /// Regardless of decision
-  Future<void> _checkPermissions(context) async {
-    /// await returns a bool but since we arent changing the UI based
-    /// on the response then its unused.
-    await _controller.requestCameraPermission();
-    Navigator.pushNamed(context, '/registration');
   }
 
   @override
@@ -97,11 +90,11 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
           ],
         ),
       ),
-      bypassBtn: const BypassBtn(
+      bypassBtn: BypassBtn(
           title: 'continue using the app without the permission',
-          where: 'registration'),
+          where: routes.RegistrationRoute),
       onBtnClick: () {
-        _checkPermissions(context);
+        _cameraController.checkPermissions();
       },
       title: 'Enable Location',
       isBtnDisabled: false,
