@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CampaignStats extends StatelessWidget {
-  final double days;
-  final double currentMoney;
-  final double goalMoney;
+  final int days;
+  final int currentMoney;
+  final int goalMoney;
 
   CampaignStats({
     super.key,

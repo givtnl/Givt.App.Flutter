@@ -27,7 +27,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case routes.QRMockRoute:
       return MaterialPageRoute(builder: (context) => QRmockPage());
     case routes.DonationAmountRoute:
-      return MaterialPageRoute(builder: (context) => const DoantionAmount());
+      return MaterialPageRoute(builder: (context) => DoantionAmount());
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(
