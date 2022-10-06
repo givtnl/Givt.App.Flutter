@@ -3,8 +3,8 @@ import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/features/benefits/controller/usp_controller.dart';
 import 'package:givt_mobile_apps/features/benefits/widget/benefit_row.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:givt_mobile_apps/models/localStorage.dart';
 
-import '../../models/progress.dart';
 import '../../utils/locator.dart';
 
 class UspPage extends StatefulWidget {
@@ -15,14 +15,14 @@ class UspPage extends StatefulWidget {
 }
 
 class _UspPageState extends State<UspPage> {
-  final OnboardingProgressModel _model = locator<OnboardingProgressModel>();
+  final LocalUserProxy _model = locator<LocalUserProxy>();
 
   //temporary for testing
   @override
   void initState() {
     _model.downgradeProgress('camera');
     _model.downgradeProgress('location');
-    var current = _model.realm.all<OnboardingProgress>().first;
+    var current = _model.realm.all<LocalUser>().first;
     print(
         'Progress camera is ${current.cameraAsked}; and location is  ${current.locationAsked}');
   }

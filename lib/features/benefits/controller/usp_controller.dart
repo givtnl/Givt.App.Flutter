@@ -1,4 +1,4 @@
-import 'package:givt_mobile_apps/models/progress.dart';
+import 'package:givt_mobile_apps/models/localStorage.dart';
 
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
@@ -6,9 +6,9 @@ import '../../../core/constants/route_paths.dart' as routes;
 
 void checkProgressAndNavigate() {
   final NavigationService _navigationService = locator<NavigationService>();
-  final OnboardingProgressModel _model = locator<OnboardingProgressModel>();
+  final LocalUserProxy _model = locator<LocalUserProxy>();
 
-  OnboardingProgress current = _model.realm.all<OnboardingProgress>().first;
+  LocalUser current = _model.realm.all<LocalUser>().first;
 
   if (!current.locationAsked && !current.cameraAsked) {
     _navigationService.navigateTo(routes.LocationPermissionRoute);

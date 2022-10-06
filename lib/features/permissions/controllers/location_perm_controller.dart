@@ -1,12 +1,13 @@
-import 'package:givt_mobile_apps/models/progress.dart';
+import 'package:givt_mobile_apps/models/localStorage.dart';
+
 import 'package:givt_mobile_apps/services/location_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class LocationController {
-  late final OnboardingProgress current =
-      locator<OnboardingProgressModel>().realm.all<OnboardingProgress>().first;
+  late final LocalUser current =
+      locator<LocalUserProxy>().realm.all<LocalUser>().first;
   final NavigationService _navigationService = locator<NavigationService>();
   final LocationService _locationService = locator<LocationService>();
 

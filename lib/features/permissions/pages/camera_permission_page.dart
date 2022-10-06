@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
 import 'package:givt_mobile_apps/features/permissions/controllers/camera_perm_controller.dart';
+import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/models/permission_models.dart';
-import 'package:givt_mobile_apps/models/progress.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
@@ -20,7 +20,7 @@ class CameraPermissionPage extends StatefulWidget {
 
 class _CameraPermissionPageState extends State<CameraPermissionPage>
     with WidgetsBindingObserver {
-  final OnboardingProgressModel _model = locator<OnboardingProgressModel>();
+  final LocalUserProxy _model = locator<LocalUserProxy>();
   final CameraService _cameraService = locator<CameraService>();
   final _cameraController = CameraController();
   bool _detectPermission = false;
