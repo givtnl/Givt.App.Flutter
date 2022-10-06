@@ -1,5 +1,5 @@
 import 'package:givt_mobile_apps/models/progress.dart';
-import 'package:givt_mobile_apps/providers/location_permission.dart';
+import 'package:givt_mobile_apps/services/location_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;

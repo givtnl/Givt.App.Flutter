@@ -7,7 +7,7 @@ import 'package:givt_mobile_apps/models/progress.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
-import '../../../providers/camera_permission.dart';
+import '../../../services/camera_service.dart';
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
 

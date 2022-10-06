@@ -30,15 +30,17 @@ class BaseTemplate extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-              child: SvgPicture.asset(
-                'assets/svg/logo.svg',
-                height: logoHeight ?? 25,
-              ),
-            ),
-          ),
+          (logoHeight != 0)
+              ? SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                    child: SvgPicture.asset(
+                      'assets/svg/logo.svg',
+                      height: logoHeight ?? 25,
+                    ),
+                  ),
+                )
+              : const SizedBox(width: 0, height: 0),
           Container(child: pageContent),
           Container(
             child: hasFooterButton

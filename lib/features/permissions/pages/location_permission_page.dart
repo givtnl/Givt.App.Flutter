@@ -4,7 +4,7 @@ import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
 import 'package:givt_mobile_apps/features/permissions/controllers/location_perm_controller.dart';
 import 'package:givt_mobile_apps/models/permission_models.dart';
 import 'package:givt_mobile_apps/models/progress.dart';
-import 'package:givt_mobile_apps/providers/location_permission.dart';
+import 'package:givt_mobile_apps/services/location_service.dart';
 
 import '../../../utils/locator.dart';
 
