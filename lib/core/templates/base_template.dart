@@ -13,6 +13,7 @@ class BaseTemplate extends StatelessWidget {
   bool? isBtnDisabled;
   double? logoHeight;
   Color? backgroundColor;
+  bool? buttonBackgroundInvert;
 
   BaseTemplate(
       {required this.pageContent,
@@ -21,6 +22,7 @@ class BaseTemplate extends StatelessWidget {
       this.isBtnDisabled = false,
       this.onBtnClick,
       this.bypassBtn,
+      this.buttonBackgroundInvert,
       this.logoHeight,
       this.backgroundColor});
 
@@ -52,6 +54,7 @@ class BaseTemplate extends StatelessWidget {
                     child: Column(
                       children: [
                         GenericButton(
+                          white: buttonBackgroundInvert ?? false,
                           text: title,
                           disabled: isBtnDisabled!,
                           onClicked: hasFooterButton ? onBtnClick! : () {},
