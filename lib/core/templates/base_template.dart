@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import '../widgets/buttons/generic_button.dart';
 import '../themes/primary_theme.dart';
+import './logo_header_template.dart';
 
 class BaseTemplate extends StatelessWidget {
   final Widget pageContent;
@@ -30,15 +29,7 @@ class BaseTemplate extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-              child: SvgPicture.asset(
-                'assets/svg/logo.svg',
-                height: logoHeight ?? 25,
-              ),
-            ),
-          ),
+          const LogoHeaderTemplate(),
           Container(child: pageContent),
           Container(
             child: hasFooterButton

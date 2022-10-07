@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SlideHeader3 extends StatelessWidget {
-  const SlideHeader3({super.key});
+  SlideHeader3({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,9 @@ class SlideHeader3 extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 2),
+              padding: const EdgeInsets.only(top: 2),
               child: const Center(
-                child: Text("Enjoy giving together",
+                child: Text('Enjoy giving together',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,

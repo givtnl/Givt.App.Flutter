@@ -6,6 +6,7 @@ class SlideHeader2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Stack(
           children: <Widget>[
@@ -20,7 +21,7 @@ class SlideHeader2 extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 2),
+              padding: const EdgeInsets.only(top: 2, left: 5),
               child: const Center(
                 child: Text("Receive one tax",
                     style: TextStyle(
@@ -45,14 +46,15 @@ class SlideHeader2 extends StatelessWidget {
               ),
             ),
             Container(
-              width: double.infinity,
-              child: const Text("statement",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w800,
-                  )),
+              padding: const EdgeInsets.only(left: 5),
+              child: const Center(
+                child: Text("statement",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w800,
+                    )),
+              ),
             ),
           ],
         ),

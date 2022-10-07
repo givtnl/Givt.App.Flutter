@@ -1,12 +1,12 @@
 import 'dart:async';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../widgets/slide_header1.dart';
 import '../widgets/slide_header2.dart';
 import '../widgets/slide_header3.dart';
-import '../../../core/templates/base_template.dart';
+import '../../../services/navigation_service.dart';
+import '../../../utils/locator.dart';
 
 class StartupPage extends StatefulWidget {
   const StartupPage({super.key});
@@ -16,6 +16,7 @@ class StartupPage extends StatefulWidget {
 }
 
 class _StartupPageState extends State<StartupPage> {
+  final NavigationService _navigationService = locator<NavigationService>();
   final ValueNotifier<String> _notifierSVG =
       ValueNotifier('assets/svg/intro_background1.svg');
   final ValueNotifier<int> _notifierCurrentPage = ValueNotifier(0);
@@ -73,7 +74,9 @@ class _StartupPageState extends State<StartupPage> {
 
   void animationComplete() {
     if (_isExpanded) {
-      print('Animation Complete!!!');
+      Timer(const Duration(seconds: 2), () {
+        _navigationService.navigateTo('login');
+      });
     }
   }
 
@@ -186,7 +189,7 @@ class _StartupPageState extends State<StartupPage> {
                                       : (val == 1)
                                           ? const SlideHeader2()
                                           : (val == 2)
-                                              ? const SlideHeader3()
+                                              ? SlideHeader3()
                                               : Container(),
                                 ),
                                 Container(

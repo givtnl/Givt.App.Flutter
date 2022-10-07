@@ -3,6 +3,7 @@ const String UspRoute = 'usp';
 const String CameraPermissionRoute = 'camera-permission';
 const String LocationPermissionRoute = 'location-permission';
 const String RegistrationRoute = 'registration';
+const String LoginRoute = 'login';
 
 
 

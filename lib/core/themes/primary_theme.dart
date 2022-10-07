@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PrimaryTheme {
   static ThemeData get theme {
     return ThemeData(
-      canvasColor: Colors.white,
+      canvasColor: Color(0xffF5F5F5),
       backgroundColor: const Color.fromARGB(255, 229, 229, 229),
       primaryColor: const Color.fromARGB(255, 125, 189, 161),
       accentColor: const Color.fromARGB(255, 128, 128, 128),

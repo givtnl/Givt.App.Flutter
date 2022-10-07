@@ -36,7 +36,6 @@ class MyApp extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        home: const UspPage(),
         navigatorKey: locator<NavigationService>().navigatorKey,
         onGenerateRoute: router.generateRoute,
         initialRoute: routes.StartupRoute,
