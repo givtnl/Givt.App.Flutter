@@ -5,6 +5,7 @@ const String LocationPermissionRoute = 'location-permission';
 const String RegistrationRoute = 'registration';
 const String QRMockRoute = 'qr-mock';
 const String DonationAmountRoute = 'donation-amount';
+const String DonationSuccessRoute = 'donation-success';
 
 
 

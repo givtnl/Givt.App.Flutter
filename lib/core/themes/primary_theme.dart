@@ -50,6 +50,8 @@ class PrimaryTheme {
         primary: Color.fromARGB(255, 125, 189, 161),
         secondary: Color.fromARGB(255, 53, 80, 112),
         tertiary: Color.fromARGB(45, 53, 80, 112),
+        surface: Color.fromARGB(255, 24, 72, 105),
+        onSurface: Colors.white,
       ),
       fontFamily: 'Mulish',
     );

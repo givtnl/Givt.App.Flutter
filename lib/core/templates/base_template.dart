@@ -12,6 +12,7 @@ class BaseTemplate extends StatelessWidget {
   final VoidCallback? onBtnClick;
   bool? isBtnDisabled;
   double? logoHeight;
+  Color? backgroundColor;
 
   BaseTemplate(
       {required this.pageContent,
@@ -20,13 +21,15 @@ class BaseTemplate extends StatelessWidget {
       this.isBtnDisabled = false,
       this.onBtnClick,
       this.bypassBtn,
-      this.logoHeight});
+      this.logoHeight,
+      this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
     double bottomPadding;
     (bypassBtn != null) ? bottomPadding = 10 : bottomPadding = 35;
     return Scaffold(
+      backgroundColor: backgroundColor ?? Theme.of(context).backgroundColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
