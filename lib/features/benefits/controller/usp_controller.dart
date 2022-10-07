@@ -6,8 +6,8 @@ import '../../../core/constants/route_paths.dart' as routes;
 
 void checkProgressAndNavigate() {
   final NavigationService _navigationService = locator<NavigationService>();
-  final LocalUserProxy _model = locator<LocalUserProxy>();
 
+  final LocalUserProxy _model = locator<LocalUserProxy>();
   LocalUser current = _model.realm.all<LocalUser>().first;
 
   if (!current.locationAsked && !current.cameraAsked) {

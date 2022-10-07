@@ -15,6 +15,7 @@ class CampaignInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -26,7 +27,7 @@ class CampaignInfo extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
           child: Text(
-            orgCause,
+            orgCause.toUpperCase(),
             style: Theme.of(context).textTheme.headline5,
           ),
         ),
