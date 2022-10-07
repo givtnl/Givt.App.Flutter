@@ -23,7 +23,7 @@ class GenericButton extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: disabled
               ? Theme.of(context).accentColor
-              : (white != null
+              : (white != false
                   ? Theme.of(context).canvasColor
                   : Theme.of(context).primaryColor),
           minimumSize: Size.fromHeight(50),
@@ -32,7 +32,7 @@ class GenericButton extends StatelessWidget {
         child: FittedBox(
           child: Text(
             text,
-            style: white != null
+            style: white != false
                 ? Theme.of(context)
                     .textTheme
                     .bodyText1
