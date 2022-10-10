@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:story_progress/story_progress.dart';
 import '../../../core/templates/logo_header_template.dart';
-
+import '../../../core/constants/route_paths.dart' as routes;
 import '../widgets/slide_header1.dart';
 import '../widgets/slide_header2.dart';
 import '../widgets/slide_header3.dart';
@@ -50,7 +50,6 @@ class _StartupPageState extends State<StartupPage> {
   }
 
   void startCarousel() {
-    print(_storyProgressKey.currentState);
     if (_storyProgressKey.currentState?.isPlaying() == false) {
       _storyProgressKey.currentState?.resume();
     }
@@ -87,7 +86,7 @@ class _StartupPageState extends State<StartupPage> {
   void animationComplete() {
     if (_isExpanded) {
       Timer(const Duration(seconds: 2), () {
-        _navigationService.navigateTo('login');
+        _navigationService.navigateTo(routes.LoginRoute);
       });
     }
   }
@@ -235,6 +234,7 @@ class _StartupPageState extends State<StartupPage> {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 50, 10, 10),
       child: StoryProgress(
+        color: Theme.of(context).colorScheme.secondary,
         key: _storyProgressKey,
         progressCount: 3,
         duration: _slideDuration,
