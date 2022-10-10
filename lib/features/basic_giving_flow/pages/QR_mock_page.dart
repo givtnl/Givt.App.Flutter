@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
-import 'package:provider/provider.dart';
+import '../../../services/navigation_service.dart';
+import '../../../utils/locator.dart';
+import '../../../core/constants/route_paths.dart' as routes;
 
 class QRmockPage extends StatelessWidget {
-  const QRmockPage({super.key});
+  QRmockPage({super.key});
+
+  final NavigationService _navigationService = locator<NavigationService>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,8 @@ class QRmockPage extends StatelessWidget {
         ),
       ),
       // define this function somewhere else that would contain
-      onBtnClick: () => Navigator.pushNamed(context, '/'),
+      onBtnClick: () =>
+          _navigationService.navigateTo(routes.DonationAmountRoute),
       title: 'Donate',
       isBtnDisabled: false,
       logoHeight: 50,

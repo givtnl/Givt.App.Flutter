@@ -8,7 +8,7 @@ class GenericButton extends StatelessWidget {
   final dynamic disabledColor;
   final dynamic textColor;
 
-  const GenericButton({
+  GenericButton({
     Key? key,
     required this.text,
     required this.disabled,

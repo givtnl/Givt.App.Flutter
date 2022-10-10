@@ -11,6 +11,8 @@ class BaseTemplate extends StatelessWidget {
   final VoidCallback? onBtnClick;
   bool? isBtnDisabled;
   double? logoHeight;
+  Color? backgroundColor;
+  bool? buttonBackgroundInvert;
 
   BaseTemplate(
       {required this.pageContent,
@@ -19,13 +21,16 @@ class BaseTemplate extends StatelessWidget {
       this.isBtnDisabled = false,
       this.onBtnClick,
       this.bypassBtn,
-      this.logoHeight});
+      this.buttonBackgroundInvert,
+      this.logoHeight,
+      this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
     double bottomPadding;
     (bypassBtn != null) ? bottomPadding = 10 : bottomPadding = 35;
     return Scaffold(
+      backgroundColor: backgroundColor ?? Theme.of(context).canvasColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -38,6 +43,7 @@ class BaseTemplate extends StatelessWidget {
                     child: Column(
                       children: [
                         GenericButton(
+                          white: buttonBackgroundInvert ?? false,
                           text: title,
                           disabled: isBtnDisabled!,
                           onClicked: hasFooterButton ? onBtnClick! : () {},
