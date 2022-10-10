@@ -31,7 +31,7 @@ class BaseTemplate extends StatelessWidget {
     double bottomPadding;
     (bypassBtn != null) ? bottomPadding = 10 : bottomPadding = 35;
     return Scaffold(
-      backgroundColor: backgroundColor ?? Theme.of(context).backgroundColor,
+      backgroundColor: backgroundColor ?? Theme.of(context).canvasColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/controller/amount_controller.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/controller/create_cachedGivt.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/amount_input.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_info.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_stats.dart';
@@ -23,9 +25,9 @@ class _DoantionAmountState extends State<DoantionAmount> {
     'goalMoney': 12000,
     'days': 12,
   };
-
+  Map<String, dynamic> choice = {};
 // this is for controlling the amount
-  int? donationAmount;
+  int donationAmount = 0;
 
   bool selectedMin = false;
   bool selectedMed = false;
@@ -41,28 +43,13 @@ class _DoantionAmountState extends State<DoantionAmount> {
         });
   }
 
-  void selectedTypicalAmount(selection) {
+  void selectedTypicalAmount(selection, selectionState) {
     setState(() {
-      switch (selection) {
-        case "selectedMin":
-          selectedMin = true;
-          selectedMed = false;
-          selectedMax = false;
-          donationAmount = 5;
-          break;
-        case "selectedMed":
-          selectedMin = false;
-          selectedMed = true;
-          selectedMax = false;
-          donationAmount = 10;
-          break;
-        case "selectedMax":
-          selectedMin = false;
-          selectedMed = false;
-          selectedMax = true;
-          donationAmount = 15;
-          break;
-      }
+      choice = getAmount(selection, selectionState, null);
+      selectedMin = choice["selectedMin"];
+      selectedMed = choice["selectedMed"];
+      selectedMax = choice["selectedMax"];
+      donationAmount = choice["donationAmount"];
     });
   }
 
@@ -100,19 +87,22 @@ class _DoantionAmountState extends State<DoantionAmount> {
                   DonationButton(
                     filled: selectedMin,
                     bold: true,
-                    onPressed: () => selectedTypicalAmount('selectedMin'),
+                    onPressed: () =>
+                        selectedTypicalAmount('selectedMin', selectedMin),
                     label: '\$5',
                   ),
                   DonationButton(
                     filled: selectedMed,
                     bold: true,
-                    onPressed: () => selectedTypicalAmount('selectedMed'),
+                    onPressed: () =>
+                        selectedTypicalAmount('selectedMed', selectedMed),
                     label: '\$10',
                   ),
                   DonationButton(
                     filled: selectedMax,
                     bold: true,
-                    onPressed: () => selectedTypicalAmount('selectedMax'),
+                    onPressed: () =>
+                        selectedTypicalAmount('selectedMax', selectedMax),
                     label: '\$15',
                   ),
                   DonationButton(
@@ -129,9 +119,10 @@ class _DoantionAmountState extends State<DoantionAmount> {
         ),
       ),
       // this one should actually create a new cached givt then navigate
-      onBtnClick: () {},
+      onBtnClick: () => createCachedGivtandNavigate(donationAmount),
       title: 'Continue',
-      isBtnDisabled: false,
+      //should be disabled until amount is chosen
+      isBtnDisabled: donationAmount > 1.5 ? false : true,
       logoHeight: 0,
     );
   }
