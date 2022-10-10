@@ -13,34 +13,34 @@ class SuccessDonationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseTemplate(
-        pageContent: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 35),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SvgPicture.asset(
-                'assets/svg/success_duotone.svg',
-                height: 50,
+      pageContent: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 35),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SvgPicture.asset(
+              'assets/svg/success_duotone.svg',
+              height: 50,
+            ),
+            SizedBox(height: 70),
+            Text(
+              'Thank you for your \$68 donation to the First Church of Atlanta!',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface,
+                fontSize: 30,
+                fontWeight: FontWeight.w800,
               ),
-              SizedBox(height: 70),
-              Text(
-                'Thank you for your \$68 donation to the First Church of Atlanta!',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-        // define this function somewhere else that would contain
-        onBtnClick: () =>
-            _navigationService.navigateTo(routes.DonationAmountRoute),
-        title: 'Go to home screen',
-        isBtnDisabled: false,
-        logoHeight: 0,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        buttonBackgroundInvert: true);
+      ),
+      // define this function somewhere else that would contain
+      onBtnClick: () =>
+          _navigationService.navigateTo(routes.DonationAmountRoute),
+      title: 'Go to home screen',
+      isBtnDisabled: false,
+      logoHeight: 0,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+    );
   }
 }

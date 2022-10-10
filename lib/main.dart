@@ -29,21 +29,9 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      child: MaterialApp(
-        title: 'Givt',
-        debugShowCheckedModeBanner: false,
-        theme: PrimaryTheme.theme,
-        supportedLocales: LangIndex.all,
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        navigatorKey: locator<NavigationService>().navigatorKey,
-        onGenerateRoute: router.generateRoute,
-        initialRoute: routes.StartupRoute,
-      ),
+      navigatorKey: locator<NavigationService>().navigatorKey,
+      onGenerateRoute: router.generateRoute,
+      initialRoute: routes.DonationAmountRoute,
     );
   }
 }
