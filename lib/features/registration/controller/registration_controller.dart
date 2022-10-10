@@ -1,11 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'dart:convert';
 import '../../../models/user.dart';
-import '../../../core/constants/environment_variables.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
-import '../../../utils/givtapi.dart';
+import '../../../services/api_service.dart';
 
 class RegistrationController {
   bool btnDisabled;
@@ -25,8 +22,8 @@ class RegistrationController {
         showLoader(true);
         final response = await checkTLDAndCreateTempUser(email);
         showLoader(false);
-        SnackBarNotifyer(ctx).showSnackBarMessage(
-            'Temp User created successfully!', Colors.green);
+        SnackBarNotifyer(ctx)
+            .showSnackBarMessage('User created successfully!', Colors.green);
       } catch (error) {
         showLoader(false);
         SnackBarNotifyer(ctx).showSnackBarMessage(error.toString(), Colors.red);
@@ -35,7 +32,7 @@ class RegistrationController {
   }
 
   Future checkTLDAndCreateTempUser(String email) async {
-    bool response = await GivtAPI().checktld(email);
+    bool response = await APIService().checktld(email);
     if (response) {
       final locale = Localizations.localeOf(ctx).toString();
       final User tempUser = User(
@@ -67,9 +64,9 @@ class RegistrationController {
         'AppLanguage': tempUser.AppLanguage,
         'TimeZoneId': tempUser.TimeZoneId
       });
-      return await GivtAPI().createUser(encodedUser);
+      return await APIService().createUser(encodedUser);
     } else {
-      throw HttpException('Incorect Email domain used!');
+      throw 'Incorect Email domain used!';
     }
   }
 }

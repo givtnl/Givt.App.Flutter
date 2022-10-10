@@ -8,7 +8,7 @@ import '../models/permission_models.dart';
 //Permission.camera.status --> will return current status
 //undetermined, granted, denied, restricted, permanentlyDenied
 
-class CameraController extends ChangeNotifier {
+class CameraService extends ChangeNotifier {
   /// this gets overriden when the app launches and initiates state in main
   CameraSelection _cameraSelection = CameraSelection.noCameraPermission;
 

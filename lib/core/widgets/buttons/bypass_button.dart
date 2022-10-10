@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/themes/primary_theme.dart';
+import 'package:givt_mobile_apps/core/constants/route_paths.dart' as routes;
+import 'package:givt_mobile_apps/services/navigation_service.dart';
+import 'package:givt_mobile_apps/utils/locator.dart';
 
 class BypassBtn extends StatelessWidget {
+  final NavigationService _navigationService = locator<NavigationService>();
   final String title;
-  final String where;
-  const BypassBtn({
+  final dynamic where;
+  BypassBtn({
     super.key,
     required this.title,
     required this.where,
@@ -13,7 +16,8 @@ class BypassBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => Navigator.pushNamed(context, where),
+      // differently
+      onPressed: () => _navigationService.navigateTo(where),
       child: Text(
         title,
         style: TextStyle(
