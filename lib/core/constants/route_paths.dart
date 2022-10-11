@@ -7,6 +7,8 @@ const String QRMockRoute = 'qr-mock';
 const String DonationAmountRoute = 'donation-amount';
 const String DonationSuccessRoute = 'donation-success';
 const String LoginRoute = 'login';
+const String SplashScreenRoute = 'splash-screen';
+
 
 
 

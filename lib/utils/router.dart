@@ -9,10 +9,12 @@ import '../features/permissions/pages/camera_permission_page.dart';
 import '../features/permissions/pages/location_permission_page.dart';
 import '../features/registration/pages/first_time_registration_page.dart';
 import '../features/login/pages/login_page.dart';
+import '../features/spash_screen/pages/splash_screen_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
-  print(settings.name);
   switch (settings.name) {
+    case routes.SplashScreenRoute:
+      return MaterialPageRoute(builder: (context) => SplashScreenPage());
     case routes.StartupRoute:
       return MaterialPageRoute(builder: (context) => const StartupPage());
     case routes.LoginRoute:
