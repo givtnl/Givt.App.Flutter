@@ -23,6 +23,7 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
 
 // should be received from QR scan, gotten from database, etc
   Map<String, dynamic> FetchedInfo = {
+    'mediumId': 'medium-receieved-from-qr',
     "orgName": 'First Church of Atlanta',
     'orgCause': 'Donate to the youth ministry trip to Equador',
     "orgCauseDescription":
@@ -38,14 +39,6 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
   bool selectedMax = false;
   bool otherInput = true;
   int donationAmount = 0;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    var currentUser = _model.realm.all<LocalUser>().first;
-    print('Hey this user exists, they are: ${currentUser.userId}');
-    super.initState();
-  }
 
   void selectedTypicalAmount(
       int amount, bool userInput, Map<String, dynamic> previous) {
@@ -139,7 +132,8 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
               GenericButton(
                 text: 'Next',
                 disabled: donationAmount > 1.5 ? false : true,
-                onClicked: () => createCachedGivtandNavigate(donationAmount),
+                onClicked: () => createCachedGivtandNavigate(
+                    donationAmount, FetchedInfo['mediumId']),
               )
             ],
           ),

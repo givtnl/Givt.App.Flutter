@@ -25,7 +25,7 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
     int? amountLimit,
     String? appLanguage,
     String? timeZoneId,
-    CachedGivts? cachedGivts,
+    Iterable<CachedGivts> cachedGivts = const [],
   }) {
     if (!_defaultsSet) {
       _defaultsSet = RealmObject.setDefaults<LocalUser>({
@@ -48,7 +48,8 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
     RealmObject.set(this, 'amountLimit', amountLimit);
     RealmObject.set(this, 'appLanguage', appLanguage);
     RealmObject.set(this, 'timeZoneId', timeZoneId);
-    RealmObject.set(this, 'cachedGivts', cachedGivts);
+    RealmObject.set<RealmList<CachedGivts>>(
+        this, 'cachedGivts', RealmList<CachedGivts>(cachedGivts));
   }
 
   LocalUser._();
@@ -136,11 +137,12 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
   set timeZoneId(String? value) => RealmObject.set(this, 'timeZoneId', value);
 
   @override
-  CachedGivts? get cachedGivts =>
-      RealmObject.get<CachedGivts>(this, 'cachedGivts') as CachedGivts?;
+  RealmList<CachedGivts> get cachedGivts =>
+      RealmObject.get<CachedGivts>(this, 'cachedGivts')
+          as RealmList<CachedGivts>;
   @override
-  set cachedGivts(covariant CachedGivts? value) =>
-      RealmObject.set(this, 'cachedGivts', value);
+  set cachedGivts(covariant RealmList<CachedGivts> value) =>
+      throw RealmUnsupportedSetError();
 
   @override
   Stream<RealmObjectChanges<LocalUser>> get changes =>
@@ -167,19 +169,20 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
       SchemaProperty('appLanguage', RealmPropertyType.string, optional: true),
       SchemaProperty('timeZoneId', RealmPropertyType.string, optional: true),
       SchemaProperty('cachedGivts', RealmPropertyType.object,
-          optional: true, linkTarget: 'CachedGivts'),
+          linkTarget: 'CachedGivts', collectionType: RealmCollectionType.list),
     ]);
   }
 }
 
 class CachedGivts extends _CachedGivts with RealmEntity, RealmObject {
   CachedGivts(
-    String campaignId,
+    String mediumId,
     int donationAmount,
     DateTime dateTime,
-    String userId,
-  ) {
-    RealmObject.set(this, 'campaignId', campaignId);
+    givenUserId, {
+    String? userId,
+  }) {
+    RealmObject.set(this, 'mediumId', mediumId);
     RealmObject.set(this, 'donationAmount', donationAmount);
     RealmObject.set(this, 'dateTime', dateTime);
     RealmObject.set(this, 'userId', userId);
@@ -188,10 +191,9 @@ class CachedGivts extends _CachedGivts with RealmEntity, RealmObject {
   CachedGivts._();
 
   @override
-  String get campaignId =>
-      RealmObject.get<String>(this, 'campaignId') as String;
+  String get mediumId => RealmObject.get<String>(this, 'mediumId') as String;
   @override
-  set campaignId(String value) => throw RealmUnsupportedSetError();
+  set mediumId(String value) => throw RealmUnsupportedSetError();
 
   @override
   int get donationAmount => RealmObject.get<int>(this, 'donationAmount') as int;
@@ -205,9 +207,9 @@ class CachedGivts extends _CachedGivts with RealmEntity, RealmObject {
   set dateTime(DateTime value) => throw RealmUnsupportedSetError();
 
   @override
-  String get userId => RealmObject.get<String>(this, 'userId') as String;
+  String? get userId => RealmObject.get<String>(this, 'userId') as String?;
   @override
-  set userId(String value) => throw RealmUnsupportedSetError();
+  set userId(String? value) => throw RealmUnsupportedSetError();
 
   @override
   Stream<RealmObjectChanges<CachedGivts>> get changes =>
@@ -218,10 +220,10 @@ class CachedGivts extends _CachedGivts with RealmEntity, RealmObject {
   static SchemaObject _initSchema() {
     RealmObject.registerFactory(CachedGivts._);
     return const SchemaObject(CachedGivts, 'CachedGivts', [
-      SchemaProperty('campaignId', RealmPropertyType.string),
+      SchemaProperty('mediumId', RealmPropertyType.string),
       SchemaProperty('donationAmount', RealmPropertyType.int),
       SchemaProperty('dateTime', RealmPropertyType.timestamp),
-      SchemaProperty('userId', RealmPropertyType.string),
+      SchemaProperty('userId', RealmPropertyType.string, optional: true),
     ]);
   }
 }

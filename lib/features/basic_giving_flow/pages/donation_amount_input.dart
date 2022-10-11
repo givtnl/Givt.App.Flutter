@@ -100,7 +100,8 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
                             controller: _amountController,
                             keyboardType: TextInputType.number,
                             onSubmitted: (_) => InputController(context)
-                                .handleSubmit(_amountController.text),
+                                .handleSubmit(_amountController.text,
+                                    FetchedInfo['mediumId']),
                           ),
                         ),
                       ],

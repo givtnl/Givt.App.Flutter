@@ -23,16 +23,18 @@ class _LocalUser {
   int? amountLimit;
   String? appLanguage;
   String? timeZoneId;
-  _CachedGivts? cachedGivts;
+  // maybe this should take an array/list of type CachedGivts
+  List<_CachedGivts> cachedGivts = [];
 }
 
 @RealmModel()
 class _CachedGivts {
-  // could store more data
-  late final String campaignId;
+  // does it need to store more data?
+  // it definetely needs to store some id/ token
+  late final String mediumId;
   late final int donationAmount;
   late final DateTime dateTime;
-  late final String userId;
+  late final String? userId;
 }
 
 /// A proxy of the data
@@ -51,15 +53,12 @@ class LocalUserProxy {
           )));
     }
   }
-  void updateProgress(String key) {
+
+  void createCachedGivt(mediumId, donationAmount, dateTime, givenUserId) {
     realm.write(() {
       LocalUser localCurrent = realm.all<LocalUser>().first;
-      if (key == 'camera') {
-        localCurrent.cameraAsked = true;
-      }
-      if (key == 'location') {
-        localCurrent.locationAsked = true;
-      }
+      localCurrent.cachedGivts
+          .add(CachedGivts(mediumId, donationAmount, dateTime, givenUserId));
     });
   }
 
@@ -93,6 +92,18 @@ class LocalUserProxy {
       localCurrent.amountLimit = amountLimit;
       localCurrent.appLanguage = appLanguage;
       localCurrent.timeZoneId = timeZoneId;
+    });
+  }
+
+  void updateProgress(String key) {
+    realm.write(() {
+      LocalUser localCurrent = realm.all<LocalUser>().first;
+      if (key == 'camera') {
+        localCurrent.cameraAsked = true;
+      }
+      if (key == 'location') {
+        localCurrent.locationAsked = true;
+      }
     });
   }
 

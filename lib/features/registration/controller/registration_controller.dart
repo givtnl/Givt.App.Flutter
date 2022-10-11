@@ -89,7 +89,7 @@ class RegistrationController {
         tempUser.TimeZoneId,
       );
       _navigationService.navigateTo(routes.DonationAmountTypicalRoute);
-      return tempUserID;
+      return;
     } else {
       throw 'Incorect Email domain used!';
     }
