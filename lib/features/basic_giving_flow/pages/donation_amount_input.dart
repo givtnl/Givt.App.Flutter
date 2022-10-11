@@ -1,12 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/controller/amount_controller.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/controller/create_cachedGivt.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/controller/input_controller.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_info.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_stats.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/input_button_donation.dart';
 
 class DoantionAmountInput extends StatefulWidget {
@@ -29,24 +24,6 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
   };
   // for user input
   final _amountController = TextEditingController();
-  bool otherInput = true;
-  int donationAmount = 0;
-
-  void typingAmount(ctx) {
-    if (_amountController.text.isEmpty) {
-      return;
-    }
-    setState(() {
-      donationAmount = int.parse(_amountController.text);
-    });
-    print(donationAmount);
-  }
-
-  // if (enteredAmount <= 1.5) {
-  //     SnackBarNotifyer(ctx)
-  //         .showSnackBarMessage('Cannot donate less than \$1.5', Colors.red);
-  //     return;
-  //   }
 
   @override
   Widget build(BuildContext context) {
@@ -122,8 +99,8 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
                             ),
                             controller: _amountController,
                             keyboardType: TextInputType.number,
-                            onSubmitted: (_) => createCachedGivtandNavigate(
-                                int.parse(_amountController.text)),
+                            onSubmitted: (_) => InputController(context)
+                                .handleSubmit(_amountController.text),
                           ),
                         ),
                       ],

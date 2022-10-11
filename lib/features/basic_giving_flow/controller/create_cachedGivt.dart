@@ -6,9 +6,9 @@ import '../../../core/constants/route_paths.dart' as routes;
 
 void createCachedGivtandNavigate(int? donationAmount) {
   final NavigationService _navigationService = locator<NavigationService>();
-
   final LocalUserProxy _model = locator<LocalUserProxy>();
+
   LocalUser current = _model.realm.all<LocalUser>().first;
-  print(donationAmount);
+
   _navigationService.navigateTo(routes.DonationSuccessRoute);
 }
