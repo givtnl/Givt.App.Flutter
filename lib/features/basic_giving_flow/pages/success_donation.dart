@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
