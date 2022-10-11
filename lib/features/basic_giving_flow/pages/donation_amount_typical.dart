@@ -5,6 +5,7 @@ import 'package:givt_mobile_apps/features/basic_giving_flow/controller/create_ca
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_info.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_stats.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_button.dart';
+import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
@@ -18,6 +19,8 @@ class DoantionAmountTypical extends StatefulWidget {
 
 class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
   final NavigationService _navigationService = locator<NavigationService>();
+  final LocalUserProxy _model = locator<LocalUserProxy>();
+
 // should be received from QR scan, gotten from database, etc
   Map<String, dynamic> FetchedInfo = {
     "orgName": 'First Church of Atlanta',
@@ -35,6 +38,14 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
   bool selectedMax = false;
   bool otherInput = true;
   int donationAmount = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    var currentUser = _model.realm.all<LocalUser>().first;
+    print('Hey this user exists, they are: ${currentUser.userId}');
+    super.initState();
+  }
 
   void selectedTypicalAmount(
       int amount, bool userInput, Map<String, dynamic> previous) {

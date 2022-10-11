@@ -10,6 +10,7 @@ class _LocalUser {
   // non_constant_identifier_names
   String? email;
   String? userId;
+  // should the iban be in local storage ?
   String? iBAN;
   String? phoneNumber;
   String? firstName;
@@ -59,6 +60,39 @@ class LocalUserProxy {
       if (key == 'location') {
         localCurrent.locationAsked = true;
       }
+    });
+  }
+
+  void createUser(
+    email,
+    userId,
+    iBAN,
+    phoneNumber,
+    firstName,
+    lastName,
+    address,
+    city,
+    postalCode,
+    country,
+    amountLimit,
+    appLanguage,
+    timeZoneId,
+  ) {
+    realm.write(() {
+      LocalUser localCurrent = realm.all<LocalUser>().first;
+      localCurrent.email = email;
+      localCurrent.userId = userId;
+      localCurrent.iBAN = iBAN;
+      localCurrent.phoneNumber = phoneNumber;
+      localCurrent.firstName = firstName;
+      localCurrent.lastName = lastName;
+      localCurrent.address = address;
+      localCurrent.city = city;
+      localCurrent.postalCode = postalCode;
+      localCurrent.country = country;
+      localCurrent.amountLimit = amountLimit;
+      localCurrent.appLanguage = appLanguage;
+      localCurrent.timeZoneId = timeZoneId;
     });
   }
 
