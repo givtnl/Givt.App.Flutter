@@ -4,11 +4,15 @@ import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
-void createCachedGivtandNavigate(int? donationAmount) {
-  final NavigationService _navigationService = locator<NavigationService>();
-  final LocalUserProxy _model = locator<LocalUserProxy>();
+void createCachedGivtandNavigate(int donationAmount, String mediumId) {
+  DateTime dateTime = DateTime.now();
 
-  LocalUser current = _model.realm.all<LocalUser>().first;
+  final NavigationService navigationService = locator<NavigationService>();
+  final LocalUserProxy model = locator<LocalUserProxy>();
 
-  _navigationService.navigateTo(routes.DonationSuccessRoute);
+// fourth arg is null bc the current flow doesnt register the email so it does not fetch the userId
+  model.createCachedGivt(mediumId, donationAmount, dateTime, null);
+
+// this should navigate to the iframescreen
+  navigationService.navigateTo(routes.DonationSuccessRoute);
 }
