@@ -49,7 +49,7 @@ class PrimaryTheme {
         seedColor: Color.fromARGB(255, 125, 189, 161),
         primary: Color.fromARGB(255, 125, 189, 161),
         secondary: Color.fromARGB(255, 53, 80, 112),
-        tertiary: Color.fromARGB(45, 53, 80, 112),
+        tertiary: Color.fromARGB(45, 24, 72, 105),
         surface: Color.fromARGB(255, 24, 72, 105),
         onSurface: Colors.white,
       ),

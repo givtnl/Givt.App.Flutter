@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_amount.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_amount_input.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_amount_typical.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/success_donation.dart';
 import 'package:givt_mobile_apps/features/startup/pages/startup_page.dart';
 import '../core/constants/route_paths.dart' as routes;
@@ -30,8 +31,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           builder: (context) => const FirstTimeRegistrationPage());
     case routes.QRMockRoute:
       return MaterialPageRoute(builder: (context) => QRmockPage());
-    case routes.DonationAmountRoute:
-      return MaterialPageRoute(builder: (context) => DoantionAmount());
+    case routes.DonationAmountTypicalRoute:
+      return MaterialPageRoute(builder: (context) => DoantionAmountTypical());
+    case routes.DonationAmountInputRoute:
+      return MaterialPageRoute(builder: (context) => DoantionAmountInput());
     case routes.DonationSuccessRoute:
       return MaterialPageRoute(builder: (context) => SuccessDonationPage());
     default:
