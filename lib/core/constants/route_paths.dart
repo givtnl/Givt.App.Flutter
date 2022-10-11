@@ -4,12 +4,10 @@ const String CameraPermissionRoute = 'camera-permission';
 const String LocationPermissionRoute = 'location-permission';
 const String RegistrationRoute = 'registration';
 const String QRMockRoute = 'qr-mock';
-const String WePayRoute = 'wepay-iframe';
-const String DonationAmountRoute = 'donation-amount';
+const String DonationAmountTypicalRoute = 'donation-amount';
+const String DonationAmountInputRoute = 'donation-input';
 const String DonationSuccessRoute = 'donation-success';
 const String LoginRoute = 'login';
-const String SplashScreenRoute = 'splash-screen';
-
 
 
 

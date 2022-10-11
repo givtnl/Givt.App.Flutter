@@ -9,6 +9,6 @@ void createCachedGivtandNavigate(int? donationAmount) {
 
   final LocalUserProxy _model = locator<LocalUserProxy>();
   LocalUser current = _model.realm.all<LocalUser>().first;
-
+  print(donationAmount);
   _navigationService.navigateTo(routes.DonationSuccessRoute);
 }

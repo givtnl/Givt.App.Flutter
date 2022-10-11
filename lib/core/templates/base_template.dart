@@ -31,7 +31,7 @@ class BaseTemplate extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const LogoHeaderTemplate(),
+          logoHeight == 0 ? SizedBox() : LogoHeaderTemplate(),
           Container(child: pageContent),
           Container(
             child: hasFooterButton
