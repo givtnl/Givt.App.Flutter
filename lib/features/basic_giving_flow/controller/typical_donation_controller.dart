@@ -24,6 +24,7 @@ getAmount(int amount, bool userInput, Map<String, dynamic> previous) {
         break;
     }
   }
+  // Alex: bad practice to use strings -- shuld prolly be a class
   results = {
     "selectedMin": selectedMin,
     "selectedMed": selectedMed,
