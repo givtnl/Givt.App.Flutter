@@ -17,7 +17,7 @@ class LocationPermissionPage extends StatefulWidget {
 
 class _LocationPermissionPageState extends State<LocationPermissionPage>
     with WidgetsBindingObserver {
-  final LocalUserProxy _model = locator<LocalUserProxy>();
+  final LocalStorageProxy _model = locator<LocalStorageProxy>();
   final LocationService _locationService = locator<LocationService>();
   final _locationController = LocationController();
   bool _detectPermission = false;

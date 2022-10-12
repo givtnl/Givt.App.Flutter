@@ -6,53 +6,29 @@ part of 'localStorage.dart';
 // RealmObjectGenerator
 // **************************************************************************
 
-class LocalUser extends _LocalUser with RealmEntity, RealmObject {
+class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
   static var _defaultsSet = false;
 
-  LocalUser({
+  LocalStorage({
     bool locationAsked = false,
     bool cameraAsked = false,
-    String? email,
-    String? userId,
-    String? iBAN,
-    String? phoneNumber,
-    String? firstName,
-    String? lastName,
-    String? address,
-    String? city,
-    String? postalCode,
-    String? country,
-    int? amountLimit,
-    String? appLanguage,
-    String? timeZoneId,
+    LocalUser? userData,
     Iterable<CachedGivts> cachedGivts = const [],
   }) {
     if (!_defaultsSet) {
-      _defaultsSet = RealmObject.setDefaults<LocalUser>({
+      _defaultsSet = RealmObject.setDefaults<LocalStorage>({
         'locationAsked': false,
         'cameraAsked': false,
       });
     }
     RealmObject.set(this, 'locationAsked', locationAsked);
     RealmObject.set(this, 'cameraAsked', cameraAsked);
-    RealmObject.set(this, 'email', email);
-    RealmObject.set(this, 'userId', userId);
-    RealmObject.set(this, 'iBAN', iBAN);
-    RealmObject.set(this, 'phoneNumber', phoneNumber);
-    RealmObject.set(this, 'firstName', firstName);
-    RealmObject.set(this, 'lastName', lastName);
-    RealmObject.set(this, 'address', address);
-    RealmObject.set(this, 'city', city);
-    RealmObject.set(this, 'postalCode', postalCode);
-    RealmObject.set(this, 'country', country);
-    RealmObject.set(this, 'amountLimit', amountLimit);
-    RealmObject.set(this, 'appLanguage', appLanguage);
-    RealmObject.set(this, 'timeZoneId', timeZoneId);
+    RealmObject.set(this, 'userData', userData);
     RealmObject.set<RealmList<CachedGivts>>(
         this, 'cachedGivts', RealmList<CachedGivts>(cachedGivts));
   }
 
-  LocalUser._();
+  LocalStorage._();
 
   @override
   bool get locationAsked =>
@@ -67,74 +43,11 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
   set cameraAsked(bool value) => RealmObject.set(this, 'cameraAsked', value);
 
   @override
-  String? get email => RealmObject.get<String>(this, 'email') as String?;
+  LocalUser? get userData =>
+      RealmObject.get<LocalUser>(this, 'userData') as LocalUser?;
   @override
-  set email(String? value) => RealmObject.set(this, 'email', value);
-
-  @override
-  String? get userId => RealmObject.get<String>(this, 'userId') as String?;
-  @override
-  set userId(String? value) => RealmObject.set(this, 'userId', value);
-
-  @override
-  String? get iBAN => RealmObject.get<String>(this, 'iBAN') as String?;
-  @override
-  set iBAN(String? value) => RealmObject.set(this, 'iBAN', value);
-
-  @override
-  String? get phoneNumber =>
-      RealmObject.get<String>(this, 'phoneNumber') as String?;
-  @override
-  set phoneNumber(String? value) => RealmObject.set(this, 'phoneNumber', value);
-
-  @override
-  String? get firstName =>
-      RealmObject.get<String>(this, 'firstName') as String?;
-  @override
-  set firstName(String? value) => RealmObject.set(this, 'firstName', value);
-
-  @override
-  String? get lastName => RealmObject.get<String>(this, 'lastName') as String?;
-  @override
-  set lastName(String? value) => RealmObject.set(this, 'lastName', value);
-
-  @override
-  String? get address => RealmObject.get<String>(this, 'address') as String?;
-  @override
-  set address(String? value) => RealmObject.set(this, 'address', value);
-
-  @override
-  String? get city => RealmObject.get<String>(this, 'city') as String?;
-  @override
-  set city(String? value) => RealmObject.set(this, 'city', value);
-
-  @override
-  String? get postalCode =>
-      RealmObject.get<String>(this, 'postalCode') as String?;
-  @override
-  set postalCode(String? value) => RealmObject.set(this, 'postalCode', value);
-
-  @override
-  String? get country => RealmObject.get<String>(this, 'country') as String?;
-  @override
-  set country(String? value) => RealmObject.set(this, 'country', value);
-
-  @override
-  int? get amountLimit => RealmObject.get<int>(this, 'amountLimit') as int?;
-  @override
-  set amountLimit(int? value) => RealmObject.set(this, 'amountLimit', value);
-
-  @override
-  String? get appLanguage =>
-      RealmObject.get<String>(this, 'appLanguage') as String?;
-  @override
-  set appLanguage(String? value) => RealmObject.set(this, 'appLanguage', value);
-
-  @override
-  String? get timeZoneId =>
-      RealmObject.get<String>(this, 'timeZoneId') as String?;
-  @override
-  set timeZoneId(String? value) => RealmObject.set(this, 'timeZoneId', value);
+  set userData(covariant LocalUser? value) =>
+      RealmObject.set(this, 'userData', value);
 
   @override
   RealmList<CachedGivts> get cachedGivts =>
@@ -145,6 +58,146 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
       throw RealmUnsupportedSetError();
 
   @override
+  Stream<RealmObjectChanges<LocalStorage>> get changes =>
+      RealmObject.getChanges<LocalStorage>(this);
+
+  static SchemaObject get schema => _schema ??= _initSchema();
+  static SchemaObject? _schema;
+  static SchemaObject _initSchema() {
+    RealmObject.registerFactory(LocalStorage._);
+    return const SchemaObject(LocalStorage, 'LocalStorage', [
+      SchemaProperty('locationAsked', RealmPropertyType.bool),
+      SchemaProperty('cameraAsked', RealmPropertyType.bool),
+      SchemaProperty('userData', RealmPropertyType.object,
+          optional: true, linkTarget: 'LocalUser'),
+      SchemaProperty('cachedGivts', RealmPropertyType.object,
+          linkTarget: 'CachedGivts', collectionType: RealmCollectionType.list),
+    ]);
+  }
+}
+
+class LocalUser extends _LocalUser with RealmEntity, RealmObject {
+  static var _defaultsSet = false;
+
+  LocalUser({
+    String email = "",
+    String userId = "",
+    String iBAN = "",
+    String phoneNumber = "",
+    String firstName = "",
+    String lastName = "",
+    String address = "",
+    String city = "",
+    String postalCode = "",
+    String country = "",
+    int amountLimit = 10000,
+    String appLanguage = "",
+    String timeZoneId = "",
+  }) {
+    if (!_defaultsSet) {
+      _defaultsSet = RealmObject.setDefaults<LocalUser>({
+        'email': "",
+        'userId': "",
+        'iBAN': "",
+        'phoneNumber': "",
+        'firstName': "",
+        'lastName': "",
+        'address': "",
+        'city': "",
+        'postalCode': "",
+        'country': "",
+        'amountLimit': 10000,
+        'appLanguage': "",
+        'timeZoneId': "",
+      });
+    }
+    RealmObject.set(this, 'email', email);
+    RealmObject.set(this, 'userId', userId);
+    RealmObject.set(this, 'iBAN', iBAN);
+    RealmObject.set(this, 'phoneNumber', phoneNumber);
+    RealmObject.set(this, 'firstName', firstName);
+    RealmObject.set(this, 'lastName', lastName);
+    RealmObject.set(this, 'address', address);
+    RealmObject.set(this, 'city', city);
+    RealmObject.set(this, 'postalCode', postalCode);
+    RealmObject.set(this, 'country', country);
+    RealmObject.set(this, 'amountLimit', amountLimit);
+    RealmObject.set(this, 'appLanguage', appLanguage);
+    RealmObject.set(this, 'timeZoneId', timeZoneId);
+  }
+
+  LocalUser._();
+
+  @override
+  String get email => RealmObject.get<String>(this, 'email') as String;
+  @override
+  set email(String value) => RealmObject.set(this, 'email', value);
+
+  @override
+  String get userId => RealmObject.get<String>(this, 'userId') as String;
+  @override
+  set userId(String value) => RealmObject.set(this, 'userId', value);
+
+  @override
+  String get iBAN => RealmObject.get<String>(this, 'iBAN') as String;
+  @override
+  set iBAN(String value) => RealmObject.set(this, 'iBAN', value);
+
+  @override
+  String get phoneNumber =>
+      RealmObject.get<String>(this, 'phoneNumber') as String;
+  @override
+  set phoneNumber(String value) => RealmObject.set(this, 'phoneNumber', value);
+
+  @override
+  String get firstName => RealmObject.get<String>(this, 'firstName') as String;
+  @override
+  set firstName(String value) => RealmObject.set(this, 'firstName', value);
+
+  @override
+  String get lastName => RealmObject.get<String>(this, 'lastName') as String;
+  @override
+  set lastName(String value) => RealmObject.set(this, 'lastName', value);
+
+  @override
+  String get address => RealmObject.get<String>(this, 'address') as String;
+  @override
+  set address(String value) => RealmObject.set(this, 'address', value);
+
+  @override
+  String get city => RealmObject.get<String>(this, 'city') as String;
+  @override
+  set city(String value) => RealmObject.set(this, 'city', value);
+
+  @override
+  String get postalCode =>
+      RealmObject.get<String>(this, 'postalCode') as String;
+  @override
+  set postalCode(String value) => RealmObject.set(this, 'postalCode', value);
+
+  @override
+  String get country => RealmObject.get<String>(this, 'country') as String;
+  @override
+  set country(String value) => RealmObject.set(this, 'country', value);
+
+  @override
+  int get amountLimit => RealmObject.get<int>(this, 'amountLimit') as int;
+  @override
+  set amountLimit(int value) => RealmObject.set(this, 'amountLimit', value);
+
+  @override
+  String get appLanguage =>
+      RealmObject.get<String>(this, 'appLanguage') as String;
+  @override
+  set appLanguage(String value) => RealmObject.set(this, 'appLanguage', value);
+
+  @override
+  String get timeZoneId =>
+      RealmObject.get<String>(this, 'timeZoneId') as String;
+  @override
+  set timeZoneId(String value) => RealmObject.set(this, 'timeZoneId', value);
+
+  @override
   Stream<RealmObjectChanges<LocalUser>> get changes =>
       RealmObject.getChanges<LocalUser>(this);
 
@@ -153,23 +206,19 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
   static SchemaObject _initSchema() {
     RealmObject.registerFactory(LocalUser._);
     return const SchemaObject(LocalUser, 'LocalUser', [
-      SchemaProperty('locationAsked', RealmPropertyType.bool),
-      SchemaProperty('cameraAsked', RealmPropertyType.bool),
-      SchemaProperty('email', RealmPropertyType.string, optional: true),
-      SchemaProperty('userId', RealmPropertyType.string, optional: true),
-      SchemaProperty('iBAN', RealmPropertyType.string, optional: true),
-      SchemaProperty('phoneNumber', RealmPropertyType.string, optional: true),
-      SchemaProperty('firstName', RealmPropertyType.string, optional: true),
-      SchemaProperty('lastName', RealmPropertyType.string, optional: true),
-      SchemaProperty('address', RealmPropertyType.string, optional: true),
-      SchemaProperty('city', RealmPropertyType.string, optional: true),
-      SchemaProperty('postalCode', RealmPropertyType.string, optional: true),
-      SchemaProperty('country', RealmPropertyType.string, optional: true),
-      SchemaProperty('amountLimit', RealmPropertyType.int, optional: true),
-      SchemaProperty('appLanguage', RealmPropertyType.string, optional: true),
-      SchemaProperty('timeZoneId', RealmPropertyType.string, optional: true),
-      SchemaProperty('cachedGivts', RealmPropertyType.object,
-          linkTarget: 'CachedGivts', collectionType: RealmCollectionType.list),
+      SchemaProperty('email', RealmPropertyType.string),
+      SchemaProperty('userId', RealmPropertyType.string),
+      SchemaProperty('iBAN', RealmPropertyType.string),
+      SchemaProperty('phoneNumber', RealmPropertyType.string),
+      SchemaProperty('firstName', RealmPropertyType.string),
+      SchemaProperty('lastName', RealmPropertyType.string),
+      SchemaProperty('address', RealmPropertyType.string),
+      SchemaProperty('city', RealmPropertyType.string),
+      SchemaProperty('postalCode', RealmPropertyType.string),
+      SchemaProperty('country', RealmPropertyType.string),
+      SchemaProperty('amountLimit', RealmPropertyType.int),
+      SchemaProperty('appLanguage', RealmPropertyType.string),
+      SchemaProperty('timeZoneId', RealmPropertyType.string),
     ]);
   }
 }

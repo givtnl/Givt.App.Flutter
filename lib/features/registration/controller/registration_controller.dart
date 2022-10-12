@@ -19,7 +19,7 @@ class RegistrationController {
       this.btnDisabled, this.formKey, this.email, this.ctx, this.showLoader);
 
   final NavigationService _navigationService = locator<NavigationService>();
-  late final LocalUserProxy realmProxy = locator<LocalUserProxy>();
+  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
 
   Future<void> handleButtonClick() async {
     final form = formKey.currentState;

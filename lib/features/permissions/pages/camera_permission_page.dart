@@ -20,7 +20,7 @@ class CameraPermissionPage extends StatefulWidget {
 
 class _CameraPermissionPageState extends State<CameraPermissionPage>
     with WidgetsBindingObserver {
-  final LocalUserProxy _model = locator<LocalUserProxy>();
+  final LocalStorageProxy _model = locator<LocalStorageProxy>();
   final CameraService _cameraService = locator<CameraService>();
   final _cameraController = CameraController();
   bool _detectPermission = false;

@@ -19,7 +19,7 @@ class DoantionAmountTypical extends StatefulWidget {
 
 class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
   final NavigationService _navigationService = locator<NavigationService>();
-  final LocalUserProxy _model = locator<LocalUserProxy>();
+  final LocalStorageProxy _model = locator<LocalStorageProxy>();
 
 // should be received from QR scan, gotten from database, etc
   Map<String, dynamic> FetchedInfo = {
