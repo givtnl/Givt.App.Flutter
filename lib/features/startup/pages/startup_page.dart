@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ProgressIndicator;
 import 'package:flutter_svg/svg.dart';
-import 'package:story_progress/story_progress.dart';
+import 'package:givt_mobile_apps/utils/progress_indicator.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import '../../../core/templates/logo_header_template.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 import '../widgets/slide_header1.dart';
@@ -26,7 +27,7 @@ class _StartupPageState extends State<StartupPage> {
   final Color _mainBackgroundColor = const Color(0xFFF5F5F5);
   final Duration _slideDuration = const Duration(seconds: 3);
   late final _carouselController = CarouselController();
-  final _storyProgressKey = GlobalKey<StoryProgressState>();
+  final _storyProgressKey = GlobalKey<ProgressIndicatorState>();
   int _currentPage = 0;
   bool _isExpanded = false;
 
@@ -233,7 +234,7 @@ class _StartupPageState extends State<StartupPage> {
   Widget _buildSliderProgressBars() {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 50, 10, 10),
-      child: StoryProgress(
+      child: ProgressIndicator(
         color: Theme.of(context).colorScheme.secondary,
         key: _storyProgressKey,
         progressCount: 3,

@@ -47,7 +47,6 @@ dependencies:
   realm: ^0.4.0+beta
   get_it: ^7.2.0
   carousel_slider: ^4.1.1
-  story_progress: ^0.0.5
   flutter_inappwebview: ^5.4.4+3
 
 dev_dependencies:
