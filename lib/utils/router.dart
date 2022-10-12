@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_amount.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/success_donation.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/pages/wepay_iframe_page.dart';
 import 'package:givt_mobile_apps/features/startup/pages/startup_page.dart';
 import '../core/constants/route_paths.dart' as routes;
 import '../features/basic_giving_flow/pages/qr_mock_page.dart';
@@ -9,7 +10,7 @@ import '../features/permissions/pages/camera_permission_page.dart';
 import '../features/permissions/pages/location_permission_page.dart';
 import '../features/registration/pages/first_time_registration_page.dart';
 import '../features/login/pages/login_page.dart';
-import '../features/spash_screen/pages/splash_screen_page.dart';
+import '../features/splash_screen/pages/splash_screen_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -34,6 +35,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => QRmockPage());
     case routes.DonationAmountRoute:
       return MaterialPageRoute(builder: (context) => DoantionAmount());
+    case routes.WePayRoute:
+      return MaterialPageRoute(builder: (context) => WePayPage());
     case routes.DonationSuccessRoute:
       return MaterialPageRoute(builder: (context) => SuccessDonationPage());
     default:
