@@ -8,6 +8,8 @@ const String DonationAmountTypicalRoute = 'donation-amount';
 const String DonationAmountInputRoute = 'donation-input';
 const String DonationSuccessRoute = 'donation-success';
 const String LoginRoute = 'login';
+const String SplashScreenRoute = 'splash-screen';
+
 
 
 
