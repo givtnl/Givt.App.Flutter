@@ -6,12 +6,14 @@ class DonationButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String label;
   bool? filled;
+  Color? specialColor;
   bool? bold;
   DonationButton({
     super.key,
     required this.onPressed,
     required this.label,
     this.filled = false,
+    this.specialColor,
     this.bold = false,
   });
 
@@ -24,7 +26,7 @@ class DonationButton extends StatelessWidget {
           style: OutlinedButton.styleFrom(
             backgroundColor: !filled!
                 ? (const Color.fromARGB(0, 155, 155, 155))
-                : (Theme.of(context).colorScheme.primary),
+                : (specialColor ?? Theme.of(context).colorScheme.primary),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7.0),
             ),
