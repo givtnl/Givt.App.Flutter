@@ -8,8 +8,7 @@ const String DonationAmountTypicalRoute = 'donation-amount';
 const String DonationAmountInputRoute = 'donation-input';
 const String DonationSuccessRoute = 'donation-success';
 const String LoginRoute = 'login';
-
-
+const String WepayRoute = "wepay";
 
 
 // Map<String, WidgetBuilder> routes = {
