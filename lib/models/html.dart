@@ -5,53 +5,37 @@ class WepayHtml {
 <html>
 <head>
     <script src='https://cdn.wepay.com/wepay.min.js'></script>
-    <style type="text/css">
-        html {
-            height: 100%;
-        }
-
-        body {
-            text-align: center;
-            margin: 10;
-            box-sizing: border-box;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden !important;
-            position: relative;
-        }
-
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body style="background-color:#FFFFFF">
+<body style="background-color:#F5F5F5">
 <!-- credit-card-iframe id will be the location for appending the credit card iframe -->
-<div id="credit-card-iframe"></div>
+<div id="credit-card-iframe"style="height:500px"></div>
 <div id="token"></div>
 <script>
 
     const custom_style = {
     'styles': {
+        '#credit-card #cvv .validator':{
+'max-width':'!important inherit',
+        },
         'base': {
             'color': '#2e2957',
-            'background-color': '#FFFFFF',
-            'border': '1.3px solid #898989',
-            'border-top': 'none',
-            'border-right': 'none',
-            'border-left': 'none',
+            'height':'inherit',
+            'padding':'8px',
+            'background-color': '#F5F5F5',
+            'border': '2px solid #184869',
+            'border-radius': '15px',
             'font-weight': '400',
             'font-family': 'sans-serif',
-            'font-size': '17px',
-            'padding': '0px',
+            'font-size': '25px',
+            
             ':focus': {
-                'border': '1.8px solid #898989',
-                'border-top': 'none',
-                'border-right': 'none',
-                'border-left': 'none'
+                'border': '1.8px solid #184869',
             },
             '::placeholder': {
                 'text-transform': 'capitalize',
                 'color': '#BCB9C8',
-                'font-size': '17px',
+                'font-size': '25px',
                 'font-weight': '400'
             }
         },
@@ -86,14 +70,16 @@ class WepayHtml {
                  'display': 'none'
             }
         }
-    }};
+    }
+    };
 
     const options = {
         custom_style: custom_style,
-        show_labels:true,
-        show_placeholders:false,
+        show_labels:false,
+        show_placeholders:true,
         show_error_messages:true,
         show_error_messages_when_unfocused:false
+
     };
     const appId = "537744";
     const apiVersion = "3.0";

@@ -30,37 +30,39 @@ class _WePayPageState extends State<WePayPage> {
   Widget build(BuildContext context) {
     return DoantionTemplate(
       questionText: "Fill in your credit details",
-      content: SizedBox(
-          height: 150,
-          child: InAppWebView(
-            initialOptions: InAppWebViewGroupOptions(
-              android: AndroidInAppWebViewOptions(),
-              crossPlatform: InAppWebViewOptions(
-                javaScriptEnabled: true,
-                disableVerticalScroll: true,
+      content: SingleChildScrollView(
+        child: SizedBox(
+            height: 230,
+            child: InAppWebView(
+              initialOptions: InAppWebViewGroupOptions(
+                android: AndroidInAppWebViewOptions(),
+                crossPlatform: InAppWebViewOptions(
+                  javaScriptEnabled: true,
+                  disableVerticalScroll: true,
+                ),
               ),
-            ),
-            // initialUrlRequest: URLRequest(
-            //   url: Uri(
-            //       scheme: "https",
-            //       host: "givt-debug-api.azurewebsites.net",
-            //       path: "/wepay-flutter.html"),
-            // ),
-            initialData: InAppWebViewInitialData(data: WepayHtml.body),
-            onWebViewCreated: (controller) {
-              webViewController = controller;
-            },
-            onConsoleMessage: ((controller, consoleMessage) => {
-                  logger.i(consoleMessage),
-                }),
-          )),
-      button: GenericButton(
-        text: "Donate",
-        disabled: false,
-        onClicked: () => {
-          webViewController?.evaluateJavascript(source: "tokenize();"),
-        },
+              // initialUrlRequest: URLRequest(
+              //   url: Uri(
+              //       scheme: "https",
+              //       host: "givt-debug-api.azurewebsites.net",
+              //       path: "/wepay-flutter.html"),
+              // ),
+              initialData: InAppWebViewInitialData(data: WepayHtml.body),
+              onWebViewCreated: (controller) {
+                webViewController = controller;
+              },
+              onConsoleMessage: ((controller, consoleMessage) => {
+                    logger.i(consoleMessage),
+                  }),
+            )),
       ),
+      // button: GenericButton(
+      //   text: "Donate",
+      //   disabled: false,
+      //   onClicked: () => {
+      //     webViewController?.evaluateJavascript(source: "tokenize();"),
+      //   },
+      // ),
     );
   }
 }
