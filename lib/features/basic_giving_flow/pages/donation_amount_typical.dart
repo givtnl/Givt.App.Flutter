@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/controller/typical_donation_controller.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/controller/create_cachedGivt.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_info.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_stats.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_button.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
+import 'package:givt_mobile_apps/utils/connection_check.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
@@ -31,23 +31,21 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
     "currentMoney": 9342,
     'goalMoney': 12000,
     'days': 12,
+    'typicalAmounts': [5, 10, 15],
   };
 
-  Map<String, dynamic> choice = {};
-  bool selectedMin = false;
-  bool selectedMed = false;
-  bool selectedMax = false;
-  bool otherInput = true;
   int donationAmount = 0;
+  int selection = -1;
 
-  void selectedTypicalAmount(
-      int amount, bool userInput, Map<String, dynamic> previous) {
+  void selectedTypicalAmount(int index) {
     setState(() {
-      choice = getAmount(amount, userInput, previous);
-      selectedMin = choice["selectedMin"];
-      selectedMed = choice["selectedMed"];
-      selectedMax = choice["selectedMax"];
-      donationAmount = choice["donationAmount"];
+      if (selection == index) {
+        selection = -1;
+        donationAmount = 0;
+        return;
+      }
+      selection = index;
+      donationAmount = FetchedInfo['typicalAmounts'][index];
     });
   }
 
@@ -98,28 +96,25 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
                           ),
                           // donation button sets the variable-amount
                           DonationButton(
-                            filled: selectedMin,
+                            filled: (selection == 0),
                             bold: true,
-                            onPressed: () =>
-                                selectedTypicalAmount(5, false, results),
-                            label: '\$5',
+                            onPressed: () => selectedTypicalAmount(0),
+                            label: '\$${FetchedInfo['typicalAmounts'][0]}',
                           ),
                           DonationButton(
-                            filled: selectedMed,
+                            filled: (selection == 1),
                             bold: true,
-                            onPressed: () =>
-                                selectedTypicalAmount(10, false, results),
-                            label: '\$10',
+                            onPressed: () => selectedTypicalAmount(1),
+                            label: '\$${FetchedInfo['typicalAmounts'][1]}',
                           ),
                           DonationButton(
-                            filled: selectedMax,
+                            filled: (selection == 2),
                             bold: true,
-                            onPressed: () =>
-                                selectedTypicalAmount(15, false, results),
-                            label: '\$15',
+                            onPressed: () => selectedTypicalAmount(2),
+                            label: '\$${FetchedInfo['typicalAmounts'][2]}',
                           ),
                           DonationButton(
-                              filled: otherInput,
+                              //filled: otherInput,
                               specialColor:
                                   Theme.of(context).colorScheme.tertiary,
                               onPressed: () => _navigationService
