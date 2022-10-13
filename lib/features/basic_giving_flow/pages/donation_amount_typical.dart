@@ -120,6 +120,8 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
                           ),
                           DonationButton(
                               filled: otherInput,
+                              specialColor:
+                                  Theme.of(context).colorScheme.tertiary,
                               onPressed: () => _navigationService
                                   .navigateTo(routes.DonationAmountInputRoute),
                               label: 'Enter a different amount'),

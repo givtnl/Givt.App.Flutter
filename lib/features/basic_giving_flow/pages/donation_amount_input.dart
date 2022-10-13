@@ -14,6 +14,7 @@ class DoantionAmountInput extends StatefulWidget {
 class _DoantionAmountInputState extends State<DoantionAmountInput> {
 // should be received from QR scan, gotten from database, etc
   Map<String, dynamic> FetchedInfo = {
+    'mediumId': 'medium-receieved-from-qr',
     "orgName": 'First Church of Atlanta',
     'orgCause': 'Donate to the youth ministry trip to Equador',
     "orgCauseDescription":
@@ -99,9 +100,11 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
                             ),
                             controller: _amountController,
                             keyboardType: TextInputType.number,
-                            onSubmitted: (_) => InputController(context)
-                                .handleSubmit(_amountController.text,
-                                    FetchedInfo['mediumId']),
+                            onSubmitted: (_) {
+                              InputController(context).handleSubmit(
+                                  _amountController.text,
+                                  FetchedInfo['mediumId']);
+                            },
                           ),
                         ),
                       ],

@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       ],
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: router.generateRoute,
-      initialRoute: routes.WePayRoute,
+      initialRoute: routes.DonationAmountTypicalRoute,
     );
   }
 }
