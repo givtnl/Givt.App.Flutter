@@ -1,3 +1,4 @@
+import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
 import 'package:givt_mobile_apps/models/html.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
@@ -27,132 +28,39 @@ class _WePayPageState extends State<WePayPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          SizedBox(
-              height: 150,
-              child: InAppWebView(
-                initialOptions: InAppWebViewGroupOptions(
-                  android: AndroidInAppWebViewOptions(),
-                  crossPlatform: InAppWebViewOptions(
-                    javaScriptEnabled: true,
-                    disableVerticalScroll: true,
-                  ),
-                ),
-                // initialUrlRequest: URLRequest(
-                //   url: Uri(
-                //       scheme: "https",
-                //       host: "givt-debug-api.azurewebsites.net",
-                //       path: "/wepay-flutter.html"),
-                // ),
-                initialData: InAppWebViewInitialData(data: WepayHtml.body),
-                onWebViewCreated: (controller) {
-                  webViewController = controller;
-                },
-                onConsoleMessage: ((controller, consoleMessage) => {
-                      logger.i(consoleMessage),
-                    }),
-              )),
-          GenericButton(
-            text: "Hi",
-            disabled: false,
-            onClicked: () => {
-              webViewController?.evaluateJavascript(source: "tokenize();"),
+    return DoantionTemplate(
+      questionText: "Fill in your credit details",
+      content: SizedBox(
+          height: 150,
+          child: InAppWebView(
+            initialOptions: InAppWebViewGroupOptions(
+              android: AndroidInAppWebViewOptions(),
+              crossPlatform: InAppWebViewOptions(
+                javaScriptEnabled: true,
+                disableVerticalScroll: true,
+              ),
+            ),
+            // initialUrlRequest: URLRequest(
+            //   url: Uri(
+            //       scheme: "https",
+            //       host: "givt-debug-api.azurewebsites.net",
+            //       path: "/wepay-flutter.html"),
+            // ),
+            initialData: InAppWebViewInitialData(data: WepayHtml.body),
+            onWebViewCreated: (controller) {
+              webViewController = controller;
             },
-          )
-        ],
+            onConsoleMessage: ((controller, consoleMessage) => {
+                  logger.i(consoleMessage),
+                }),
+          )),
+      button: GenericButton(
+        text: "Donate",
+        disabled: false,
+        onClicked: () => {
+          webViewController?.evaluateJavascript(source: "tokenize();"),
+        },
       ),
     );
   }
 }
-// class WePayPage extends StatefulWidget {
-//   WePayPage({super.key});
-
-//   @override
-//   State<WePayPage> createState() => _WePayPageState();
-// }
-
-// class _WePayPageState extends State<WePayPage> {
-//   final Completer<WebViewController> _controller =
-//       Completer<WebViewController>();
-
-//   @override
-//   void initState() {
-//     if (Platform.isAndroid) {
-//       WebView.platform = SurfaceAndroidWebView();
-//     } else if (Platform.isIOS) {
-//       WebView.platform = CupertinoWebView();
-//     }
-//     ;
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//         //color: Colors.green,
-//         //width: double.infinity,
-//         //height: MediaQuery.of(context).size.height * 0.7,
-//         child: Column(
-//           children: <Widget>[
-//             const LogoHeaderTemplate(),
-//             SizedBox(
-//               width: double.infinity,
-//               height: MediaQuery.of(context).size.height * 0.3,
-//               child: WebView(
-//                 javascriptMode: JavascriptMode.unrestricted,
-//                 initialUrl:
-//                     'https://givt-debug-api.azurewebsites.net/wepay-flutter.html',
-//                 onWebViewCreated: _controller.complete,
-//                 onWebResourceError: _controller.completeError,
-//                 javascriptChannels: Set.from([
-//                   JavascriptChannel(
-//                       name: 'Print',
-//                       onMessageReceived: (JavascriptMessage message) {
-//                         //This is where you receive message from
-//                         //javascript code and handle in Flutter/Dart
-//                         //like here, the message is just being printed
-//                         //in Run/LogCat window of android studio
-//                         print(message.message);
-//                       })
-//                 ]),
-//               ),
-//             ),
-//             GenericButton(
-//               text: 'Submit',
-//               disabled: false,
-//               onClicked: () async {
-//                 final controller = await _controller.future;
-//                 print(controller);
-//                 //         var script = """
-//                 //     window.wkVars.messageHandler.postMessage({'event': 'Start tokenizing'})
-//                 //     const tokenize = window.wkVars.creditCard.tokenize()
-//                 //       .then(function(response) {
-//                 //         window.wkVars.messageHandler.postMessage({'token': response.id});
-//                 //       })
-//                 //       .catch(function(error) {
-//                 //         let key = error[0].target[0];
-//                 //         window.wkVars.creditCard.setFocus(key);
-//                 //         window.wkVars.messageHandler.postMessage({'error': JSON.stringify(error)});
-//                 //       });
-//                 // """;
-
-//                 var script = """
-//                               let creditCard = WePay.createCreditCardIframe(iframe_container_id, options);
-//                               Print.postMessage(JSON.stringify(creditCard))
-                             
-//                             """;
-//                 var response =
-//                     await controller.runJavascriptReturningResult(script);
-//                 print(response);
-//               },
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

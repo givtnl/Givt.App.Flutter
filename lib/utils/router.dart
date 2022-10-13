@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_amount_input.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_amount_typical.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/pages/input_amount_page.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/pages/typical_amount_page.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/success_donation.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/wepay_iframe_page.dart';
 import 'package:givt_mobile_apps/features/startup/pages/startup_page.dart';
