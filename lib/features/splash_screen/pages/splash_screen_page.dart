@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:splashscreen/splashscreen.dart';
 import 'dart:async';
-import '../../../core/templates/logo_header_template.dart';
+import '../../startup/pages/startup_page.dart';
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
@@ -9,19 +10,15 @@ class SplashScreenPage extends StatelessWidget {
   NavigationService _navigationService = locator<NavigationService>();
   SplashScreenPage({super.key});
 
-  void _startTimer() {
-    Timer(const Duration(seconds: 2), () {
-      _navigationService.navigateTo(routes.StartupRoute);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    _startTimer();
-    return const Scaffold(
-      body: Center(
-        child: LogoHeaderTemplate(),
-      ),
+    return SplashScreen(
+      seconds: 5,
+      image: Image.asset('assets/images/logo.png'),
+      backgroundColor: Colors.white,
+      photoSize: 200.0,
+      loaderColor: Theme.of(context).colorScheme.secondary,
+      navigateAfterSeconds: const StartupPage(),
     );
   }
 }

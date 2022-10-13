@@ -9,7 +9,7 @@ import '../features/permissions/pages/camera_permission_page.dart';
 import '../features/permissions/pages/location_permission_page.dart';
 import '../features/registration/pages/first_time_registration_page.dart';
 import '../features/login/pages/login_page.dart';
-import '../features/spash_screen/pages/splash_screen_page.dart';
+import '../features/splash_screen/pages/splash_screen_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
