@@ -86,7 +86,7 @@ class _StartupPageState extends State<StartupPage> {
   void animationComplete() {
     if (_isExpanded) {
       Timer(const Duration(seconds: 2), () {
-        _navigationService.navigateTo(routes.LoginRoute);
+        // _navigationService.navigateTo(routes.LoginRoute);
       });
     }
   }
@@ -130,7 +130,7 @@ class _StartupPageState extends State<StartupPage> {
               duration: const Duration(milliseconds: 800),
               color: (val == 2)
                   ? _isExpanded
-                      ? const Color.fromARGB(255, 248, 232, 181)
+                      ? Theme.of(context).colorScheme.surface
                       : const Color(0xFFEDC646)
                   : _mainBackgroundColor,
               padding: const EdgeInsets.only(top: 20),
@@ -152,15 +152,10 @@ class _StartupPageState extends State<StartupPage> {
       child: AnimatedOpacity(
         opacity: _isExpanded ? 1.0 : 0.0,
         duration: const Duration(milliseconds: 500),
-        child: const Center(
-          child: Text(
-            'Welcome to givt',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 30,
-              fontWeight: FontWeight.w800,
-            ),
+        child: Center(
+          child: SvgPicture.asset(
+            'assets/svg/logo_white.svg',
+            height: 100,
           ),
         ),
       ),
