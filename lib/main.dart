@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'dart:ui';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:givt_mobile_apps/core/language/languageIndex.dart';
@@ -7,15 +10,14 @@ import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'core/themes/primary_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'utils/router.dart' as router;
-
 import 'core/constants/route_paths.dart' as routes;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
-  PlatformDispatcher.instance.onError = (error, stack) {
-    print(error);
-    return true;
-  };
+  if (Platform.isAndroid) {
+    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+  }
   runApp(const MyApp());
 }
 
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
       ],
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: router.generateRoute,
-      initialRoute: routes.DonationAmountTypicalRoute,
+      initialRoute: routes.WepayRoute,
     );
   }
 }
