@@ -15,14 +15,14 @@ class UspPage extends StatefulWidget {
 }
 
 class _UspPageState extends State<UspPage> {
-  final LocalUserProxy _model = locator<LocalUserProxy>();
+  final LocalStorageProxy _model = locator<LocalStorageProxy>();
 
   //temporary for testing
   @override
   void initState() {
     _model.downgradeProgress('camera');
     _model.downgradeProgress('location');
-    var current = _model.realm.all<LocalUser>().first;
+    var current = _model.realm.all<LocalStorage>().first;
     print(
         'Progress camera is ${current.cameraAsked}; and location is  ${current.locationAsked}');
   }

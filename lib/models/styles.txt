@@ -1,0 +1,25 @@
+'styles': {
+          'base': {
+            'border-color': '#ccc',
+            'transition': ' border-color 0.6s linear, border-width 0.6s linear',
+            'border-radius': '5px',
+            ':hover': {
+              'border-color': 'black'
+              },
+              ':focus': {
+                'border-color': '#969696'
+              },
+              '::placeholder': {
+                'color': '#ccc'
+              },
+              '::selection':{
+                'color': 'red'
+              }
+          },
+          'valid': {
+            'border-color': '#5ca96d',
+          },
+          'invalid': {
+            'border-color': '#d26172',
+          }
+        }

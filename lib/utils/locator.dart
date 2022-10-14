@@ -8,7 +8,7 @@ GetIt locator = GetIt.instance;
 
 void setupLocator() {
   locator.registerLazySingleton(() => NavigationService());
-  locator.registerLazySingleton(() => LocalUserProxy());
+  locator.registerLazySingleton(() => LocalStorageProxy());
   locator.registerLazySingleton(() => CameraService());
   locator.registerLazySingleton(() => LocationService());
 }
