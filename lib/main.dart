@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       ],
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: router.generateRoute,
-      initialRoute: routes.WepayRoute,
+      initialRoute: routes.SplashScreenRoute,
     );
   }
 }
