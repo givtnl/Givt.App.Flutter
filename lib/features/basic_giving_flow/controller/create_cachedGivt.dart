@@ -19,10 +19,10 @@ Future<void> createCachedGivtandNavigate(
 
   if (connected && Platform.isIOS) {
     // this should direct to ifram in the inapp browser bc of apple store policies
-    navigationService.navigateTo(routes.DonationSuccessRoute);
+    navigationService.navigateTo(routes.WepayRoute);
   } else if (connected) {
 // this should direct to iframe in the app
-    navigationService.navigateTo(routes.DonationSuccessRoute);
+    navigationService.navigateTo(routes.WepayRoute);
   } else {
     // sorry you cannot make a donnation while offline
   }

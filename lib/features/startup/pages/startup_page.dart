@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart' hide ProgressIndicator;
 import 'package:flutter_svg/svg.dart';
+import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/utils/progress_indicator.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import '../../../core/templates/logo_header_template.dart';
@@ -28,6 +29,7 @@ class _StartupPageState extends State<StartupPage> {
   final Duration _slideDuration = const Duration(seconds: 3);
   late final _carouselController = CarouselController();
   final _storyProgressKey = GlobalKey<ProgressIndicatorState>();
+  final LocalStorageProxy _model = locator<LocalStorageProxy>();
   int _currentPage = 0;
   bool _isExpanded = false;
 
@@ -39,6 +41,11 @@ class _StartupPageState extends State<StartupPage> {
 
   @override
   void initState() {
+    _model.downgradeProgress('camera');
+    _model.downgradeProgress('location');
+    var current = _model.realm.all<LocalStorage>().first;
+    print(
+        'Progress camera is ${current.cameraAsked}; and location is  ${current.locationAsked}');
     super.initState();
     Future.delayed(Duration.zero, () {
       startCarousel();
@@ -87,7 +94,7 @@ class _StartupPageState extends State<StartupPage> {
   void animationComplete() {
     if (_isExpanded) {
       Timer(const Duration(seconds: 2), () {
-        // _navigationService.navigateTo(routes.LoginRoute);
+        _navigationService.navigateTo(routes.LocationPermissionRoute);
       });
     }
   }
@@ -104,7 +111,7 @@ class _StartupPageState extends State<StartupPage> {
             SafeArea(
               child: AnimatedOpacity(
                   opacity: _isExpanded ? 0.0 : 1.0,
-                  duration: const Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 350),
                   child: const LogoHeaderTemplate()),
             ),
             Stack(
@@ -126,7 +133,9 @@ class _StartupPageState extends State<StartupPage> {
       builder: (BuildContext context, int val, Widget? child) {
         return Center(
           child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(50)),
+            borderRadius: _isExpanded
+                ? BorderRadius.all(Radius.circular(0))
+                : BorderRadius.all(Radius.circular(50)),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 800),
               color: (val == 2)
@@ -134,9 +143,11 @@ class _StartupPageState extends State<StartupPage> {
                       ? Theme.of(context).colorScheme.surface
                       : const Color(0xFFEDC646)
                   : _mainBackgroundColor,
-              padding: const EdgeInsets.only(top: 20),
-              width: _isExpanded ? MediaQuery.of(context).size.height * 1 : 60,
-              height: _isExpanded ? MediaQuery.of(context).size.height * 1 : 60,
+              padding: const EdgeInsets.only(top: 0),
+              width:
+                  _isExpanded ? MediaQuery.of(context).size.height * 1.3 : 60,
+              height:
+                  _isExpanded ? MediaQuery.of(context).size.height * 1.3 : 60,
               onEnd: animationComplete,
             ),
           ),
@@ -171,7 +182,7 @@ class _StartupPageState extends State<StartupPage> {
           valueListenable: _notifierSVG,
           builder: (BuildContext context, String svg, Widget? child) {
             return Container(
-              padding: const EdgeInsets.only(top: 260),
+              padding: const EdgeInsets.only(top: 170),
               child: Center(
                   child: SvgPicture.asset(
                 svg,
@@ -212,7 +223,7 @@ class _StartupPageState extends State<StartupPage> {
                                     : Container(),
                       ),
                       Container(
-                          margin: const EdgeInsets.only(bottom: 40),
+                          // margin: const EdgeInsets.only(bottom: 40),
                           child: SvgPicture.asset(svg, width: 320)),
                     ],
                   );

@@ -47,6 +47,7 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
   @override
   Widget build(BuildContext context) {
     return DoantionTemplate(
+      wepay: false,
       questionText: "How much would you like to donate?",
       content: Column(children: [
         DonationButton(

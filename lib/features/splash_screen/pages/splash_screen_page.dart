@@ -13,7 +13,7 @@ class SplashScreenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SplashScreen(
-      seconds: 5,
+      seconds: 2,
       image: Image.asset('assets/images/logo.png'),
       backgroundColor: Colors.white,
       photoSize: 200.0,

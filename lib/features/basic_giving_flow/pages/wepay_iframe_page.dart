@@ -32,7 +32,9 @@ class WePayPage extends StatefulWidget {
 
 class _WePayPageState extends State<WePayPage> {
   InAppWebViewController? webViewController;
-  final _amountController = TextEditingController();
+  bool showiFrame = false;
+  final _nameController = TextEditingController();
+  final _postcodeController = TextEditingController();
   NavigationService _navigationService = locator<NavigationService>();
 
   bool isLoading = false;
@@ -41,6 +43,12 @@ class _WePayPageState extends State<WePayPage> {
     setState(() {
       isLoading = true;
       _startTimer();
+    });
+  }
+
+  showiFrameState() {
+    setState(() {
+      showiFrame = true;
     });
   }
 
@@ -89,8 +97,8 @@ class _WePayPageState extends State<WePayPage> {
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(width: 0)),
                       ),
-                      controller: _amountController,
-                      keyboardType: TextInputType.number,
+                      controller: _nameController,
+                      //keyboardType: TextInputType.number,
                       onSubmitted: (_) {},
                     )),
               ),
@@ -124,13 +132,15 @@ class _WePayPageState extends State<WePayPage> {
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(width: 0)),
                       ),
-                      controller: _amountController,
-                      keyboardType: TextInputType.number,
-                      onSubmitted: (_) {},
+                      controller: _postcodeController,
+                      //keyboardType: TextInputType.number,
+                      onSubmitted: (_) {
+                        //toggleLoading();
+                      },
                     )),
               ),
               SizedBox(
-                  height: 135,
+                  height: 130,
                   child: InAppWebView(
                     initialOptions: InAppWebViewGroupOptions(
                       android: AndroidInAppWebViewOptions(),
@@ -148,15 +158,20 @@ class _WePayPageState extends State<WePayPage> {
                     initialData: InAppWebViewInitialData(data: WepayHtml.body),
                     onWebViewCreated: (controller) {
                       webViewController = controller;
+                      showiFrameState();
+                      print('i get executed');
                     },
                     onConsoleMessage: ((controller, consoleMessage) => {
                           logger.i(consoleMessage),
                         }),
                   )),
+              // iframe loads so this dissappears fast, but the wepay iframe takes longer
+              // (showiFrame) ? SizedBox() : CircularProgressIndicator(),
             ],
           ),
         ),
       ),
+      wepay: true,
       button: (isLoading)
           ? Center(child: CircularProgressIndicator())
           : GenericButton(
