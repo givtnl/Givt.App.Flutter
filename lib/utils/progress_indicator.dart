@@ -15,7 +15,7 @@ class ProgressIndicator extends StatefulWidget {
   ProgressIndicator(
       {Key? key,
       this.progressCount = 1,
-      this.duration = const Duration(seconds: 8),
+      this.duration = const Duration(seconds: 3),
       this.width = 200.0,
       required this.onStatusChanged,
       this.color = Colors.black})
@@ -66,6 +66,7 @@ class ProgressIndicatorState extends State<ProgressIndicator>
 
   @override
   void dispose() {
+    print('disposed....');
     _controller.dispose();
     super.dispose();
   }
@@ -159,7 +160,6 @@ class ProgressContainer extends AnimatedWidget implements Controller {
   ///So, [statusChanged] to Status.completed
   void forward() {
     if (currentIndex == progressCount - 1) {
-      print('finished'); //completed
       if (!isCompleted) {
         statusChanged(Status.completed);
         isCompleted = true;
