@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ProgressIndicator;
 import 'package:flutter_svg/svg.dart';
-import 'package:story_progress/story_progress.dart';
+import 'package:givt_mobile_apps/utils/progress_indicator.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import '../../../core/templates/logo_header_template.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 import '../widgets/slide_header1.dart';
@@ -26,7 +27,7 @@ class _StartupPageState extends State<StartupPage> {
   final Color _mainBackgroundColor = const Color(0xFFF5F5F5);
   final Duration _slideDuration = const Duration(seconds: 3);
   late final _carouselController = CarouselController();
-  final _storyProgressKey = GlobalKey<StoryProgressState>();
+  final _storyProgressKey = GlobalKey<ProgressIndicatorState>();
   int _currentPage = 0;
   bool _isExpanded = false;
 
@@ -86,7 +87,7 @@ class _StartupPageState extends State<StartupPage> {
   void animationComplete() {
     if (_isExpanded) {
       Timer(const Duration(seconds: 2), () {
-        // _navigationService.navigateTo(routes.LoginRoute);
+        //  _navigationService.navigateTo(routes.LocationPermissionRoute);
       });
     }
   }
@@ -124,20 +125,27 @@ class _StartupPageState extends State<StartupPage> {
       valueListenable: _notifierCurrentPage,
       builder: (BuildContext context, int val, Widget? child) {
         return Center(
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(50)),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 800),
-              color: (val == 2)
-                  ? _isExpanded
-                      ? Theme.of(context).colorScheme.surface
-                      : const Color(0xFFEDC646)
-                  : _mainBackgroundColor,
-              padding: const EdgeInsets.only(top: 20),
-              width: _isExpanded ? MediaQuery.of(context).size.height * 1 : 60,
-              height: _isExpanded ? MediaQuery.of(context).size.height * 1 : 60,
-              onEnd: animationComplete,
-            ),
+          child: Stack(
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: (_isExpanded)
+                    ? const BorderRadius.all(Radius.circular(0))
+                    : const BorderRadius.all(Radius.circular(50)),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 800),
+                  color: (val == 2)
+                      ? _isExpanded
+                          ? Theme.of(context).colorScheme.surface
+                          : const Color(0xFFEDC646)
+                      : _mainBackgroundColor,
+                  width:
+                      _isExpanded ? MediaQuery.of(context).size.height * 1 : 60,
+                  height:
+                      _isExpanded ? MediaQuery.of(context).size.height * 1 : 60,
+                  onEnd: animationComplete,
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -147,7 +155,8 @@ class _StartupPageState extends State<StartupPage> {
   Widget _buildWelcomeTransition() {
     return Container(
       padding: const EdgeInsets.only(bottom: 100),
-      height: MediaQuery.of(context).size.height * 0.8,
+      height: (MediaQuery.of(context).size.height * 0.9) -
+          MediaQuery.of(context).padding.top,
       width: double.infinity,
       child: AnimatedOpacity(
         opacity: _isExpanded ? 1.0 : 0.0,
@@ -163,20 +172,28 @@ class _StartupPageState extends State<StartupPage> {
   }
 
   Widget _buildBackgroundBlob() {
-    return AnimatedOpacity(
-      opacity: _isExpanded ? 0.0 : 1.0,
-      duration: const Duration(milliseconds: 500),
-      child: ValueListenableBuilder(
-          valueListenable: _notifierSVG,
-          builder: (BuildContext context, String svg, Widget? child) {
-            return Container(
-              padding: const EdgeInsets.only(top: 260),
-              child: Center(
-                  child: SvgPicture.asset(
-                svg,
-              )),
-            );
-          }),
+    return Container(
+      margin: const EdgeInsets.only(top: 30),
+      child: AnimatedOpacity(
+        opacity: _isExpanded ? 0.0 : 1.0,
+        duration: const Duration(milliseconds: 500),
+        child: ValueListenableBuilder(
+            valueListenable: _notifierSVG,
+            builder: (BuildContext context, String svg, Widget? child) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Center(
+                        child: SvgPicture.asset(
+                      svg,
+                    )),
+                  ],
+                ),
+              );
+            }),
+      ),
     );
   }
 
@@ -184,43 +201,47 @@ class _StartupPageState extends State<StartupPage> {
     return AnimatedOpacity(
       opacity: _isExpanded ? 0.0 : 1.0,
       duration: const Duration(milliseconds: 500),
-      child: Column(
-        children: [
-          CarouselSlider(
-            carouselController: _carouselController,
-            options: CarouselOptions(
-                height: MediaQuery.of(context).size.height * 0.7,
-                enableInfiniteScroll: false,
-                viewportFraction: 1,
-                onPageChanged: (integer, _) =>
-                    {setOvalBackgroundShape(integer)}),
-            items: svgImages.map((svg) {
-              return ValueListenableBuilder(
-                valueListenable: _notifierCurrentPage,
-                builder: (BuildContext context, int val, Widget? child) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        child: (val == 0)
-                            ? const SlideHeader1()
-                            : (val == 1)
-                                ? const SlideHeader2()
-                                : (val == 2)
-                                    ? SlideHeader3()
-                                    : Container(),
-                      ),
-                      Container(
-                          margin: const EdgeInsets.only(bottom: 40),
-                          child: SvgPicture.asset(svg, width: 320)),
-                    ],
-                  );
-                },
-              );
-            }).toList(),
-          ),
-          _buildSliderProgressBars()
-        ],
+      child: Container(
+        margin: const EdgeInsets.only(top: 30),
+        child: Column(
+          children: [
+            CarouselSlider(
+              carouselController: _carouselController,
+              options: CarouselOptions(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  enableInfiniteScroll: false,
+                  viewportFraction: 1,
+                  onPageChanged: (integer, _) =>
+                      {setOvalBackgroundShape(integer)}),
+              items: svgImages.map((svg) {
+                return ValueListenableBuilder(
+                  valueListenable: _notifierCurrentPage,
+                  builder: (BuildContext context, int val, Widget? child) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          child: (val == 0)
+                              ? const SlideHeader1()
+                              : (val == 1)
+                                  ? const SlideHeader2()
+                                  : (val == 2)
+                                      ? SlideHeader3()
+                                      : Container(),
+                        ),
+                        Container(
+                            // color: Colors.red,
+                            //margin: const EdgeInsets.only(bottom: 0),
+                            child: SvgPicture.asset(svg, width: 320)),
+                      ],
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+            _buildSliderProgressBars()
+          ],
+        ),
       ),
     );
   }
@@ -228,7 +249,7 @@ class _StartupPageState extends State<StartupPage> {
   Widget _buildSliderProgressBars() {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 50, 10, 10),
-      child: StoryProgress(
+      child: ProgressIndicator(
         color: Theme.of(context).colorScheme.secondary,
         key: _storyProgressKey,
         progressCount: 3,

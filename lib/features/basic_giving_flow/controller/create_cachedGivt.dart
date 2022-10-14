@@ -1,14 +1,29 @@
+import 'dart:io';
 import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/utils/connection_check.dart';
 
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
-void createCachedGivtandNavigate(int? donationAmount) {
-  final NavigationService _navigationService = locator<NavigationService>();
+Future<void> createCachedGivtandNavigate(
+    int donationAmount, String mediumId) async {
+  bool connected = await tryConnection();
+  DateTime dateTime = DateTime.now();
 
-  final LocalUserProxy _model = locator<LocalUserProxy>();
-  LocalUser current = _model.realm.all<LocalUser>().first;
+  final NavigationService navigationService = locator<NavigationService>();
+  final LocalStorageProxy model = locator<LocalStorageProxy>();
 
-  _navigationService.navigateTo(routes.DonationSuccessRoute);
+// fourth arg is null bc the current flow doesnt register the email so it does not fetch the userId
+  model.createCachedGivt(mediumId, donationAmount, dateTime, null);
+
+  if (connected && Platform.isIOS) {
+    // this should direct to ifram in the inapp browser bc of apple store policies
+    navigationService.navigateTo(routes.DonationSuccessRoute);
+  } else if (connected) {
+// this should direct to iframe in the app
+    navigationService.navigateTo(routes.DonationSuccessRoute);
+  } else {
+    // sorry you cannot make a donnation while offline
+  }
 }

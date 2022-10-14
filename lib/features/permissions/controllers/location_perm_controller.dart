@@ -6,8 +6,8 @@ import 'package:givt_mobile_apps/utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class LocationController {
-  late final LocalUser current =
-      locator<LocalUserProxy>().realm.all<LocalUser>().first;
+  late final LocalStorage current =
+      locator<LocalStorageProxy>().realm.all<LocalStorage>().first;
   final NavigationService _navigationService = locator<NavigationService>();
   final LocationService _locationService = locator<LocationService>();
 

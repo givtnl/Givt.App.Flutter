@@ -47,12 +47,13 @@ dependencies:
   realm: ^0.4.0+beta
   get_it: ^7.2.0
   carousel_slider: ^4.1.1
-  story_progress: ^0.0.5
+  flutter_inappwebview: ^5.4.4+3
   splashscreen: ^1.3.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  logger: ^1.1.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

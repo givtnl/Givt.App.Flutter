@@ -51,7 +51,7 @@ class _FirstTimeRegistrationPageState extends State<FirstTimeRegistrationPage> {
       pageContent: _isLoading
           ? Center(
               child: Column(
-              children: [
+              children: const [
                 CircularProgressIndicator(),
                 SizedBox(
                   height: 30,

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/services/navigation_service.dart';
+import 'package:givt_mobile_apps/utils/locator.dart';
 import 'dart:convert';
 import '../../../models/user.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
+import '../../../core/constants/route_paths.dart' as routes;
 import '../../../services/api_service.dart';
 
 class RegistrationController {
@@ -13,6 +17,9 @@ class RegistrationController {
   late SnackBarNotifyer notifyer;
   RegistrationController(
       this.btnDisabled, this.formKey, this.email, this.ctx, this.showLoader);
+
+  final NavigationService _navigationService = locator<NavigationService>();
+  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
 
   Future<void> handleButtonClick() async {
     final form = formKey.currentState;
@@ -64,7 +71,25 @@ class RegistrationController {
         'AppLanguage': tempUser.AppLanguage,
         'TimeZoneId': tempUser.TimeZoneId
       });
-      return await APIService().createUser(encodedUser);
+      final String tempUserID = await APIService().createUser(encodedUser);
+      // create a realm local user
+      realmProxy.createUser(
+        tempUser.Email,
+        tempUserID,
+        tempUser.IBAN,
+        tempUser.PhoneNumber,
+        tempUser.FirstName,
+        tempUser.LastName,
+        tempUser.Address,
+        tempUser.City,
+        tempUser.PostalCode,
+        tempUser.Country,
+        tempUser.AmountLimit,
+        tempUser.AppLanguage,
+        tempUser.TimeZoneId,
+      );
+      _navigationService.navigateTo(routes.DonationAmountTypicalRoute);
+      return;
     } else {
       throw 'Incorect Email domain used!';
     }
