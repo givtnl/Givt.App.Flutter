@@ -6,10 +6,13 @@ class WepayHtml {
 <head>
     <script src='https://cdn.wepay.com/wepay.min.js'></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish">
+
 </head>
 <body style="background-color:#F5F5F5">
+<!--<div style="font-family: Mulish;">Card number</div> -->
 <!-- credit-card-iframe id will be the location for appending the credit card iframe -->
-<div id="credit-card-iframe"style="height:500px"></div>
+<div id="credit-card-iframe"style="font-family: Mulish;"></div>
 <div id="token"></div>
 <script>
 
@@ -21,21 +24,24 @@ class WepayHtml {
         'base': {
             'color': '#2e2957',
             'height':'inherit',
-            'padding':'8px',
+            'padding':'12px',
+            
+            margin:'0px',
             'background-color': '#F5F5F5',
-            'border': '2px solid #184869',
-            'border-radius': '15px',
+            'border': '1px solid #184869',
+            'border-radius': '8px',
             'font-weight': '400',
-            'font-family': 'sans-serif',
-            'font-size': '25px',
+            'font-family': "'Mulish'",
+            'font-size': '16px',
             
             ':focus': {
-                'border': '1.8px solid #184869',
+                'border': '1px solid #184869',
             },
             '::placeholder': {
+              'font-family': "'Mulish' !important",
                 'text-transform': 'capitalize',
-                'color': '#BCB9C8',
-                'font-size': '25px',
+                'color': '#838383',
+                'font-size': '16px',
                 'font-weight': '400'
             }
         },
@@ -47,19 +53,7 @@ class WepayHtml {
             'color': '#2e2957',
             'border-color': '#898989'
         },
-        'labels': {
-            'base': {
-                'color': '#898989',
-                'font-family': 'sans-serif',
-                'font-size': '12px',
-                'font-weight': '400',
-                'text-transform': 'capitalize',
-                'padding': '0px',
-            },
-            'invalid': {
-                'color': '#F17057'
-            }
-        },
+
         'errors': {
             'invalid': {
                 'color': '#CD5C5C'

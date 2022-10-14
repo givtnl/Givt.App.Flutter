@@ -40,56 +40,59 @@ class DoantionTemplate extends StatelessWidget {
         backgroundColor: Theme.of(context).canvasColor,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 35),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                children: [
-                  Column(
-                    children: [
-                      CampaignInfo(
-                        orgCause: FetchedInfo["orgCause"],
-                        orgCauseDescription: FetchedInfo['orgCauseDescription'],
-                        orgName: FetchedInfo['orgName'],
-                      ),
-                      CampaignStats(
-                        currentMoney: FetchedInfo['currentMoney'],
-                        days: FetchedInfo['days'],
-                        goalMoney: FetchedInfo['goalMoney'],
-                      ),
-                    ],
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
-                            child: Text(
-                              questionText,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  ?.copyWith(fontWeight: FontWeight.w800),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  children: [
+                    Column(
+                      children: [
+                        CampaignInfo(
+                          orgCause: FetchedInfo["orgCause"],
+                          orgCauseDescription:
+                              FetchedInfo['orgCauseDescription'],
+                          orgName: FetchedInfo['orgName'],
+                        ),
+                        CampaignStats(
+                          currentMoney: FetchedInfo['currentMoney'],
+                          days: FetchedInfo['days'],
+                          goalMoney: FetchedInfo['goalMoney'],
+                        ),
+                      ],
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+                              child: Text(
+                                questionText,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(fontWeight: FontWeight.w800),
+                              ),
                             ),
-                          ),
-                          content,
-                        ],
+                            content,
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              if (button != null)
-                button!
-              else
-                const SizedBox(
-                  height: 0,
-                  width: 0,
+                  ],
                 ),
-            ],
+                if (button != null)
+                  button!
+                else
+                  const SizedBox(
+                    height: 0,
+                    width: 0,
+                  ),
+              ],
+            ),
           ),
         ),
       ),

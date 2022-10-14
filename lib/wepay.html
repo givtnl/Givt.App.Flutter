@@ -3,8 +3,14 @@
 <head>
     <script src='https://cdn.wepay.com/wepay.min.js'></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish">
+    <style>@font-face {
+        font-family: Mulish-Local;
+        src:  'file:<path>/Mulish-Regular.ttf';
+      }</style>
 </head>
 <body style="background-color:#F5F5F5">
+    <div style="font-family: Mulish;">Card number</div>
 <!-- credit-card-iframe id will be the location for appending the credit card iframe -->
 <div id="credit-card-iframe"style="height:500px"></div>
 <div id="token"></div>
@@ -18,21 +24,22 @@
         'base': {
             'color': '#2e2957',
             'height':'inherit',
-            'margin':'10px',
+            'padding':'8px',
+            margin:'0px',
             'background-color': '#F5F5F5',
-            'border': '2px solid #184869',
-            'border-radius': '15px',
+            'border': '1px solid #184869',
+            'border-radius': '8px',
             'font-weight': '400',
-            'font-family': 'sans-serif',
-            'font-size': '57px',
-            'padding': '0px',
+            'font-family': "'Mulish',sans-serif",
+            'font-size': '20px',
+            
             ':focus': {
-                'border': '1.8px solid #184869',
+                'border': '1px solid #184869',
             },
             '::placeholder': {
                 'text-transform': 'capitalize',
                 'color': '#BCB9C8',
-                'font-size': '57px',
+                'font-size': '20px',
                 'font-weight': '400'
             }
         },
