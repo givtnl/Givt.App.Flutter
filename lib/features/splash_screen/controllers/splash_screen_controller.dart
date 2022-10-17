@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
@@ -20,6 +22,9 @@ class SplashScreenController {
     final tempUser = createTempUser();
     final encodedUser = getEncodedUser(tempUser);
     final String tempUserID = await APIService().createUser(encodedUser);
+    if ((tempUserID is HttpException) == false) {
+      return Future.value(const StartupPage());
+    }
     realmProxy.addTempUserID(tempUserID);
     return Future.value(const StartupPage());
   }
@@ -45,7 +50,6 @@ class SplashScreenController {
   String getRandomGeneratedEmail() {
     final generatedString = String.fromCharCodes(Iterable.generate(
         5, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-    print(generatedString);
     return 'givttest+$generatedString@gmail.com';
   }
 
