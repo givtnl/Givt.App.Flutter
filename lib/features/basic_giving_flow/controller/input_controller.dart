@@ -7,9 +7,9 @@ class InputController {
   InputController(this.ctx);
 
   void handleSubmit(inputAmount, mediumId) {
-    if (inputAmount.isEmpty || int.parse(inputAmount) <= 1.5) {
+    if (inputAmount.isEmpty || int.parse(inputAmount) <= 2) {
       SnackBarNotifyer(ctx)
-          .showSnackBarMessage('Cannot donate less than \$1.5', Colors.red);
+          .showSnackBarMessage('Cannot donate less than \$2', Colors.red);
       return;
     }
     createCachedGivtandNavigate(int.parse(inputAmount), mediumId);
