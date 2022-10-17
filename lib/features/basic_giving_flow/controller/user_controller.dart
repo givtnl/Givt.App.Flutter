@@ -5,28 +5,39 @@ import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'dart:math';
 import 'dart:convert';
-import '../../startup/pages/startup_page.dart';
 import '../../../models/temp-user.dart';
+import '../../../models/user.dart';
 import '../../../services/api_service.dart';
 
-class SplashScreenController {
+class UserController {
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
   BuildContext ctx;
+  String _firstName;
+  String _lastName;
+  String _postcode;
   final _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
 
-  SplashScreenController(this.ctx);
+  UserController(this.ctx, this._firstName, this._lastName, this._postcode);
 
-  Future<Widget> createTempUserAndNavigate() async {
-    final tempUser = createTempUser();
+  Future<Map<String, dynamic>> createAndGetRegisteredUser(
+      String userID, dynamic tempUser) async {
+    final user = User.fromTempUser(userID, tempUser);
+    print('registered user : $user');
     final encodedUser = getEncodedUser(tempUser);
-    final String tempUserID = await APIService().createTempUser(encodedUser);
-    if ((tempUserID is HttpException) == false) {
-      return Future.value(const StartupPage());
-    }
-    realmProxy.addTempUserID(tempUserID);
-    return Future.value(const StartupPage());
+    final response = await APIService().createRegisteredUser(encodedUser);
+    return jsonDecode(response);
+  }
+
+  Future<Map<String, dynamic>> createAndGetTempUser() async {
+    final tempUser = createTempUser();
+    final encodedUser = getEncodedTempUser(tempUser);
+    final tempUserId = await APIService().createTempUser(encodedUser);
+    Map<String, dynamic> tempUserMap = new Map<String, dynamic>();
+    tempUserMap["userId"] = tempUserId;
+    tempUserMap["user"] = tempUser;
+    return tempUserMap;
   }
 
   TempUser createTempUser() {
@@ -35,11 +46,11 @@ class SplashScreenController {
         Email: getRandomGeneratedEmail(),
         IBAN: 'FB66GIVT12345678',
         PhoneNumber: '060000000',
-        FirstName: 'John',
-        LastName: 'Doe',
+        FirstName: _firstName,
+        LastName: _lastName,
         Address: 'Foobarstraat 5',
         City: 'Foobar',
-        PostalCode: '786 FB',
+        PostalCode: _postcode,
         Country: 'NL',
         Password: 'R4nd0mP@s\$w0rd123',
         AmountLimit: 499,
@@ -53,7 +64,7 @@ class SplashScreenController {
     return 'givttest+$generatedString@gmail.com';
   }
 
-  String getEncodedUser(tempUser) {
+  String getEncodedTempUser(tempUser) {
     return json.encode({
       'Email': tempUser.Email,
       'IBAN': tempUser.IBAN,
@@ -68,6 +79,22 @@ class SplashScreenController {
       'AmountLimit': tempUser.AmountLimit,
       'AppLanguage': tempUser.AppLanguage,
       'TimeZoneId': tempUser.TimeZoneId
+    });
+  }
+
+  String getEncodedUser(user) {
+    return json.encode({
+      'userId': user.userId,
+      'email': user.email,
+      'phoneNumber': user.phoneNumber,
+      'firstName': user.firstName,
+      'lastName': user.lastName,
+      'deviceOS': user.deviceOS,
+      'postalCode': user.postalCode,
+      'country': user.country,
+      'password': user.password,
+      'appLanguage': user.appLanguage,
+      'timeZoneId': user.timeZoneId
     });
   }
 }
