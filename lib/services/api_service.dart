@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
 import '../core/constants/environment_variables.dart';
 
@@ -18,7 +20,7 @@ class APIService {
     var response = await http.post(url, body: jsonUser, headers: headers);
     // response.body is plain text of the user ID or an error
     if (response.statusCode >= 400) {
-      throw response.body;
+      throw HttpException(response.body);
     } else {
       return response.body;
     }
