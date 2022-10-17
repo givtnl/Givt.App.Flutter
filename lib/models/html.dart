@@ -18,7 +18,7 @@ class WepayHtml {
 
     const custom_style = {
     'styles': {
-        '#credit-card #cvv .validator':{
+        'validator':{
 'max-width':'!important inherit',
         },
         'base': {
@@ -91,7 +91,8 @@ class WepayHtml {
         console.log("tokenizing");
         creditCard.tokenize()
             .then(function(response) {
-                console.log('response', JSON.stringify(response));
+                console.log(JSON.stringify(response));
+               return JSON.stringify(response);
                 //creditcardIframeActivity.processWePayResponse(JSON.stringify(response));
             })
             .catch(function(error) {
@@ -99,6 +100,7 @@ class WepayHtml {
                 let key = error[0].target[0];
                 creditCard.setFocus(key);
                 console.log('error', JSON.stringify(error))
+                return JSON.stringify(response);
             });
     }
 </script>

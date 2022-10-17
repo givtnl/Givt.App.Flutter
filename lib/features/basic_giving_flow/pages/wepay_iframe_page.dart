@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
@@ -33,23 +34,37 @@ class WePayPage extends StatefulWidget {
 class _WePayPageState extends State<WePayPage> {
   InAppWebViewController? webViewController;
   bool showiFrame = false;
+  final _postFocusNode = FocusNode();
   final _nameController = TextEditingController();
   final _postcodeController = TextEditingController();
+  final _form = GlobalKey<FormState>();
+
   NavigationService _navigationService = locator<NavigationService>();
 
   bool isLoading = false;
 
-  toggleLoading() {
-    setState(() {
-      isLoading = true;
-      _startTimer();
-    });
+  @override
+  void dispose() {
+    _postFocusNode.dispose();
   }
 
   showiFrameState() {
     setState(() {
       showiFrame = true;
     });
+  }
+
+  void onSubmit() {
+    bool? valid = _form.currentState?.validate();
+    if (valid == true) {
+      // show a loader then navigates to success
+      setState(() {
+        isLoading = true;
+        _startTimer();
+      });
+      //call the tokenize function
+      webViewController!.evaluateJavascript(source: "tokenize();");
+    }
   }
 
   void _startTimer() {
@@ -64,9 +79,10 @@ class _WePayPageState extends State<WePayPage> {
       questionText: "Fill in your credit details",
       content: Padding(
         padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-        child: SingleChildScrollView(
+        child: Form(
+          key: _form,
           child: Column(
-            children: [
+            children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: OutlinedButton(
@@ -81,7 +97,8 @@ class _WePayPageState extends State<WePayPage> {
                         color: Theme.of(context).colorScheme.surface,
                       ),
                     ),
-                    child: TextField(
+                    child: TextFormField(
+                      textInputAction: TextInputAction.next,
                       autofocus: false,
                       textAlign: TextAlign.start,
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
@@ -94,12 +111,13 @@ class _WePayPageState extends State<WePayPage> {
                             Theme.of(context).textTheme.bodyText2?.copyWith(
                                   fontSize: 16,
                                 ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(width: 0)),
                       ),
                       controller: _nameController,
-                      //keyboardType: TextInputType.number,
-                      onSubmitted: (_) {},
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_postFocusNode);
+                      },
                     )),
               ),
               Padding(
@@ -116,7 +134,8 @@ class _WePayPageState extends State<WePayPage> {
                         color: Theme.of(context).colorScheme.surface,
                       ),
                     ),
-                    child: TextField(
+                    child: TextFormField(
+                      focusNode: _postFocusNode,
                       autofocus: false,
                       textAlign: TextAlign.start,
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
@@ -133,9 +152,20 @@ class _WePayPageState extends State<WePayPage> {
                             borderSide: BorderSide(width: 0)),
                       ),
                       controller: _postcodeController,
-                      //keyboardType: TextInputType.number,
-                      onSubmitted: (_) {
-                        //toggleLoading();
+                      validator: (value) {
+                        bool isZipValid = false;
+                        if (value != null && value.isEmpty) {
+                          isZipValid = RegExp(r"/(^\d{5}$)|(^\d{5}-\d{4}$)/",
+                                  caseSensitive: false)
+                              .hasMatch(value);
+                          if (isZipValid) {
+                            logger.wtf('success');
+                            // yay zip is valid
+                            return null;
+                          }
+                        }
+                        logger.wtf('please enter a valid post code');
+                        return 'please enter a valid post code';
                       },
                     )),
               ),
@@ -159,11 +189,11 @@ class _WePayPageState extends State<WePayPage> {
                     onWebViewCreated: (controller) {
                       webViewController = controller;
                       showiFrameState();
-                      print('i get executed');
                     },
-                    onConsoleMessage: ((controller, consoleMessage) => {
-                          logger.i(consoleMessage),
-                        }),
+                    onConsoleMessage: ((controller, consoleMessage) {
+                      logger.i(consoleMessage);
+                      // hmm could i get the token here?
+                    }),
                   )),
               // iframe loads so this dissappears fast, but the wepay iframe takes longer
               // (showiFrame) ? SizedBox() : CircularProgressIndicator(),
@@ -177,10 +207,7 @@ class _WePayPageState extends State<WePayPage> {
           : GenericButton(
               text: "Donate",
               disabled: false,
-              onClicked: () => {
-                //webViewController?.evaluateJavascript(source: "tokenize();"),
-                toggleLoading()
-              },
+              onClicked: () => onSubmit(),
             ),
     );
   }
