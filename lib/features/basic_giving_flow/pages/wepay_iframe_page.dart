@@ -1,6 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:math';
+import 'dart:io';
 
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
@@ -9,6 +8,7 @@ import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+import '../controller/user_controller.dart';
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
@@ -35,7 +35,8 @@ class _WePayPageState extends State<WePayPage> {
   InAppWebViewController? webViewController;
   bool showiFrame = false;
   final _postFocusNode = FocusNode();
-  final _nameController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
   final _postcodeController = TextEditingController();
   final _form = GlobalKey<FormState>();
 
@@ -54,16 +55,34 @@ class _WePayPageState extends State<WePayPage> {
     });
   }
 
-  void onSubmit() {
+  void onSubmit(BuildContext context) async {
     bool? valid = _form.currentState?.validate();
     if (valid == true) {
-      // show a loader then navigates to success
-      setState(() {
+      final usrController = UserController(context, _firstNameController.text,
+          _lastNameController.text, _postcodeController.text);
+      setState(() async {
         isLoading = true;
-        _startTimer();
       });
-      //call the tokenize function
-      webViewController!.evaluateJavascript(source: "tokenize();");
+
+      //create temporary user
+      final Map<String, dynamic> tempUserMap =
+          await usrController.createAndGetTempUser();
+      final tempUserID = tempUserMap["userId"];
+      if ((tempUserID is HttpException) == false) {
+        final registeredUser = usrController.createAndGetRegisteredUser(
+            tempUserID, tempUserMap["user"]);
+        print(registeredUser);
+        setState(() {
+          isLoading = false;
+          _navigationService.navigateTo(routes.DonationSuccessRoute);
+        });
+        webViewController!.evaluateJavascript(source: "tokenize();");
+      } else {
+        print('Error when creating temp user: $tempUserID');
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -76,7 +95,7 @@ class _WePayPageState extends State<WePayPage> {
   @override
   Widget build(BuildContext context) {
     return DoantionTemplate(
-      questionText: "Fill in your credit details",
+      questionText: "Fill in your credit card details",
       content: Padding(
         padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
         child: Form(
@@ -97,27 +116,73 @@ class _WePayPageState extends State<WePayPage> {
                         color: Theme.of(context).colorScheme.surface,
                       ),
                     ),
-                    child: TextFormField(
-                      textInputAction: TextInputAction.next,
-                      autofocus: false,
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                          ),
-                      decoration: InputDecoration(
-                        hintText: 'Card holder name',
-                        hintStyle:
-                            Theme.of(context).textTheme.bodyText2?.copyWith(
-                                  fontSize: 16,
-                                ),
-                        focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(width: 0)),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        autofocus: false,
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16,
+                            ),
+                        decoration: InputDecoration(
+                          hintText: 'First Name',
+                          hintStyle:
+                              Theme.of(context).textTheme.bodyText2?.copyWith(
+                                    fontSize: 16,
+                                  ),
+                          focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(width: 0)),
+                        ),
+                        controller: _firstNameController,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(_postFocusNode);
+                        },
                       ),
-                      controller: _nameController,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_postFocusNode);
-                      },
+                    )),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Theme.of(context).canvasColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0),
+                      ),
+                      side: BorderSide(
+                        width: 1,
+                        color: Theme.of(context).colorScheme.surface,
+                      ),
+                    ),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        autofocus: false,
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16,
+                            ),
+                        decoration: InputDecoration(
+                          hintText: 'Last Name',
+                          hintStyle:
+                              Theme.of(context).textTheme.bodyText2?.copyWith(
+                                    fontSize: 16,
+                                  ),
+                          focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(width: 0)),
+                        ),
+                        controller: _lastNameController,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(_postFocusNode);
+                        },
+                      ),
                     )),
               ),
               Padding(
@@ -203,11 +268,11 @@ class _WePayPageState extends State<WePayPage> {
       ),
       wepay: true,
       button: (isLoading)
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : GenericButton(
               text: "Donate",
               disabled: false,
-              onClicked: () => onSubmit(),
+              onClicked: () => onSubmit(context),
             ),
     );
   }
