@@ -87,7 +87,7 @@ class _StartupPageState extends State<StartupPage> {
   void animationComplete() {
     if (_isExpanded) {
       Timer(const Duration(seconds: 2), () {
-        //  _navigationService.navigateTo(routes.LocationPermissionRoute);
+        _navigationService.navigateTo(routes.LocationPermissionRoute);
       });
     }
   }
