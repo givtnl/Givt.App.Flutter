@@ -73,21 +73,19 @@ class RegistrationController {
       });
       final String tempUserID = await APIService().createTempUser(encodedUser);
       // create a realm local user
-      realmProxy.createUser(
-        tempUser.Email,
-        tempUserID,
-        tempUser.IBAN,
-        tempUser.PhoneNumber,
-        tempUser.FirstName,
-        tempUser.LastName,
-        tempUser.Address,
-        tempUser.City,
-        tempUser.PostalCode,
-        tempUser.Country,
-        tempUser.AmountLimit,
-        tempUser.AppLanguage,
-        tempUser.TimeZoneId,
-      );
+      // realmProxy.createUser(
+      //   tempUser.Email,
+      //   tempUserID,
+      //   tempUser.IBAN,
+      //   tempUser.PhoneNumber,
+      //   tempUser.FirstName,
+      //   tempUser.LastName,
+      //   tempUser.Address,
+      //   tempUser.City,
+      //   tempUser.PostalCode,
+      //   tempUser.Country,
+      //   tempUser.AmountLimit,
+      // );
       _navigationService.navigateTo(routes.DonationAmountTypicalRoute);
       return;
     } else {

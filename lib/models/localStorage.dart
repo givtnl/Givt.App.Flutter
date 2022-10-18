@@ -1,5 +1,5 @@
 import 'package:realm/realm.dart';
-
+import 'registered_user.dart';
 // Realm: Declare a part file
 part 'localStorage.g.dart';
 
@@ -7,7 +7,6 @@ part 'localStorage.g.dart';
 class _LocalStorage {
   bool locationAsked = false;
   bool cameraAsked = false;
-  String? tempUserID;
   late _LocalUser? userData;
   // maybe this should take an array/list of type CachedGivts
   List<_CachedGivts> cachedGivts = [];
@@ -15,18 +14,16 @@ class _LocalStorage {
 
 @RealmModel()
 class _LocalUser {
-  // non_constant_identifier_names
+  // instance of User
   String email = "";
   String userId = "";
-  String iBAN = "";
+  int deviceOS = 0;
   String phoneNumber = "";
   String firstName = "";
   String lastName = "";
-  String address = "";
-  String city = "";
   String postalCode = "";
   String country = "";
-  int amountLimit = 10000;
+  String password = "";
   String appLanguage = "";
   String timeZoneId = "";
 }
@@ -72,41 +69,20 @@ class LocalStorageProxy {
     });
   }
 
-  void addTempUserID(String id) {
-    realm.write(() {
-      realm.all<LocalStorage>().first.tempUserID = id;
-    });
-  }
-
-  void createUser(
-    email,
-    userId,
-    iBAN,
-    phoneNumber,
-    firstName,
-    lastName,
-    address,
-    city,
-    postalCode,
-    country,
-    amountLimit,
-    appLanguage,
-    timeZoneId,
-  ) {
+  void createUser(RegisteredUser user) {
     realm.write(() {
       LocalUser localCurrent = realm.all<LocalStorage>().first.userData!;
-      localCurrent.userId = userId;
-      localCurrent.iBAN = iBAN;
-      localCurrent.phoneNumber = phoneNumber;
-      localCurrent.firstName = firstName;
-      localCurrent.lastName = lastName;
-      localCurrent.address = address;
-      localCurrent.city = city;
-      localCurrent.postalCode = postalCode;
-      localCurrent.country = country;
-      localCurrent.amountLimit = amountLimit;
-      localCurrent.appLanguage = appLanguage;
-      localCurrent.timeZoneId = timeZoneId;
+      localCurrent.userId = user.userId;
+      localCurrent.email = user.email;
+      localCurrent.deviceOS = user.deviceOS;
+      localCurrent.phoneNumber = user.phoneNumber;
+      localCurrent.firstName = user.firstName;
+      localCurrent.lastName = user.lastName;
+      localCurrent.postalCode = user.postalCode;
+      localCurrent.country = user.country;
+      localCurrent.password = user.password;
+      localCurrent.appLanguage = user.appLanguage;
+      localCurrent.timeZoneId = user.timeZoneId;
     });
   }
 

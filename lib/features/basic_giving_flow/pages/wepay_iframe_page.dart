@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'dart:convert';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
 import 'package:givt_mobile_apps/models/html.dart';
@@ -60,28 +60,28 @@ class _WePayPageState extends State<WePayPage> {
     if (valid == true) {
       final usrController = UserController(context, _firstNameController.text,
           _lastNameController.text, _postcodeController.text);
-      setState(() async {
+      setState(() {
         isLoading = true;
       });
 
       //create temporary user
-      final Map<String, dynamic> tempUserMap =
-          await usrController.createAndGetTempUser();
-      final tempUserID = tempUserMap["userId"];
-      if ((tempUserID is HttpException) == false) {
-        final registeredUser = usrController.createAndGetRegisteredUser(
+      try {
+        //create temp user
+        final Map<String, dynamic> tempUserMap =
+            await usrController.createAndGetTempUser();
+        final tempUserID = tempUserMap["userId"];
+
+        //create registered user
+        final registeredUser = await usrController.createAndGetRegisteredUser(
             tempUserID, tempUserMap["user"]);
-        print(registeredUser);
+
+        webViewController!.evaluateJavascript(source: "tokenize();");
         setState(() {
           isLoading = false;
           _navigationService.navigateTo(routes.DonationSuccessRoute);
         });
-        webViewController!.evaluateJavascript(source: "tokenize();");
-      } else {
-        print('Error when creating temp user: $tempUserID');
-        setState(() {
-          isLoading = false;
-        });
+      } catch (error) {
+        print('Error: $error');
       }
     }
   }
@@ -217,21 +217,21 @@ class _WePayPageState extends State<WePayPage> {
                             borderSide: BorderSide(width: 0)),
                       ),
                       controller: _postcodeController,
-                      validator: (value) {
-                        bool isZipValid = false;
-                        if (value != null && value.isEmpty) {
-                          isZipValid = RegExp(r"/(^\d{5}$)|(^\d{5}-\d{4}$)/",
-                                  caseSensitive: false)
-                              .hasMatch(value);
-                          if (isZipValid) {
-                            logger.wtf('success');
-                            // yay zip is valid
-                            return null;
-                          }
-                        }
-                        logger.wtf('please enter a valid post code');
-                        return 'please enter a valid post code';
-                      },
+                      // validator: (value) {
+                      //   bool isZipValid = false;
+                      //   if (value != null && value.isEmpty) {
+                      //     isZipValid = RegExp(r"/(^\d{5}$)|(^\d{5}-\d{4}$)/",
+                      //             caseSensitive: false)
+                      //         .hasMatch(value);
+                      //     if (isZipValid) {
+                      //       logger.wtf('success');
+                      //       // yay zip is valid
+                      //       return null;
+                      //     }
+                      //   }
+                      //   logger.wtf('please enter a valid post code');
+                      //   return 'please enter a valid post code';
+                      // },
                     )),
               ),
               SizedBox(
