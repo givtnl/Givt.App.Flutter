@@ -6,7 +6,7 @@ import 'package:givt_mobile_apps/utils/locator.dart';
 import 'dart:math';
 import 'dart:convert';
 import '../../../models/temp-user.dart';
-import '../../../models/user.dart';
+import '../../../models/registered_user.dart';
 import '../../../services/api_service.dart';
 
 class UserController {
@@ -23,9 +23,10 @@ class UserController {
 
   Future<Map<String, dynamic>> createAndGetRegisteredUser(
       String userID, dynamic tempUser) async {
-    final user = User.fromTempUser(userID, tempUser);
-    print('registered user : $user');
-    final encodedUser = getEncodedUser(tempUser);
+    final registeredUser = RegisteredUser.fromTempUser(userID, tempUser);
+    // Add Registered user to Realms DB (Local State storage)
+    realmProxy.createUser(registeredUser);
+    final encodedUser = getEncodedUser(registeredUser);
     final response = await APIService().createRegisteredUser(encodedUser);
     return jsonDecode(response);
   }
@@ -34,7 +35,7 @@ class UserController {
     final tempUser = createTempUser();
     final encodedUser = getEncodedTempUser(tempUser);
     final tempUserId = await APIService().createTempUser(encodedUser);
-    Map<String, dynamic> tempUserMap = new Map<String, dynamic>();
+    Map<String, dynamic> tempUserMap = Map<String, dynamic>();
     tempUserMap["userId"] = tempUserId;
     tempUserMap["user"] = tempUser;
     return tempUserMap;

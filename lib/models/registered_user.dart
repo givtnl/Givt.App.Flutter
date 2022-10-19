@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:givt_mobile_apps/models/temp-user.dart';
 
-class User {
+class RegisteredUser {
   final String userId;
   final String email;
   final String phoneNumber;
@@ -15,7 +15,7 @@ class User {
   final String lastName;
   final String timeZoneId;
 
-  User(
+  RegisteredUser(
       {required this.email,
       required this.userId,
       required this.phoneNumber,
@@ -28,8 +28,8 @@ class User {
       required this.appLanguage,
       required this.timeZoneId});
 
-  factory User.fromTempUser(String userId, TempUser tempUser) {
-    return User(
+  factory RegisteredUser.fromTempUser(String userId, TempUser tempUser) {
+    return RegisteredUser(
       userId: userId,
       email: tempUser.Email,
       deviceOS: 0,
@@ -43,4 +43,18 @@ class User {
       timeZoneId: tempUser.TimeZoneId,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        "userId": userId,
+        "email": email,
+        "deviceOS": deviceOS,
+        "phoneNumber": phoneNumber,
+        "firstName": firstName,
+        "lastName": lastName,
+        "postalCode": postalCode,
+        "country": country,
+        "password": password,
+        "appLanguage": appLanguage,
+        "timeZoneId": timeZoneId,
+      };
 }

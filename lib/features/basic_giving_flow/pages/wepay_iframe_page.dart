@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'dart:convert';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/controller/validation_controllers.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
@@ -70,23 +70,23 @@ class _WePayPageState extends State<WePayPage> {
       });
 
       //create temporary user
-      final Map<String, dynamic> tempUserMap =
-          await usrController.createAndGetTempUser();
-      final tempUserID = tempUserMap["userId"];
-      if ((tempUserID is HttpException) == false) {
-        final registeredUser = usrController.createAndGetRegisteredUser(
+      try {
+        //create temp user
+        final Map<String, dynamic> tempUserMap =
+            await usrController.createAndGetTempUser();
+        final tempUserID = tempUserMap["userId"];
+
+        //create registered user
+        final registeredUser = await usrController.createAndGetRegisteredUser(
             tempUserID, tempUserMap["user"]);
-        print(registeredUser);
+
+        webViewController!.evaluateJavascript(source: "tokenize();");
         setState(() {
           isLoading = false;
           _navigationService.navigateTo(routes.DonationSuccessRoute);
         });
-        webViewController!.evaluateJavascript(source: "tokenize();");
-      } else {
-        print('Error when creating temp user: $tempUserID');
-        setState(() {
-          isLoading = false;
-        });
+      } catch (error) {
+        print('Error: $error');
       }
     }
   }
