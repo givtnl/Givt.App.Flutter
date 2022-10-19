@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import '../core/constants/environment_variables.dart';
@@ -25,14 +26,28 @@ class APIService {
     }
   }
 
-  Future<String> createRegisteredUser(String jsonUser) async {
+  Future<dynamic> createRegisteredUser(String jsonUser) async {
     final url = Uri.https(baseApiUrl, '/api/v2/users/register');
     var response = await http.post(url, body: jsonUser, headers: headers);
-    print(response.statusCode);
-    print(response.body);
     if (response.statusCode >= 400) {
-      throw const HttpException('Failed to create a registered user');
+      throw Exception('Failed to create a registered user');
     } else {
+      // returns stringified object
+      return response.body;
+    }
+  }
+
+  Future<dynamic> createMandate(String wepayToken, String userId) async {
+    final url = Uri.https(baseApiUrl, '/api/v2/users/$userId/mandates');
+    final String mandate = json.encode({
+      'paymentMethodToken': wepayToken,
+      'userId': userId,
+    });
+    var response = await http.post(url, body: mandate, headers: headers);
+    if (response.statusCode >= 400) {
+      throw Exception('Failed to create a mandate for user: $userId.');
+    } else {
+      // returns stringified object
       return response.body;
     }
   }

@@ -21,14 +21,14 @@ class UserController {
 
   UserController(this.ctx, this._firstName, this._lastName, this._postcode);
 
-  Future<Map<String, dynamic>> createAndGetRegisteredUser(
+  Future<dynamic> createAndGetRegisteredUser(
       String userID, dynamic tempUser) async {
     final registeredUser = RegisteredUser.fromTempUser(userID, tempUser);
     // Add Registered user to Realms DB (Local State storage)
     realmProxy.createUser(registeredUser);
     final encodedUser = getEncodedUser(registeredUser);
-    final response = await APIService().createRegisteredUser(encodedUser);
-    return jsonDecode(response);
+    await APIService().createRegisteredUser(encodedUser);
+    return registeredUser;
   }
 
   Future<Map<String, dynamic>> createAndGetTempUser() async {
