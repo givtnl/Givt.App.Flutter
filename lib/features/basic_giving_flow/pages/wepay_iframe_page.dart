@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'dart:convert';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
 import 'package:givt_mobile_apps/models/html.dart';
@@ -60,28 +60,28 @@ class _WePayPageState extends State<WePayPage> {
     if (valid == true) {
       final usrController = UserController(context, _firstNameController.text,
           _lastNameController.text, _postcodeController.text);
-      setState(() async {
+      setState(() {
         isLoading = true;
       });
 
       //create temporary user
-      final Map<String, dynamic> tempUserMap =
-          await usrController.createAndGetTempUser();
-      final tempUserID = tempUserMap["userId"];
-      if ((tempUserID is HttpException) == false) {
-        final registeredUser = usrController.createAndGetRegisteredUser(
+      try {
+        //create temp user
+        final Map<String, dynamic> tempUserMap =
+            await usrController.createAndGetTempUser();
+        final tempUserID = tempUserMap["userId"];
+
+        //create registered user
+        final registeredUser = await usrController.createAndGetRegisteredUser(
             tempUserID, tempUserMap["user"]);
-        print(registeredUser);
+
+        webViewController!.evaluateJavascript(source: "tokenize();");
         setState(() {
           isLoading = false;
           _navigationService.navigateTo(routes.DonationSuccessRoute);
         });
-        webViewController!.evaluateJavascript(source: "tokenize();");
-      } else {
-        print('Error when creating temp user: $tempUserID');
-        setState(() {
-          isLoading = false;
-        });
+      } catch (error) {
+        print('Error: $error');
       }
     }
   }
@@ -186,96 +186,6 @@ class _WePayPageState extends State<WePayPage> {
                     )),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: TextFormField(
-                  textInputAction: TextInputAction.next,
-                  autofocus: false,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16,
-                      ),
-                  decoration: InputDecoration(
-                    hintText: 'Card holder name',
-                    hintStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          fontSize: 16,
-                        ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                          width: 1,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .surface), //<-- SEE HERE
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                          width: 1,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .surface), //<-- SEE HERE
-                    ),
-                  ),
-                  controller: _nameController,
-                  onFieldSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(_postFocusNode);
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  textInputAction: TextInputAction.next,
-                  autofocus: false,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: 16,
-                      ),
-                  decoration: InputDecoration(
-                    hintText: 'Post Code',
-                    hintStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          fontSize: 16,
-                        ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                          width: 1,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .surface), //<-- SEE HERE
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                          width: 1,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .surface), //<-- SEE HERE
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(
-                          width: 1, color: Colors.red), //<-- SEE HERE
-                    ),
-                  ),
-                  controller: _postcodeController,
-                  validator: (value) {
-                    bool isZipValid = false;
-                    if (value != null && value.isEmpty) {
-                      isZipValid = RegExp(r"/(^\d{5}$)|(^\d{5}-\d{4}$)/",
-                              caseSensitive: false)
-                          .hasMatch(value);
-                      if (isZipValid) {
-                        // yay zip is valid
-                        return null;
-                      }
-                    }
-                    return 'Not a Valid Post Code';
-                  },
-                ),
-              ),
-              Padding(
                 padding: const EdgeInsets.fromLTRB(8, 15, 8, 8),
                 child: OutlinedButton(
                     onPressed: () {},
@@ -307,19 +217,21 @@ class _WePayPageState extends State<WePayPage> {
                             borderSide: BorderSide(width: 0)),
                       ),
                       controller: _postcodeController,
-                      validator: (value) {
-                        bool isZipValid = false;
-                        if (value != null && value.isEmpty) {
-                          isZipValid = RegExp(r"/(^\d{5}$)|(^\d{5}-\d{4}$)/",
-                                  caseSensitive: false)
-                              .hasMatch(value);
-                          if (isZipValid) {
-                            // yay zip is valid
-                            return null;
-                          }
-                        }
-                        return 'Not a Valid Post Code';
-                      },
+                      // validator: (value) {
+                      //   bool isZipValid = false;
+                      //   if (value != null && value.isEmpty) {
+                      //     isZipValid = RegExp(r"/(^\d{5}$)|(^\d{5}-\d{4}$)/",
+                      //             caseSensitive: false)
+                      //         .hasMatch(value);
+                      //     if (isZipValid) {
+                      //       logger.wtf('success');
+                      //       // yay zip is valid
+                      //       return null;
+                      //     }
+                      //   }
+                      //   logger.wtf('please enter a valid post code');
+                      //   return 'please enter a valid post code';
+                      // },
                     )),
               ),
               SizedBox(
