@@ -11,9 +11,11 @@ import 'core/themes/primary_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'utils/router.dart' as router;
 import 'core/constants/route_paths.dart' as routes;
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   setupLocator();
   if (Platform.isAndroid) {
     await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
@@ -39,7 +41,7 @@ class MyApp extends StatelessWidget {
       ],
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: router.generateRoute,
-      initialRoute: routes.WepayRoute,
+      initialRoute: routes.StartupRoute,
     );
   }
 }
