@@ -1,17 +1,12 @@
-import 'dart:async';
-import 'dart:io';
 import 'dart:convert';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
 import 'package:givt_mobile_apps/models/html.dart';
+import 'package:givt_mobile_apps/models/registered_user.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-
-import '../controller/user_controller.dart';
-import '../../../services/navigation_service.dart';
-import '../../../utils/locator.dart';
-import '../../../core/constants/route_paths.dart' as routes;
+import '../controller/donation_controller.dart';
 
 const String handlerName = "registrationMessageHandler";
 final logger = Logger(
@@ -32,15 +27,14 @@ class WePayPage extends StatefulWidget {
 }
 
 class _WePayPageState extends State<WePayPage> {
-  InAppWebViewController? webViewController;
+  late InAppWebViewController _webViewController;
   bool showiFrame = false;
   final _postFocusNode = FocusNode();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _postcodeController = TextEditingController();
   final _form = GlobalKey<FormState>();
-
-  NavigationService _navigationService = locator<NavigationService>();
+  late String _registeredUserId;
 
   bool isLoading = false;
 
@@ -49,46 +43,19 @@ class _WePayPageState extends State<WePayPage> {
     _postFocusNode.dispose();
   }
 
-  showiFrameState() {
+  void toggleLoader(bool loading) {
     setState(() {
-      showiFrame = true;
+      isLoading = loading;
     });
   }
 
-  void onSubmit(BuildContext context) async {
-    bool? valid = _form.currentState?.validate();
-    if (valid == true) {
-      final usrController = UserController(context, _firstNameController.text,
-          _lastNameController.text, _postcodeController.text);
-      setState(() {
-        isLoading = true;
-      });
-
-      //create temporary user
-      try {
-        //create temp user
-        final Map<String, dynamic> tempUserMap =
-            await usrController.createAndGetTempUser();
-        final tempUserID = tempUserMap["userId"];
-
-        //create registered user
-        final registeredUser = await usrController.createAndGetRegisteredUser(
-            tempUserID, tempUserMap["user"]);
-
-        webViewController!.evaluateJavascript(source: "tokenize();");
-        setState(() {
-          isLoading = false;
-          _navigationService.navigateTo(routes.DonationSuccessRoute);
-        });
-      } catch (error) {
-        print('Error: $error');
-      }
-    }
+  void registeredUserId(String id) {
+    _registeredUserId = id;
   }
 
-  void _startTimer() {
-    Timer(const Duration(seconds: 2), () {
-      _navigationService.navigateTo(routes.DonationSuccessRoute);
+  showiFrameState() {
+    setState(() {
+      showiFrame = true;
     });
   }
 
@@ -252,16 +219,19 @@ class _WePayPageState extends State<WePayPage> {
                     // ),
                     initialData: InAppWebViewInitialData(data: WepayHtml.body),
                     onWebViewCreated: (controller) {
-                      webViewController = controller;
+                      _webViewController = controller;
                       showiFrameState();
                     },
                     onConsoleMessage: ((controller, consoleMessage) {
-                      logger.i(consoleMessage);
-                      // hmm could i get the token here?
+                      Map<String, dynamic> decoded =
+                          json.decode(consoleMessage.message);
+
+                      final wepayToken = decoded['id'];
+
+                      DonationController().createMandateAndSubmitDonation(
+                          wepayToken, toggleLoader, context, _registeredUserId);
                     }),
                   )),
-              // iframe loads so this dissappears fast, but the wepay iframe takes longer
-              // (showiFrame) ? SizedBox() : CircularProgressIndicator(),
             ],
           ),
         ),
@@ -272,8 +242,20 @@ class _WePayPageState extends State<WePayPage> {
           : GenericButton(
               text: "Donate",
               disabled: false,
-              onClicked: () => onSubmit(context),
-            ),
+              onClicked: () => {
+                    if (_form.currentState?.validate() == true)
+                      {
+                        DonationController().initialiseDonationProcess(
+                            context,
+                            _firstNameController,
+                            _lastNameController,
+                            _postcodeController,
+                            _webViewController,
+                            registeredUserId,
+                            toggleLoader)
+                      }
+                    //onSubmit(context),
+                  }),
     );
   }
 }
