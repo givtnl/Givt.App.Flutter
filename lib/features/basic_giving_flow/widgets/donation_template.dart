@@ -7,11 +7,14 @@ class DoantionTemplate extends StatelessWidget {
   String questionText;
   Widget content;
   Widget? button;
-  DoantionTemplate(
-      {super.key,
-      required this.questionText,
-      required this.content,
-      this.button});
+  bool? wepay;
+  DoantionTemplate({
+    super.key,
+    required this.questionText,
+    required this.content,
+    this.button,
+    this.wepay = false,
+  });
 
 // should be received from QR scan, gotten from database, etc
   Map<String, dynamic> FetchedInfo = {
@@ -39,7 +42,7 @@ class DoantionTemplate extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 35),
+          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 45),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,7 +88,12 @@ class DoantionTemplate extends StatelessWidget {
                   ],
                 ),
                 if (button != null)
-                  button!
+                  (Column(
+                    children: [
+                      (wepay!) ? SizedBox(height: 0) : SizedBox(height: 60),
+                      button!
+                    ],
+                  ))
                 else
                   const SizedBox(
                     height: 0,

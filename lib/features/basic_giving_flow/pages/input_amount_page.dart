@@ -6,7 +6,7 @@ import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_tem
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/input_button_donation.dart';
 
 class DoantionAmountInput extends StatefulWidget {
-  DoantionAmountInput({super.key});
+  const DoantionAmountInput({super.key});
 
   @override
   State<DoantionAmountInput> createState() => _DoantionAmountInputState();
@@ -41,7 +41,7 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
                   fontSize: 16,
                 ),
             decoration: InputDecoration(
-              // none of these show up wtf...
+              // none of these ever show up the hell...
               hoverColor: Colors.red,
               focusColor: Colors.green,
               fillColor: Colors.yellow,

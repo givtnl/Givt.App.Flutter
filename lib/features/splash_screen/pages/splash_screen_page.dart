@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
-import 'dart:async';
 import '../../startup/pages/startup_page.dart';
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
-import '../../../core/constants/route_paths.dart' as routes;
 
 class SplashScreenPage extends StatelessWidget {
-  NavigationService _navigationService = locator<NavigationService>();
+  final NavigationService _navigationService = locator<NavigationService>();
   SplashScreenPage({super.key});
 
   @override

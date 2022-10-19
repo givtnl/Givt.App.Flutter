@@ -14,7 +14,7 @@ class LocationController {
   getRoute() {
     dynamic route;
     if (current.cameraAsked) {
-      route = routes.RegistrationRoute;
+      route = routes.QRMockRoute;
     } else {
       route = routes.CameraPermissionRoute;
     }

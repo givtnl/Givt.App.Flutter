@@ -92,7 +92,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
       ),
       bypassBtn: BypassBtn(
           title: 'continue using the app without the permission',
-          where: routes.RegistrationRoute),
+          where: routes.QRMockRoute),
       onBtnClick: () {
         _cameraController.checkPermissions();
       },

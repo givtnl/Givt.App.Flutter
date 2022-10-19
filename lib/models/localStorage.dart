@@ -7,6 +7,7 @@ part 'localStorage.g.dart';
 class _LocalStorage {
   bool locationAsked = false;
   bool cameraAsked = false;
+  String? tempUserID;
   late _LocalUser? userData;
   // maybe this should take an array/list of type CachedGivts
   List<_CachedGivts> cachedGivts = [];
@@ -68,6 +69,12 @@ class LocalStorageProxy {
       LocalStorage localCurrent = realm.all<LocalStorage>().first;
       localCurrent.cachedGivts
           .add(CachedGivts(mediumId, donationAmount, dateTime, givenUserId));
+    });
+  }
+
+  void addTempUserID(String id) {
+    realm.write(() {
+      realm.all<LocalStorage>().first.tempUserID = id;
     });
   }
 

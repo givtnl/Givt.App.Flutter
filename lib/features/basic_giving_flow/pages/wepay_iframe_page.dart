@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math';
+import 'dart:io';
 
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
@@ -8,6 +8,7 @@ import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+import '../controller/user_controller.dart';
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
@@ -32,16 +33,57 @@ class WePayPage extends StatefulWidget {
 
 class _WePayPageState extends State<WePayPage> {
   InAppWebViewController? webViewController;
-  final _amountController = TextEditingController();
+  bool showiFrame = false;
+  final _postFocusNode = FocusNode();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _postcodeController = TextEditingController();
+  final _form = GlobalKey<FormState>();
+
   NavigationService _navigationService = locator<NavigationService>();
 
   bool isLoading = false;
 
-  toggleLoading() {
+  @override
+  void dispose() {
+    _postFocusNode.dispose();
+  }
+
+  showiFrameState() {
     setState(() {
-      isLoading = true;
-      _startTimer();
+      showiFrame = true;
     });
+  }
+
+  void onSubmit(BuildContext context) async {
+    bool? valid = _form.currentState?.validate();
+    if (valid == true) {
+      final usrController = UserController(context, _firstNameController.text,
+          _lastNameController.text, _postcodeController.text);
+      setState(() async {
+        isLoading = true;
+      });
+
+      //create temporary user
+      final Map<String, dynamic> tempUserMap =
+          await usrController.createAndGetTempUser();
+      final tempUserID = tempUserMap["userId"];
+      if ((tempUserID is HttpException) == false) {
+        final registeredUser = usrController.createAndGetRegisteredUser(
+            tempUserID, tempUserMap["user"]);
+        print(registeredUser);
+        setState(() {
+          isLoading = false;
+          _navigationService.navigateTo(routes.DonationSuccessRoute);
+        });
+        webViewController!.evaluateJavascript(source: "tokenize();");
+      } else {
+        print('Error when creating temp user: $tempUserID');
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   void _startTimer() {
@@ -53,12 +95,13 @@ class _WePayPageState extends State<WePayPage> {
   @override
   Widget build(BuildContext context) {
     return DoantionTemplate(
-      questionText: "Fill in your credit details",
+      questionText: "Fill in your credit card details",
       content: Padding(
         padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-        child: SingleChildScrollView(
+        child: Form(
+          key: _form,
           child: Column(
-            children: [
+            children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: OutlinedButton(
@@ -73,26 +116,164 @@ class _WePayPageState extends State<WePayPage> {
                         color: Theme.of(context).colorScheme.surface,
                       ),
                     ),
-                    child: TextField(
-                      autofocus: false,
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
-                          ),
-                      decoration: InputDecoration(
-                        hintText: 'Card holder name',
-                        hintStyle:
-                            Theme.of(context).textTheme.bodyText2?.copyWith(
-                                  fontSize: 16,
-                                ),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(width: 0)),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        autofocus: false,
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16,
+                            ),
+                        decoration: InputDecoration(
+                          hintText: 'First Name',
+                          hintStyle:
+                              Theme.of(context).textTheme.bodyText2?.copyWith(
+                                    fontSize: 16,
+                                  ),
+                          focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(width: 0)),
+                        ),
+                        controller: _firstNameController,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(_postFocusNode);
+                        },
                       ),
-                      controller: _amountController,
-                      keyboardType: TextInputType.number,
-                      onSubmitted: (_) {},
                     )),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Theme.of(context).canvasColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0),
+                      ),
+                      side: BorderSide(
+                        width: 1,
+                        color: Theme.of(context).colorScheme.surface,
+                      ),
+                    ),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        autofocus: false,
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16,
+                            ),
+                        decoration: InputDecoration(
+                          hintText: 'Last Name',
+                          hintStyle:
+                              Theme.of(context).textTheme.bodyText2?.copyWith(
+                                    fontSize: 16,
+                                  ),
+                          focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(width: 0)),
+                        ),
+                        controller: _lastNameController,
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).requestFocus(_postFocusNode);
+                        },
+                      ),
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  autofocus: false,
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 16,
+                      ),
+                  decoration: InputDecoration(
+                    hintText: 'Card holder name',
+                    hintStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
+                          fontSize: 16,
+                        ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                          width: 1,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .surface), //<-- SEE HERE
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                          width: 1,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .surface), //<-- SEE HERE
+                    ),
+                  ),
+                  controller: _nameController,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_postFocusNode);
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  textInputAction: TextInputAction.next,
+                  autofocus: false,
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: 16,
+                      ),
+                  decoration: InputDecoration(
+                    hintText: 'Post Code',
+                    hintStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
+                          fontSize: 16,
+                        ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                          width: 1,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .surface), //<-- SEE HERE
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                          width: 1,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .surface), //<-- SEE HERE
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                          width: 1, color: Colors.red), //<-- SEE HERE
+                    ),
+                  ),
+                  controller: _postcodeController,
+                  validator: (value) {
+                    bool isZipValid = false;
+                    if (value != null && value.isEmpty) {
+                      isZipValid = RegExp(r"/(^\d{5}$)|(^\d{5}-\d{4}$)/",
+                              caseSensitive: false)
+                          .hasMatch(value);
+                      if (isZipValid) {
+                        // yay zip is valid
+                        return null;
+                      }
+                    }
+                    return 'Not a Valid Post Code';
+                  },
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 15, 8, 8),
@@ -108,7 +289,8 @@ class _WePayPageState extends State<WePayPage> {
                         color: Theme.of(context).colorScheme.surface,
                       ),
                     ),
-                    child: TextField(
+                    child: TextFormField(
+                      focusNode: _postFocusNode,
                       autofocus: false,
                       textAlign: TextAlign.start,
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
@@ -124,13 +306,24 @@ class _WePayPageState extends State<WePayPage> {
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(width: 0)),
                       ),
-                      controller: _amountController,
-                      keyboardType: TextInputType.number,
-                      onSubmitted: (_) {},
+                      controller: _postcodeController,
+                      validator: (value) {
+                        bool isZipValid = false;
+                        if (value != null && value.isEmpty) {
+                          isZipValid = RegExp(r"/(^\d{5}$)|(^\d{5}-\d{4}$)/",
+                                  caseSensitive: false)
+                              .hasMatch(value);
+                          if (isZipValid) {
+                            // yay zip is valid
+                            return null;
+                          }
+                        }
+                        return 'Not a Valid Post Code';
+                      },
                     )),
               ),
               SizedBox(
-                  height: 135,
+                  height: 130,
                   child: InAppWebView(
                     initialOptions: InAppWebViewGroupOptions(
                       android: AndroidInAppWebViewOptions(),
@@ -148,24 +341,26 @@ class _WePayPageState extends State<WePayPage> {
                     initialData: InAppWebViewInitialData(data: WepayHtml.body),
                     onWebViewCreated: (controller) {
                       webViewController = controller;
+                      showiFrameState();
                     },
-                    onConsoleMessage: ((controller, consoleMessage) => {
-                          logger.i(consoleMessage),
-                        }),
+                    onConsoleMessage: ((controller, consoleMessage) {
+                      logger.i(consoleMessage);
+                      // hmm could i get the token here?
+                    }),
                   )),
+              // iframe loads so this dissappears fast, but the wepay iframe takes longer
+              // (showiFrame) ? SizedBox() : CircularProgressIndicator(),
             ],
           ),
         ),
       ),
+      wepay: true,
       button: (isLoading)
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : GenericButton(
               text: "Donate",
               disabled: false,
-              onClicked: () => {
-                //webViewController?.evaluateJavascript(source: "tokenize();"),
-                toggleLoading()
-              },
+              onClicked: () => onSubmit(context),
             ),
     );
   }
