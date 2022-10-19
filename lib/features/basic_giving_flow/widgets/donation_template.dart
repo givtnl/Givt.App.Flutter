@@ -87,22 +87,19 @@ class DoantionTemplate extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (button != null)
-                  (Column(
-                    children: [
-                      (wepay!) ? SizedBox(height: 0) : SizedBox(height: 60),
-                      button!
-                    ],
-                  ))
-                else
-                  const SizedBox(
-                    height: 0,
-                    width: 0,
-                  ),
               ],
             ),
           ),
         ),
+        floatingActionButton: button != null
+            ? Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                child: button,
+              )
+            : const SizedBox(
+                height: 0,
+                width: 0,
+              ),
       ),
     );
   }
