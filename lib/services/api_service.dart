@@ -51,4 +51,15 @@ class APIService {
       return response.body;
     }
   }
+
+  Future<dynamic> submitDonation(String userId, String donationObject) async {
+    final url = Uri.https(baseApiUrl, '/api/v2/users//$userId/givts');
+    var response = await http.post(url, body: donationObject, headers: headers);
+    if (response.statusCode >= 400) {
+      throw Exception('Failed to create a registered user');
+    } else {
+      // returns stringified object
+      return response.body;
+    }
+  }
 }

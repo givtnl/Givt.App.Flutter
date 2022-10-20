@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/controller/create_cachedGivt.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/controller/amount_controller.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_info.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_stats.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_button.dart';
@@ -24,7 +24,7 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
 
 // should be received from QR scan, gotten from database, etc
   Map<String, dynamic> FetchedInfo = {
-    'mediumId': 'medium-receieved-from-qr',
+    'mediumId': '61f7ed0147421018c001.c00000000053',
     'days': 12,
     'typicalAmounts': [5, 10, 15],
   };
@@ -78,8 +78,8 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
       button: GenericButton(
         text: 'Next',
         disabled: donationAmount > 1.5 ? false : true,
-        onClicked: () => createCachedGivtandNavigate(
-            donationAmount, FetchedInfo['mediumId']),
+        onClicked: () => AmountController().createCachedGivtandNavigate(
+            context, donationAmount, FetchedInfo['mediumId']),
       ),
     );
   }

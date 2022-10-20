@@ -5,6 +5,7 @@ import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_tem
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/text_input_field.dart';
 import 'package:givt_mobile_apps/models/html.dart';
 import 'package:givt_mobile_apps/models/registered_user.dart';
+import 'package:givt_mobile_apps/models/submitted_donation.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -178,7 +179,7 @@ class _WePayPageState extends State<WePayPage> {
                       _webViewController = controller;
                       showiFrameState();
                     },
-                    onConsoleMessage: ((controller, consoleMessage) {
+                    onConsoleMessage: (controller, consoleMessage) {
                       Map<String, dynamic> decoded =
                           json.decode(consoleMessage.message);
 
@@ -186,7 +187,7 @@ class _WePayPageState extends State<WePayPage> {
 
                       DonationController().createMandateAndSubmitDonation(
                           wepayToken, toggleLoader, context, _registeredUserId);
-                    }),
+                    },
                   )),
             ],
           ),
@@ -211,7 +212,6 @@ class _WePayPageState extends State<WePayPage> {
                                 registeredUserId,
                                 toggleLoader)
                           }
-                        //onSubmit(context),
                       })
           : SizedBox(),
     );
