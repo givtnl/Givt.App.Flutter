@@ -1,4 +1,4 @@
-package com.example.givt_mobile_apps
+package net.givtapp.flutter.alpha
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart' hide ProgressIndicator;
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/utils/progress_indicator.dart';
@@ -47,9 +48,13 @@ class _StartupPageState extends State<StartupPage> {
     print(
         'Progress camera is ${current.cameraAsked}; and location is  ${current.locationAsked}');
     super.initState();
+    initialization();
     Future.delayed(Duration.zero, () {
       startCarousel();
     });
+  }
+  void initialization() async {
+    FlutterNativeSplash.remove();
   }
 
   @override

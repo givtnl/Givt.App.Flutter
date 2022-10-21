@@ -1,0 +1,28 @@
+Givt offers a secure and easy way to donate by using your mobile phone. How easy? Simply open the app, select an amount and scan a QR-code, move your phone towards a collecting box or bag or select your goal from the list and that’s it. Clear, easy, and safe. We ensure that your donation will arrive at the charity fund, church or street musician.
+
+- Safe: Givt works with direct debit, therefore it is always possible to revoke your donation.
+
+- Clear: Givt has a crystal clear design so you can easily find your way.
+
+- Anonymous: Givt ensures that your identity remains private, just like when you give cash.
+
+- Easy: Givt lets you give whenever, wherever.
+
+- Freedom: You decide how much you want to give.
+
+Download Givt and create your account. The simple and one-time registration makes giving easy. No time wasted on topping up your account or login procedures! Donations will be withdrawn only after you have really donated with the app. Donations can be made without logging in.
+
+Where are you able to use Givt?
+Givt is connecting with collecting authorities at a high rate. Each week there are more charities and churches added where you have the chance to donate easily and securely without cash. Go to http://www.givtapp.net/where/ to see where you can use Givt.
+
+Is someone not using Givt yet?
+Is the organisation you want to donate to not yet in the app? Please let us know if there is a charity or church you would like to donate to. Or if you are part of a charity or church yourself that wants to receive donations via Givt. You’ll find a form on our website to notify us. The more parties take part, the easier you can keep on giving.
+
+What do you think of Givt?
+We want to develop products and services that are fully in line with the needs of our users, thus adding something to the way you can make a donation. The feedback from users is indispensable. We would like to hear what you think, miss or what can be improved. You can reach us by email at support@givt.app
+
+____________________________
+
+
+Why does Givt need access to my location?
+When using an Android smartphone, the Givt-beacon can only be detected by the Givt-app when the location is known. Therefore, Givt needs your location to make giving possible. Besides that, we do not use your location.
