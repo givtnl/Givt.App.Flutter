@@ -1,10 +1,9 @@
 postCodeValidation(value) {
   bool isZipValid = false;
   if (value != null && value.isEmpty == false) {
-    isZipValid = isZipValid =
+    isZipValid =
         RegExp(r"^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$", caseSensitive: false)
             .hasMatch(value);
-    print(isZipValid);
     if (isZipValid) {
       // yay zip is valid
       return null;
@@ -15,9 +14,10 @@ postCodeValidation(value) {
 
 nameValidation(value) {
   if (value == null || value.isEmpty) {
-    return 'Please fill in the field';
+    return 'Please enter the cardholders\' name';
+  }
+  if (value.length > 30) {
+    return 'Cannot exceed 30 characters';
   }
   return null;
 }
-
-//90210

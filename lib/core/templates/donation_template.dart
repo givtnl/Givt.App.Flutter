@@ -3,12 +3,12 @@ import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_info.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_stats.dart';
 
-class DoantionTemplate extends StatelessWidget {
+class DonationTemplate extends StatelessWidget {
   String questionText;
   Widget content;
   Widget? button;
   bool? wepay;
-  DoantionTemplate({
+  DonationTemplate({
     super.key,
     required this.questionText,
     required this.content,
@@ -41,53 +41,55 @@ class DoantionTemplate extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 45),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  children: [
-                    Column(
-                      children: [
-                        CampaignInfo(
-                          orgCause: FetchedInfo["orgCause"],
-                          orgCauseDescription:
-                              FetchedInfo['orgCauseDescription'],
-                          orgName: FetchedInfo['orgName'],
-                        ),
-                        CampaignStats(
-                          currentMoney: FetchedInfo['currentMoney'],
-                          days: FetchedInfo['days'],
-                          goalMoney: FetchedInfo['goalMoney'],
-                        ),
-                      ],
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
-                              child: Text(
-                                questionText,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1
-                                    ?.copyWith(fontWeight: FontWeight.w800),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 45),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    children: [
+                      Column(
+                        children: [
+                          CampaignInfo(
+                            orgCause: FetchedInfo["orgCause"],
+                            orgCauseDescription:
+                                FetchedInfo['orgCauseDescription'],
+                            orgName: FetchedInfo['orgName'],
+                          ),
+                          CampaignStats(
+                            currentMoney: FetchedInfo['currentMoney'],
+                            days: FetchedInfo['days'],
+                            goalMoney: FetchedInfo['goalMoney'],
+                          ),
+                        ],
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 16, 0, 8),
+                                child: Text(
+                                  questionText,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(fontWeight: FontWeight.w800),
+                                ),
                               ),
-                            ),
-                            content,
-                          ],
+                              content,
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

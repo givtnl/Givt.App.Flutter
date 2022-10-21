@@ -3,6 +3,7 @@ import 'package:givt_mobile_apps/features/basic_giving_flow/controller/validatio
 
 class TextInputField extends StatelessWidget {
   Widget passedWidget;
+  bool hasError = false;
 
   TextInputField({super.key, required this.passedWidget});
 
@@ -19,7 +20,8 @@ class TextInputField extends StatelessWidget {
             ),
             side: BorderSide(
               width: 1,
-              color: Theme.of(context).colorScheme.surface,
+              color:
+                  hasError ? Colors.red : Theme.of(context).colorScheme.surface,
             ),
           ),
           child: SizedBox(

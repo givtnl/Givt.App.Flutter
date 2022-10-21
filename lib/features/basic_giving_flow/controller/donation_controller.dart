@@ -22,14 +22,24 @@ class DonationController {
 
   void initialiseDonationProcess(
       BuildContext context,
-      firstNameController,
-      lastNameController,
-      postcodeController,
+      Map<String, String> _formValue,
       InAppWebViewController webViewController,
       Function setRegisteredUserId,
       Function toggleLoader) async {
-    final usrController = UserController(context, firstNameController.text,
-        lastNameController, postcodeController.text);
+    var hasSpaceChar = _formValue['name']!.contains(' ');
+    late String firstName;
+    late String lastName;
+    if (hasSpaceChar) {
+      firstName =
+          _formValue['name']!.substring(0, _formValue['name']!.indexOf(' '));
+      lastName = _formValue['name']!.substring(
+          _formValue['name']!.indexOf(' ') + 1, _formValue['name']!.length);
+    } else {
+      firstName = _formValue['name']!;
+      lastName = '';
+    }
+    final usrController =
+        UserController(context, firstName, lastName, _formValue['postalCode']);
     toggleLoader(true);
 
     try {
@@ -41,7 +51,7 @@ class DonationController {
       //create registered user
       final response = await usrController.createAndGetRegisteredUser(
           localUser.userId, tempUserMap["user"]);
-      print(response.toString());
+
       setRegisteredUserId(response.userId);
       webViewController.evaluateJavascript(source: "tokenize();");
     } catch (error) {
@@ -56,7 +66,6 @@ class DonationController {
     try {
       // create the jsonDonation
       final jsonDonation = Donation(wepayToken: wePayToken).jsonDonation();
-      print(jsonDonation);
       final responseDonation =
           await APIService().submitDonation(userId, jsonDonation);
       final responseMandate =
@@ -65,7 +74,6 @@ class DonationController {
       toggleLoader(false);
     } catch (error) {
       toggleLoader(false);
-      print(error);
       SnackBarNotifyer(context)
           .showSnackBarMessage(error.toString(), Colors.red);
     }
