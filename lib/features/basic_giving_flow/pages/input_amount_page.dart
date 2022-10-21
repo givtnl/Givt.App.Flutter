@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/controller/input_controller.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_info.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_stats.dart';
@@ -19,6 +20,12 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
   };
   // for user input
   final _amountController = TextEditingController();
+  bool isLoading = false;
+  void toggleLoader(bool loading) {
+    setState(() {
+      isLoading = loading;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +67,20 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
             controller: _amountController,
             keyboardType: TextInputType.number,
             onSubmitted: (_) {
-              InputController(context).handleSubmit(
-                  _amountController.text, FetchedInfo['mediumId']);
+              InputController(context).handleSubmit(_amountController.text,
+                  FetchedInfo['mediumId'], toggleLoader);
             },
           ),
         ),
+        button: (isLoading)
+            ? const Center(child: CircularProgressIndicator())
+            : GenericButton(
+                text: 'Next',
+                disabled: false,
+                onClicked: () {
+                  InputController(context).handleSubmit(_amountController.text,
+                      FetchedInfo['mediumId'], toggleLoader);
+                }),
       ),
     );
   }

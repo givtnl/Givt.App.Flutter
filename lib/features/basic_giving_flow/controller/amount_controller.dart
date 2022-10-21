@@ -11,14 +11,15 @@ import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class AmountController {
-  Future<void> createCachedGivtandNavigate(
-      context, int donationAmount, String mediumId) async {
+  Future<void> createCachedGivtandNavigate(context, int donationAmount,
+      String mediumId, Function toggleLoader) async {
     bool connected = await tryConnection();
     String dateTime = DateTime.now().toIso8601String();
     final usrController = UserController(context, null, null, null);
 
     final NavigationService navigationService = locator<NavigationService>();
     late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+    toggleLoader(true);
 
 // fourth arg is null bc the current flow doesnt register the email so it does not fetch the userId
     //model.createCachedGivt(mediumId, donationAmount, dateTime, null);
@@ -50,6 +51,7 @@ class AmountController {
 
         navigationService.navigateTo(routes.WepayRoute);
       } catch (error) {
+        toggleLoader(false);
         SnackBarNotifyer(context)
             .showSnackBarMessage(error.toString(), Colors.red);
       }

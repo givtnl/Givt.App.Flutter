@@ -31,6 +31,13 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
 
   int donationAmount = 0;
   int selection = -1;
+  bool isLoading = false;
+
+  void toggleLoader(bool loading) {
+    setState(() {
+      isLoading = loading;
+    });
+  }
 
   void selectedTypicalAmount(int index) {
     setState(() {
@@ -75,12 +82,17 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
                 _navigationService.navigateTo(routes.DonationAmountInputRoute),
             label: 'Enter a different amount'),
       ]),
-      button: GenericButton(
-        text: 'Next',
-        disabled: donationAmount > 1.5 ? false : true,
-        onClicked: () => AmountController().createCachedGivtandNavigate(
-            context, donationAmount, FetchedInfo['mediumId']),
-      ),
+      button: (isLoading)
+          ? const Center(child: CircularProgressIndicator())
+          : GenericButton(
+              text: 'Next',
+              disabled: donationAmount > 1.5 ? false : true,
+              onClicked: () => AmountController().createCachedGivtandNavigate(
+                  context,
+                  donationAmount,
+                  FetchedInfo['mediumId'],
+                  toggleLoader),
+            ),
     );
   }
 }

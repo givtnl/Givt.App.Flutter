@@ -26,7 +26,6 @@ class DonationController {
       lastNameController,
       postcodeController,
       InAppWebViewController webViewController,
-      Function setRegisteredUserId,
       Function toggleLoader) async {
     final usrController = UserController(context, firstNameController.text,
         lastNameController, postcodeController.text);
@@ -42,7 +41,6 @@ class DonationController {
       final response = await usrController.createAndGetRegisteredUser(
           localUser.userId, tempUserMap["user"]);
       print(response.toString());
-      setRegisteredUserId(response.userId);
       webViewController.evaluateJavascript(source: "tokenize();");
     } catch (error) {
       toggleLoader(false);

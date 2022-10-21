@@ -35,7 +35,6 @@ class WePayPage extends StatefulWidget {
 class _WePayPageState extends State<WePayPage> {
   late InAppWebViewController _webViewController;
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
-  bool showiFrame = false;
   final _postFocusNode = FocusNode();
   final _nameController = TextEditingController();
   final _postcodeController = TextEditingController();
@@ -43,6 +42,12 @@ class _WePayPageState extends State<WePayPage> {
   late String _registeredUserId;
 
   bool isLoading = false;
+
+  @override
+  void initState() {
+    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
+    _registeredUserId = localUser.userId;
+  }
 
   @override
   void dispose() {
@@ -55,190 +60,133 @@ class _WePayPageState extends State<WePayPage> {
     });
   }
 
-  void registeredUserId(String id) {
-    _registeredUserId = id;
-  }
-
-  showiFrameState() {
-    setState(() {
-      showiFrame = true;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
 
     return DoantionTemplate(
-      questionText: "Fill in your credit card details",
-      content: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-        child: Form(
-          key: _form,
-          child: Column(
-            children: <Widget>[
-              TextInputField(
-                passedWidget: TextFormField(
-                  autofocus: false,
-                  controller: _nameController,
-                  validator: (value) => nameValidation(value),
-                  onFieldSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(_postFocusNode);
-                  },
-                  textInputAction: TextInputAction.next,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(fontSize: 16),
-                  decoration: InputDecoration(
-                    hintText: 'Cardholder Name',
-                    hintStyle: Theme.of(context)
+        questionText: "Fill in your credit card details",
+        content: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+          child: Form(
+            key: _form,
+            child: Column(
+              children: <Widget>[
+                TextInputField(
+                  passedWidget: TextFormField(
+                    autofocus: false,
+                    controller: _nameController,
+                    validator: (value) => nameValidation(value),
+                    onFieldSubmitted: (_) {
+                      FocusScope.of(context).requestFocus(_postFocusNode);
+                    },
+                    textInputAction: TextInputAction.next,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context)
                         .textTheme
-                        .bodyText2
+                        .bodyText1
                         ?.copyWith(fontSize: 16),
-                    focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(width: 0)),
-                  ),
-                ),
-              ),
-              // TextInputField(
-              //   passedWidget: TextFormField(
-              //     autofocus: false,
-              //     controller: _firstNameController,
-              //     validator: (value) => nameValidation(value),
-              //     onFieldSubmitted: (_) {
-              //       FocusScope.of(context).requestFocus(_lastNameFocusNode);
-              //     },
-              //     textInputAction: TextInputAction.next,
-              //     textAlign: TextAlign.start,
-              //     style: Theme.of(context)
-              //         .textTheme
-              //         .bodyText1
-              //         ?.copyWith(fontSize: 16),
-              //     decoration: InputDecoration(
-              //       hintText: 'First Name',
-              //       hintStyle: Theme.of(context)
-              //           .textTheme
-              //           .bodyText2
-              //           ?.copyWith(fontSize: 16),
-              //       focusedBorder: const UnderlineInputBorder(
-              //           borderSide: BorderSide(width: 0)),
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(height: 15),
-              // TextInputField(
-              //   passedWidget: TextFormField(
-              //     autofocus: false,
-              //     focusNode: _lastNameFocusNode,
-              //     controller: _lastNameController,
-              //     validator: (value) => nameValidation(value),
-              //     onFieldSubmitted: (_) =>
-              //         FocusScope.of(context).requestFocus(_postFocusNode),
-              //     textInputAction: TextInputAction.next,
-              //     textAlign: TextAlign.start,
-              //     style: Theme.of(context)
-              //         .textTheme
-              //         .bodyText1
-              //         ?.copyWith(fontSize: 16),
-              //     decoration: InputDecoration(
-              //       hintText: 'Last Name',
-              //       hintStyle: Theme.of(context)
-              //           .textTheme
-              //           .bodyText2
-              //           ?.copyWith(fontSize: 16),
-              //       focusedBorder: const UnderlineInputBorder(
-              //           borderSide: BorderSide(width: 0)),
-              //     ),
-              //   ),
-              // ),
-              const SizedBox(height: 15),
-              TextInputField(
-                passedWidget: TextFormField(
-                  autofocus: false,
-                  focusNode: _postFocusNode,
-                  controller: _postcodeController,
-                  validator: (value) => postCodeValidation(value),
-                  onFieldSubmitted: (_) {
-                    FocusScopeNode currentFocus = FocusScope.of(context);
-                    if (!currentFocus.hasPrimaryFocus) {
-                      currentFocus.unfocus();
-                    }
-                  },
-                  textInputAction: TextInputAction.next,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(fontSize: 16),
-                  decoration: InputDecoration(
-                    hintText: 'Postal Code',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(fontSize: 16),
-                    focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(width: 0)),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 5),
-              SizedBox(
-                  height: 130,
-                  child: InAppWebView(
-                    initialOptions: InAppWebViewGroupOptions(
-                      android: AndroidInAppWebViewOptions(),
-                      crossPlatform: InAppWebViewOptions(
-                        javaScriptEnabled: true,
-                        disableVerticalScroll: true,
-                      ),
+                    decoration: InputDecoration(
+                      hintText: 'Cardholder Name',
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          ?.copyWith(fontSize: 16),
+                      focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(width: 0)),
                     ),
-                    // initialUrlRequest: URLRequest(
-                    //   url: Uri(
-                    //       scheme: "https",
-                    //       host: "givt-debug-api.azurewebsites.net",
-                    //       path: "/wepay-flutter.html"),
-                    // ),
-                    initialData: InAppWebViewInitialData(data: WepayHtml.body),
-                    onWebViewCreated: (controller) {
-                      _webViewController = controller;
-                      showiFrameState();
+                  ),
+                ),
+                SizedBox(height: 15),
+                TextInputField(
+                  passedWidget: TextFormField(
+                    autofocus: false,
+                    focusNode: _postFocusNode,
+                    controller: _postcodeController,
+                    validator: (value) => postCodeValidation(value),
+                    onFieldSubmitted: (_) {
+                      FocusScopeNode currentFocus = FocusScope.of(context);
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
                     },
-                    onConsoleMessage: (controller, consoleMessage) {
-                      Map<String, dynamic> decoded =
-                          json.decode(consoleMessage.message);
-                      final wepayToken = decoded['id'];
+                    textInputAction: TextInputAction.next,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        ?.copyWith(fontSize: 16),
+                    decoration: InputDecoration(
+                      hintText: 'Postal Code',
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          ?.copyWith(fontSize: 16),
+                      focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(width: 0)),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                SizedBox(
+                    height: 130,
+                    child: InAppWebView(
+                      initialOptions: InAppWebViewGroupOptions(
+                        android: AndroidInAppWebViewOptions(),
+                        crossPlatform: InAppWebViewOptions(
+                          javaScriptEnabled: true,
+                          disableVerticalScroll: true,
+                        ),
+                      ),
+                      // initialUrlRequest: URLRequest(
+                      //   url: Uri(
+                      //       scheme: "https",
+                      //       host: "givt-debug-api.azurewebsites.net",
+                      //       path: "/wepay-flutter.html"),
+                      // ),
+                      initialData:
+                          InAppWebViewInitialData(data: WepayHtml.body),
+                      onWebViewCreated: (controller) {
+                        _webViewController = controller;
+                      },
+                      onConsoleMessage: (controller, consoleMessage) {
+                        Map<String, dynamic> decoded =
+                            json.decode(consoleMessage.message);
+                        final wepayToken = decoded['id'];
 
-                      DonationController().createMandateAndSubmitDonation(
-                          wepayToken, toggleLoader, context, _registeredUserId);
-                    },
-                  )),
-            ],
+                        DonationController().createMandateAndSubmitDonation(
+                            wepayToken,
+                            toggleLoader,
+                            context,
+                            _registeredUserId);
+                      },
+                    )),
+                const SizedBox(height: 55),
+              ],
+            ),
           ),
         ),
-      ),
-      wepay: true,
-      button: (!keyboardIsOpen)
-          ? (isLoading)
-              ? const Center(child: CircularProgressIndicator())
-              : GenericButton(
-                  text: "Donate",
-                  disabled: false,
-                  onClicked: () => {
-                        if (_form.currentState?.validate() == true)
-                          {
-                            DonationController().initialiseDonationProcess(
-                                context,
-                                _nameController,
-                                '',
-                                _postcodeController,
-                                _webViewController,
-                                registeredUserId,
-                                toggleLoader)
-                          }
-                      })
-          : SizedBox(),
-    );
+        wepay: true,
+        button:
+            // (!keyboardIsOpen)?
+            (isLoading)
+                ? const Center(child: CircularProgressIndicator())
+                : GenericButton(
+                    text: "Donate",
+                    disabled: false,
+                    onClicked: () => {
+                          if (_form.currentState?.validate() == true)
+                            {
+                              DonationController().initialiseDonationProcess(
+                                  context,
+                                  _nameController,
+                                  '',
+                                  _postcodeController,
+                                  _webViewController,
+                                  toggleLoader)
+                            }
+                        })
+        //  : SizedBox(),
+        );
   }
 }
