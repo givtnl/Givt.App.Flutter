@@ -14,6 +14,10 @@ jobs:
         with: 
           ruby-version: '3.0'
           bundler-cache: true
+      - name: Auth codesigning
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.PRIVATE_GIT_SSH_KEY }}
       - name: Install Fastlane
         uses: maierj/fastlane-action@v2.3.0
         with:
