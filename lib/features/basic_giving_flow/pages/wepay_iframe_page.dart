@@ -37,10 +37,7 @@ class _WePayPageState extends State<WePayPage> {
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
   bool showiFrame = false;
   final _postFocusNode = FocusNode();
-  final _lastNameFocusNode = FocusNode();
   final _nameController = TextEditingController();
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
   final _postcodeController = TextEditingController();
   final _form = GlobalKey<FormState>();
   late String _registeredUserId;
@@ -50,7 +47,6 @@ class _WePayPageState extends State<WePayPage> {
   @override
   void dispose() {
     _postFocusNode.dispose();
-    _lastNameFocusNode.dispose();
   }
 
   void toggleLoader(bool loading) {
@@ -81,13 +77,38 @@ class _WePayPageState extends State<WePayPage> {
           key: _form,
           child: Column(
             children: <Widget>[
+              TextInputField(
+                passedWidget: TextFormField(
+                  autofocus: false,
+                  controller: _nameController,
+                  validator: (value) => nameValidation(value),
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_postFocusNode);
+                  },
+                  textInputAction: TextInputAction.next,
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.copyWith(fontSize: 16),
+                  decoration: InputDecoration(
+                    hintText: 'Cardholder Name',
+                    hintStyle: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        ?.copyWith(fontSize: 16),
+                    focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(width: 0)),
+                  ),
+                ),
+              ),
               // TextInputField(
               //   passedWidget: TextFormField(
               //     autofocus: false,
-              //     controller: _nameController,
+              //     controller: _firstNameController,
               //     validator: (value) => nameValidation(value),
               //     onFieldSubmitted: (_) {
-              //       FocusScope.of(context).requestFocus(_postFocusNode);
+              //       FocusScope.of(context).requestFocus(_lastNameFocusNode);
               //     },
               //     textInputAction: TextInputAction.next,
               //     textAlign: TextAlign.start,
@@ -96,7 +117,7 @@ class _WePayPageState extends State<WePayPage> {
               //         .bodyText1
               //         ?.copyWith(fontSize: 16),
               //     decoration: InputDecoration(
-              //       hintText: 'Cardholder Name',
+              //       hintText: 'First Name',
               //       hintStyle: Theme.of(context)
               //           .textTheme
               //           .bodyText2
@@ -106,57 +127,32 @@ class _WePayPageState extends State<WePayPage> {
               //     ),
               //   ),
               // ),
-              TextInputField(
-                passedWidget: TextFormField(
-                  autofocus: false,
-                  controller: _firstNameController,
-                  validator: (value) => nameValidation(value),
-                  onFieldSubmitted: (_) {
-                    FocusScope.of(context).requestFocus(_lastNameFocusNode);
-                  },
-                  textInputAction: TextInputAction.next,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(fontSize: 16),
-                  decoration: InputDecoration(
-                    hintText: 'First Name',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(fontSize: 16),
-                    focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(width: 0)),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 15),
-              TextInputField(
-                passedWidget: TextFormField(
-                  autofocus: false,
-                  focusNode: _lastNameFocusNode,
-                  controller: _lastNameController,
-                  validator: (value) => nameValidation(value),
-                  onFieldSubmitted: (_) =>
-                      FocusScope.of(context).requestFocus(_postFocusNode),
-                  textInputAction: TextInputAction.next,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      ?.copyWith(fontSize: 16),
-                  decoration: InputDecoration(
-                    hintText: 'Last Name',
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(fontSize: 16),
-                    focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(width: 0)),
-                  ),
-                ),
-              ),
+              // const SizedBox(height: 15),
+              // TextInputField(
+              //   passedWidget: TextFormField(
+              //     autofocus: false,
+              //     focusNode: _lastNameFocusNode,
+              //     controller: _lastNameController,
+              //     validator: (value) => nameValidation(value),
+              //     onFieldSubmitted: (_) =>
+              //         FocusScope.of(context).requestFocus(_postFocusNode),
+              //     textInputAction: TextInputAction.next,
+              //     textAlign: TextAlign.start,
+              //     style: Theme.of(context)
+              //         .textTheme
+              //         .bodyText1
+              //         ?.copyWith(fontSize: 16),
+              //     decoration: InputDecoration(
+              //       hintText: 'Last Name',
+              //       hintStyle: Theme.of(context)
+              //           .textTheme
+              //           .bodyText2
+              //           ?.copyWith(fontSize: 16),
+              //       focusedBorder: const UnderlineInputBorder(
+              //           borderSide: BorderSide(width: 0)),
+              //     ),
+              //   ),
+              // ),
               const SizedBox(height: 15),
               TextInputField(
                 passedWidget: TextFormField(
@@ -234,8 +230,8 @@ class _WePayPageState extends State<WePayPage> {
                           {
                             DonationController().initialiseDonationProcess(
                                 context,
-                                _firstNameController,
-                                _lastNameController,
+                                _nameController,
+                                '',
                                 _postcodeController,
                                 _webViewController,
                                 registeredUserId,
