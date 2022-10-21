@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/controller/amount_controller.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_info.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_stats.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
-import 'package:givt_mobile_apps/utils/connection_check.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 

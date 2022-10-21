@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_info.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_stats.dart';
 

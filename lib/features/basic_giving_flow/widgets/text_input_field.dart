@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/controller/validation_controllers.dart';
 
 class TextInputField extends StatelessWidget {
   Widget passedWidget;
