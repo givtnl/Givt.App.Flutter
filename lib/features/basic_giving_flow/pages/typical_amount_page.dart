@@ -24,7 +24,7 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
 
 // should be received from QR scan, gotten from database, etc
   Map<String, dynamic> FetchedInfo = {
-    'mediumId': '61f7ed0147421018c001.c00000000053',
+    'mediumId': '61f7ed0155530122c000.c00000000003',
     'days': 12,
     'typicalAmounts': [5, 10, 15],
   };

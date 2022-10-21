@@ -18,7 +18,7 @@ class DoantionTemplate extends StatelessWidget {
 
 // should be received from QR scan, gotten from database, etc
   Map<String, dynamic> FetchedInfo = {
-    'mediumId': 'medium-receieved-from-qr',
+    'mediumId': '61f7ed0155530122c000.c00000000003',
     "orgName": 'First Church of Atlanta',
     'orgCause': 'Donate to the youth ministry trip to Equador',
     "orgCauseDescription":

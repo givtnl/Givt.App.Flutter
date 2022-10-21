@@ -14,7 +14,7 @@ class AmountController {
   Future<void> createCachedGivtandNavigate(
       context, int donationAmount, String mediumId) async {
     bool connected = await tryConnection();
-    DateTime dateTime = DateTime.now();
+    String dateTime = DateTime.now().toIso8601String();
     final usrController = UserController(context, null, null, null);
 
     final NavigationService navigationService = locator<NavigationService>();
@@ -28,14 +28,16 @@ class AmountController {
         final Map<String, dynamic> tempUserMap =
             await usrController.createAndGetTempUser(null);
         final tempUserID = tempUserMap["userId"];
+        realmProxy.addUserId(tempUserID);
+        LocalUser localUser =
+            realmProxy.realm.all<LocalStorage>().first.userData!;
+
         // store donation info locally
         realmProxy.createCachedGivt(
             mediumId, donationAmount, dateTime, tempUserID);
 
         /// just assurances bellow
         ///////////////////////////////////////////////////////
-        LocalUser localUser =
-            realmProxy.realm.all<LocalStorage>().first.userData!;
         CachedGivts? localDonation = realmProxy.realm
             .all<LocalStorage>()
             .first

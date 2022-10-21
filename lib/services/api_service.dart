@@ -56,7 +56,7 @@ class APIService {
     final url = Uri.https(baseApiUrl, '/api/v2/users//$userId/givts');
     var response = await http.post(url, body: donationObject, headers: headers);
     if (response.statusCode >= 400) {
-      throw Exception('Failed to create a registered user');
+      throw Exception('Failed to process donation');
     } else {
       // returns stringified object
       return response.body;

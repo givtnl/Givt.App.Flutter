@@ -209,7 +209,7 @@ class CachedGivts extends _CachedGivts with RealmEntity, RealmObject {
   CachedGivts(
     String mediumId,
     int donationAmount,
-    DateTime dateTime,
+    String dateTime,
     String userId,
   ) {
     RealmObject.set(this, 'mediumId', mediumId);
@@ -231,10 +231,9 @@ class CachedGivts extends _CachedGivts with RealmEntity, RealmObject {
   set donationAmount(int value) => throw RealmUnsupportedSetError();
 
   @override
-  DateTime get dateTime =>
-      RealmObject.get<DateTime>(this, 'dateTime') as DateTime;
+  String get dateTime => RealmObject.get<String>(this, 'dateTime') as String;
   @override
-  set dateTime(DateTime value) => throw RealmUnsupportedSetError();
+  set dateTime(String value) => throw RealmUnsupportedSetError();
 
   @override
   String get userId => RealmObject.get<String>(this, 'userId') as String;
@@ -252,7 +251,7 @@ class CachedGivts extends _CachedGivts with RealmEntity, RealmObject {
     return const SchemaObject(CachedGivts, 'CachedGivts', [
       SchemaProperty('mediumId', RealmPropertyType.string),
       SchemaProperty('donationAmount', RealmPropertyType.int),
-      SchemaProperty('dateTime', RealmPropertyType.timestamp),
+      SchemaProperty('dateTime', RealmPropertyType.string),
       SchemaProperty('userId', RealmPropertyType.string),
     ]);
   }

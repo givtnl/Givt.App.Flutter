@@ -35,7 +35,7 @@ class _CachedGivts {
   late final String mediumId;
   late final int donationAmount;
   // this should be an ISO8601 format
-  late final DateTime dateTime;
+  late final String dateTime;
   late final String userId;
   // should this then have a token? -- no for now
 }
@@ -66,6 +66,13 @@ class LocalStorageProxy {
       LocalStorage localCurrent = realm.all<LocalStorage>().first;
       localCurrent.cachedGivts
           .add(CachedGivts(mediumId, donationAmount, dateTime, userId));
+    });
+  }
+
+  void addUserId(String id) {
+    realm.write(() {
+      LocalUser localCurrent = realm.all<LocalStorage>().first.userData!;
+      localCurrent.userId = id;
     });
   }
 

@@ -40,6 +40,7 @@ class DonationController {
       //create registered user
       final response = await usrController.createAndGetRegisteredUser(
           localUser.userId, tempUserMap["user"]);
+      print(response.toString());
       setRegisteredUserId(response.userId);
       webViewController.evaluateJavascript(source: "tokenize();");
 //
@@ -53,13 +54,18 @@ class DonationController {
   void createMandateAndSubmitDonation(String wePayToken, Function toggleLoader,
       BuildContext context, String userId) async {
     try {
-      // final responseDonation =
-      //     await APIService().submitDonation(userId, jsonDonation);
+      // create the jsonDonation
+      final jsonDonation = Donation(wepayToken: wePayToken).jsonDonation();
+      print(jsonDonation);
+      final responseDonation =
+          await APIService().submitDonation(userId, jsonDonation);
       final responseMandate =
           await APIService().createMandate(wePayToken, userId);
       toggleLoader(false);
+      //navigate
     } catch (error) {
       toggleLoader(false);
+      print(error);
       SnackBarNotifyer(context)
           .showSnackBarMessage(error.toString(), Colors.red);
     }

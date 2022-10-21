@@ -4,11 +4,14 @@ import 'package:givt_mobile_apps/features/basic_giving_flow/controller/validatio
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/text_input_field.dart';
 import 'package:givt_mobile_apps/models/html.dart';
+import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/models/registered_user.dart';
 import 'package:givt_mobile_apps/models/submitted_donation.dart';
+import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart'
+    hide LocalStorage;
 import '../controller/donation_controller.dart';
 
 const String handlerName = "registrationMessageHandler";
@@ -31,9 +34,11 @@ class WePayPage extends StatefulWidget {
 
 class _WePayPageState extends State<WePayPage> {
   late InAppWebViewController _webViewController;
+  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
   bool showiFrame = false;
   final _postFocusNode = FocusNode();
   final _lastNameFocusNode = FocusNode();
+  final _nameController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _postcodeController = TextEditingController();
@@ -76,6 +81,31 @@ class _WePayPageState extends State<WePayPage> {
           key: _form,
           child: Column(
             children: <Widget>[
+              // TextInputField(
+              //   passedWidget: TextFormField(
+              //     autofocus: false,
+              //     controller: _nameController,
+              //     validator: (value) => nameValidation(value),
+              //     onFieldSubmitted: (_) {
+              //       FocusScope.of(context).requestFocus(_postFocusNode);
+              //     },
+              //     textInputAction: TextInputAction.next,
+              //     textAlign: TextAlign.start,
+              //     style: Theme.of(context)
+              //         .textTheme
+              //         .bodyText1
+              //         ?.copyWith(fontSize: 16),
+              //     decoration: InputDecoration(
+              //       hintText: 'Cardholder Name',
+              //       hintStyle: Theme.of(context)
+              //           .textTheme
+              //           .bodyText2
+              //           ?.copyWith(fontSize: 16),
+              //       focusedBorder: const UnderlineInputBorder(
+              //           borderSide: BorderSide(width: 0)),
+              //     ),
+              //   ),
+              // ),
               TextInputField(
                 passedWidget: TextFormField(
                   autofocus: false,
@@ -182,7 +212,6 @@ class _WePayPageState extends State<WePayPage> {
                     onConsoleMessage: (controller, consoleMessage) {
                       Map<String, dynamic> decoded =
                           json.decode(consoleMessage.message);
-
                       final wepayToken = decoded['id'];
 
                       DonationController().createMandateAndSubmitDonation(

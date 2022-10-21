@@ -1,23 +1,13 @@
 import 'dart:convert';
 
-import 'package:givt_mobile_apps/models/temp-user.dart';
+import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/utils/locator.dart';
 
 class Donation {
-  final String userId;
-  final String amount;
-  final String timeStamp;
-  final String collectId;
-  final String mediumId;
-  final String postalCode;
+  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
   final String wepayToken;
 
   Donation({
-    required this.userId,
-    required this.amount,
-    required this.timeStamp,
-    required this.collectId,
-    required this.mediumId,
-    required this.postalCode,
     required this.wepayToken,
   });
 
@@ -25,18 +15,25 @@ class Donation {
 
   // encode into JSON using temp data
   String jsonDonation() {
+    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
+    CachedGivts? localDonation = realmProxy.realm
+        .all<LocalStorage>()
+        .first
+        .cachedGivts
+        .firstWhere((element) => element.userId == localUser.userId);
+
     return jsonEncode({
       "donations": [
         {
-          "userId": userId,
-          "amount": amount,
+          "userId": localUser.userId,
+          "amount": localDonation.donationAmount,
           "collectId": 1,
-          "mediumId": mediumId,
-          "timestamp": timeStamp
+          "mediumId": localDonation.mediumId,
+          "timestamp": localDonation.dateTime
         }
       ],
       "wePayPaymentDetails": {
-        "zipCode": postalCode,
+        "zipCode": localUser.postalCode,
         "paymentMethodToken": wepayToken
       },
       "donationType": 0
