@@ -11,8 +11,6 @@ class Donation {
     required this.wepayToken,
   });
 
-  // createTempDonationObj -- aggregates data from userID
-
   // encode into JSON using temp data
   String jsonDonation() {
     LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;

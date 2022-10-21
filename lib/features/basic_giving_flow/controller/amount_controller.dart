@@ -47,13 +47,8 @@ class AmountController {
             'Sucessfully created user ${localUser.userId} that matches $tempUserID, yay ${localUser.firstName}, user wants to donate ${localDonation.donationAmount}');
         //////////////////////////////////////////////////
         /// just assurances above
-        if (Platform.isIOS) {
-          // this should direct to ifram in the inapp browser bc of apple store policies
-          navigationService.navigateTo(routes.WepayRoute);
-        } else {
-          // this should direct to iframe in the app
-          navigationService.navigateTo(routes.WepayRoute);
-        }
+
+        navigationService.navigateTo(routes.WepayRoute);
       } catch (error) {
         SnackBarNotifyer(context)
             .showSnackBarMessage(error.toString(), Colors.red);

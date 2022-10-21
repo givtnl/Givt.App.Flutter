@@ -16,6 +16,7 @@ import '../../../core/constants/route_paths.dart' as routes;
 class DonationController {
   final _navigationService = locator<NavigationService>();
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  final NavigationService navigationService = locator<NavigationService>();
 
   late final String _registeredUserId;
 
@@ -28,7 +29,7 @@ class DonationController {
       Function setRegisteredUserId,
       Function toggleLoader) async {
     final usrController = UserController(context, firstNameController.text,
-        lastNameController.text, postcodeController.text);
+        lastNameController, postcodeController.text);
     toggleLoader(true);
 
     try {
@@ -43,7 +44,6 @@ class DonationController {
       print(response.toString());
       setRegisteredUserId(response.userId);
       webViewController.evaluateJavascript(source: "tokenize();");
-//
     } catch (error) {
       toggleLoader(false);
       SnackBarNotifyer(context)
@@ -61,8 +61,8 @@ class DonationController {
           await APIService().submitDonation(userId, jsonDonation);
       final responseMandate =
           await APIService().createMandate(wePayToken, userId);
+      navigationService.navigateTo(routes.DonationSuccessRoute);
       toggleLoader(false);
-      //navigate
     } catch (error) {
       toggleLoader(false);
       print(error);
