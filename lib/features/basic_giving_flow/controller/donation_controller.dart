@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
-import 'package:givt_mobile_apps/models/registered_user.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart'
     hide LocalStorage;
 import 'package:givt_mobile_apps/models/submitted_donation.dart';

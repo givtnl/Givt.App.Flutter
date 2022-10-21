@@ -5,8 +5,6 @@ import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_tem
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/text_input_field.dart';
 import 'package:givt_mobile_apps/models/html.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
-import 'package:givt_mobile_apps/models/registered_user.dart';
-import 'package:givt_mobile_apps/models/submitted_donation.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';

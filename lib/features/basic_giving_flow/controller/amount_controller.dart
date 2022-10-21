@@ -1,9 +1,7 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/notifications/snackbar.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/controller/user_controller.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
-import 'package:givt_mobile_apps/models/registered_user.dart';
 import 'package:givt_mobile_apps/utils/connection_check.dart';
 
 import '../../../services/navigation_service.dart';
@@ -21,8 +19,6 @@ class AmountController {
     late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
     toggleLoader(true);
 
-// fourth arg is null bc the current flow doesnt register the email so it does not fetch the userId
-    //model.createCachedGivt(mediumId, donationAmount, dateTime, null);
     if (connected) {
       try {
         //create temp user in backend and local storage
