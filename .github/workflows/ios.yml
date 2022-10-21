@@ -23,3 +23,5 @@ jobs:
         with:
           lane: ios certificates
           subdirectory: ios
+        env: 
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
