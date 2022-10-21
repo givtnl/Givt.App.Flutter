@@ -166,15 +166,18 @@ class _WePayPageState extends State<WePayPage> {
                   text: TextSpan(
                     style: Theme.of(context).textTheme.bodyText2,
                     children: <TextSpan>[
-                      TextSpan(
+                      const TextSpan(
                           text:
                               "If you want to know more about how we protect your data, please read about it in our "),
                       TextSpan(
                           text: 'privacy policy.',
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style:
+                              Theme.of(context).textTheme.bodyText2?.copyWith(
+                                    decoration: TextDecoration.underline,
+                                  ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              print('privacy policy.');
+                              print('redirect to privacy policy');
                             }),
                     ],
                   ),
