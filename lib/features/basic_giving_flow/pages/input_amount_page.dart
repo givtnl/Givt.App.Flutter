@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:givt_mobile_apps/core/templates/donation_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/controller/input_controller.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
@@ -35,7 +36,7 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
           currentFocus.unfocus();
         }
       },
-      child: DoantionTemplate(
+      child: DonationTemplate(
         questionText: 'How much would you like to donate?',
         content: InputButton(
           child: TextField(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/controller/amount_controller.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_button.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
+import 'package:givt_mobile_apps/core/templates/donation_template.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
@@ -50,7 +50,7 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
 
   @override
   Widget build(BuildContext context) {
-    return DoantionTemplate(
+    return DonationTemplate(
       wepay: false,
       questionText: "How much would you like to donate?",
       content: Column(children: [
