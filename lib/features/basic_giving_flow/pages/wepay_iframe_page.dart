@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/gestures.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/controller/validation_controllers.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
@@ -159,6 +160,30 @@ class _WePayPageState extends State<WePayPage> {
                             _registeredUserId);
                       },
                     )),
+                const SizedBox(height: 20),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.bodyText2,
+                    children: <TextSpan>[
+                      TextSpan(
+                          text:
+                              "If you want to know more about how we protect your data, please read about it in our "),
+                      TextSpan(
+                          text: 'privacy policy.',
+                          style: Theme.of(context).textTheme.bodyText2,
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              print('privacy policy.');
+                            }),
+                    ],
+                  ),
+                ),
+                // Text(
+                //   "If you want to know more about how we protect your data, please read about it in our privacy policy. ",
+                //   style: Theme.of(context).textTheme.bodyText2,
+                //   textAlign: TextAlign.center,
+                // ),
                 const SizedBox(height: 55),
               ],
             ),
