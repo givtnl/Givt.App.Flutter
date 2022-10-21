@@ -40,6 +40,9 @@ class _WePayPageState extends State<WePayPage> {
 
   @override
   void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _postcodeController.dispose();
     _postFocusNode.dispose();
   }
 
