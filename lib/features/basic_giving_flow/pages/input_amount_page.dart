@@ -15,7 +15,7 @@ class DoantionAmountInput extends StatefulWidget {
 class _DoantionAmountInputState extends State<DoantionAmountInput> {
 // should be received from QR scan, gotten from database, etc
   Map<String, dynamic> FetchedInfo = {
-    'mediumId': 'medium-receieved-from-qr',
+    'mediumId': '61f7ed0155530122c000.c00000000003',
   };
   // for user input
   final _amountController = TextEditingController();

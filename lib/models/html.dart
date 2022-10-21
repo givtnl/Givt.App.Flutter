@@ -51,7 +51,7 @@ class WepayHtml {
         },
         'valid': {
             'color': '#2e2957',
-            'border-color': '#898989'
+            'border-color': '#184869'
         },
 
         'errors': {

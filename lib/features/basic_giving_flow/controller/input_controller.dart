@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/notifications/snackbar.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/controller/create_cachedGivt.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/controller/amount_controller.dart';
 
 class InputController {
   BuildContext ctx;
@@ -12,6 +12,7 @@ class InputController {
           .showSnackBarMessage('Cannot donate less than \$2', Colors.red);
       return;
     }
-    createCachedGivtandNavigate(int.parse(inputAmount), mediumId);
+    AmountController()
+        .createCachedGivtandNavigate(ctx, int.parse(inputAmount), mediumId);
   }
 }
