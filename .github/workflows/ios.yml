@@ -19,5 +19,6 @@ jobs:
           bundler-cache: true
       - name: Install Fastlane
         uses: maierj/fastlane-action@v2.3.0
+        working-directory: ios
         with:
           lane: ios certificates
