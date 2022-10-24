@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:givt_mobile_apps/core/templates/donation_template.dart';
+import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/controller/input_controller.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_info.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_stats.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/input_button_donation.dart';
 
 class DoantionAmountInput extends StatefulWidget {
@@ -15,10 +14,16 @@ class DoantionAmountInput extends StatefulWidget {
 class _DoantionAmountInputState extends State<DoantionAmountInput> {
 // should be received from QR scan, gotten from database, etc
   Map<String, dynamic> FetchedInfo = {
-    'mediumId': 'medium-receieved-from-qr',
+    'mediumId': '61f7ed0155530122c000.c00000000003',
   };
   // for user input
   final _amountController = TextEditingController();
+  bool isLoading = false;
+  void toggleLoader(bool loading) {
+    setState(() {
+      isLoading = loading;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
           currentFocus.unfocus();
         }
       },
-      child: DoantionTemplate(
+      child: DonationTemplate(
         questionText: 'How much would you like to donate?',
         content: InputButton(
           child: TextField(
@@ -60,11 +65,20 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
             controller: _amountController,
             keyboardType: TextInputType.number,
             onSubmitted: (_) {
-              InputController(context).handleSubmit(
-                  _amountController.text, FetchedInfo['mediumId']);
+              InputController(context).handleSubmit(_amountController.text,
+                  FetchedInfo['mediumId'], toggleLoader);
             },
           ),
         ),
+        button: (isLoading)
+            ? const Center(child: CircularProgressIndicator())
+            : GenericButton(
+                text: 'Next',
+                disabled: false,
+                onClicked: () {
+                  InputController(context).handleSubmit(_amountController.text,
+                      FetchedInfo['mediumId'], toggleLoader);
+                }),
       ),
     );
   }

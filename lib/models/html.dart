@@ -22,17 +22,16 @@ class WepayHtml {
 'max-width':'!important inherit',
         },
         'base': {
-            'color': '#2e2957',
+            'color': '#184869',
             'height':'inherit',
             'padding':'12px',
-            
-            margin:'0px',
             'background-color': '#F5F5F5',
             'border': '1px solid #184869',
             'border-radius': '8px',
             'font-weight': '400',
             'font-family': "'Mulish'",
             'font-size': '16px',
+
             
             ':focus': {
                 'border': '1px solid #184869',
@@ -46,12 +45,12 @@ class WepayHtml {
             }
         },
         'invalid': {
-            'color': '#2e2957',
+            'color': '#184869',
             'border-color': '#F17057'
         },
         'valid': {
-            'color': '#2e2957',
-            'border-color': '#898989'
+            'color': '#184869',
+            'border-color': '#184869'
         },
 
         'errors': {

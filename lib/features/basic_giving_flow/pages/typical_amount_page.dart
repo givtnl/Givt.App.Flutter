@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/controller/create_cachedGivt.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_info.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/campaign_stats.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/controller/amount_controller.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_button.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_template.dart';
+import 'package:givt_mobile_apps/core/templates/donation_template.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
-import 'package:givt_mobile_apps/utils/connection_check.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
@@ -24,13 +21,20 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
 
 // should be received from QR scan, gotten from database, etc
   Map<String, dynamic> FetchedInfo = {
-    'mediumId': 'medium-receieved-from-qr',
+    'mediumId': '61f7ed0155530122c000.c00000000003',
     'days': 12,
     'typicalAmounts': [5, 10, 15],
   };
 
   int donationAmount = 0;
   int selection = -1;
+  bool isLoading = false;
+
+  void toggleLoader(bool loading) {
+    setState(() {
+      isLoading = loading;
+    });
+  }
 
   void selectedTypicalAmount(int index) {
     setState(() {
@@ -46,7 +50,7 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
 
   @override
   Widget build(BuildContext context) {
-    return DoantionTemplate(
+    return DonationTemplate(
       wepay: false,
       questionText: "How much would you like to donate?",
       content: Column(children: [
@@ -75,12 +79,17 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
                 _navigationService.navigateTo(routes.DonationAmountInputRoute),
             label: 'Enter a different amount'),
       ]),
-      button: GenericButton(
-        text: 'Next',
-        disabled: donationAmount > 1.5 ? false : true,
-        onClicked: () => createCachedGivtandNavigate(
-            donationAmount, FetchedInfo['mediumId']),
-      ),
+      button: (isLoading)
+          ? const Center(child: CircularProgressIndicator())
+          : GenericButton(
+              text: 'Next',
+              disabled: donationAmount > 1.5 ? false : true,
+              onClicked: () => AmountController().createCachedGivtandNavigate(
+                  context,
+                  donationAmount,
+                  FetchedInfo['mediumId'],
+                  toggleLoader),
+            ),
     );
   }
 }

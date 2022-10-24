@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class TempUser {
   final String Email;
   final String IBAN;

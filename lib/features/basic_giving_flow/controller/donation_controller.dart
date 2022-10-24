@@ -1,8 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/models/registered_user.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart'
+    hide LocalStorage;
+import 'package:givt_mobile_apps/models/submitted_donation.dart';
 import '../controller/user_controller.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
 import '../../../services/navigation_service.dart';
@@ -12,29 +12,41 @@ import '../../../core/constants/route_paths.dart' as routes;
 
 class DonationController {
   final _navigationService = locator<NavigationService>();
+  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  final NavigationService navigationService = locator<NavigationService>();
+
   late final String _registeredUserId;
 
   void initialiseDonationProcess(
       BuildContext context,
-      firstNameController,
-      lastNameController,
-      postcodeController,
+      Map<String, String> _formValue,
       InAppWebViewController webViewController,
-      Function setRegisteredUserId,
       Function toggleLoader) async {
-    final usrController = UserController(context, firstNameController.text,
-        lastNameController.text, postcodeController.text);
+    var hasSpaceChar = _formValue['name']!.contains(' ');
+    late String firstName;
+    late String lastName;
+    if (hasSpaceChar) {
+      firstName =
+          _formValue['name']!.substring(0, _formValue['name']!.indexOf(' '));
+      lastName = _formValue['name']!.substring(
+          _formValue['name']!.indexOf(' ') + 1, _formValue['name']!.length);
+    } else {
+      firstName = _formValue['name']!;
+      lastName = '';
+    }
+    final usrController =
+        UserController(context, firstName, lastName, _formValue['postalCode']);
     toggleLoader(true);
 
     try {
-      //create temp user
+      //update temp user with ID
+      LocalUser localUser =
+          realmProxy.realm.all<LocalStorage>().first.userData!;
       final Map<String, dynamic> tempUserMap =
-          await usrController.createAndGetTempUser();
-      final tempUserID = tempUserMap["userId"];
+          await usrController.createAndGetTempUser(localUser.userId);
       //create registered user
       final response = await usrController.createAndGetRegisteredUser(
-          tempUserID, tempUserMap["user"]);
-      setRegisteredUserId(response.userId);
+          localUser.userId, tempUserMap["user"]);
       webViewController.evaluateJavascript(source: "tokenize();");
     } catch (error) {
       toggleLoader(false);
@@ -46,7 +58,13 @@ class DonationController {
   void createMandateAndSubmitDonation(String wePayToken, Function toggleLoader,
       BuildContext context, String userId) async {
     try {
-      final response = await APIService().createMandate(wePayToken, userId);
+      // create the jsonDonation
+      final jsonDonation = Donation(wepayToken: wePayToken).jsonDonation();
+      final responseDonation =
+          await APIService().submitDonation(userId, jsonDonation);
+      final responseMandate =
+          await APIService().createMandate(wePayToken, userId);
+      navigationService.navigateTo(routes.DonationSuccessRoute);
       toggleLoader(false);
     } catch (error) {
       toggleLoader(false);

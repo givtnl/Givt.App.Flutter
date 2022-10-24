@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'dart:ui';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:givt_mobile_apps/core/language/languageIndex.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';

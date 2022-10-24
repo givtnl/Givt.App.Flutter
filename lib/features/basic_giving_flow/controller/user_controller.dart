@@ -12,9 +12,9 @@ import '../../../services/api_service.dart';
 class UserController {
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
   BuildContext ctx;
-  String _firstName;
-  String _lastName;
-  String _postcode;
+  String? _firstName;
+  String? _lastName;
+  String? _postcode;
   final _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
@@ -24,21 +24,30 @@ class UserController {
   Future<dynamic> createAndGetRegisteredUser(
       String userID, dynamic tempUser) async {
     final registeredUser = RegisteredUser.fromTempUser(userID, tempUser);
-    // Add Registered user to Realms DB (Local State storage)
+    // Update Registered user to Realms DB (Local State storage)
     realmProxy.createUser(registeredUser);
     final encodedUser = getEncodedUser(registeredUser);
     await APIService().createRegisteredUser(encodedUser);
     return registeredUser;
   }
 
-  Future<Map<String, dynamic>> createAndGetTempUser() async {
+  Future<Map<String, dynamic>> createAndGetTempUser(String? userId) async {
     final tempUser = createTempUser();
     final encodedUser = getEncodedTempUser(tempUser);
-    final tempUserId = await APIService().createTempUser(encodedUser);
-    Map<String, dynamic> tempUserMap = Map<String, dynamic>();
-    tempUserMap["userId"] = tempUserId;
-    tempUserMap["user"] = tempUser;
-    return tempUserMap;
+    if (userId != null) {
+      LocalUser localUser =
+          realmProxy.realm.all<LocalStorage>().first.userData!;
+      Map<String, dynamic> tempUserMap = Map<String, dynamic>();
+      tempUserMap["userId"] = localUser.userId;
+      tempUserMap["user"] = tempUser;
+      return tempUserMap;
+    } else {
+      final tempUserId = await APIService().createTempUser(encodedUser);
+      Map<String, dynamic> tempUserMap = Map<String, dynamic>();
+      tempUserMap["userId"] = tempUserId;
+      tempUserMap["user"] = tempUser;
+      return tempUserMap;
+    }
   }
 
   TempUser createTempUser() {
@@ -47,11 +56,11 @@ class UserController {
         Email: getRandomGeneratedEmail(),
         IBAN: 'FB66GIVT12345678',
         PhoneNumber: '060000000',
-        FirstName: _firstName,
-        LastName: _lastName,
+        FirstName: _firstName ?? 'hihi',
+        LastName: _lastName ?? 'haha',
         Address: 'Foobarstraat 5',
         City: 'Foobar',
-        PostalCode: _postcode,
+        PostalCode: _postcode ?? 'no zipcode',
         Country: 'NL',
         Password: 'R4nd0mP@s\$w0rd123',
         AmountLimit: 499,
