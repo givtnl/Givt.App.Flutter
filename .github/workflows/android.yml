@@ -1,0 +1,21 @@
+name: Build Android and upload to Play Store
+on: 
+  push: 
+    branches: [ pre-main ]
+jobs:
+  build-ios: 
+    name: Build Flutter Android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.118.0
+        with: 
+          ruby-version: '3.0'
+          bundler-cache: true
+      - name: Install Fastlane
+        uses: maierj/fastlane-action@v2.3.0
+        with:
+          lane: android deploy
+          subdirectory: android
