@@ -1,5 +1,0 @@
-itc_provider("YDSA4AY496") # App Store Connect Team ID
-team_id("YDSA4AY496") # Developer Portal Team ID
-
-# For more information about the Appfile, see:
-#     https://docs.fastlane.tools/advanced/#appfile
