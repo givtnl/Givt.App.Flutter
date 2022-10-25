@@ -22,14 +22,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case routes.UspRoute:
       return MaterialPageRoute(builder: (context) => const UspPage());
     case routes.CameraPermissionRoute:
-      return MaterialPageRoute(
-          builder: (context) => const CameraPermissionPage());
+      return MaterialPageRoute(builder: (context) => const CameraPermissionPage());
     case routes.LocationPermissionRoute:
-      return MaterialPageRoute(
-          builder: (context) => const LocationPermissionPage());
+      return MaterialPageRoute(builder: (context) => const LocationPermissionPage());
     case routes.RegistrationRoute:
-      return MaterialPageRoute(
-          builder: (context) => const FirstTimeRegistrationPage());
+      return MaterialPageRoute(builder: (context) => const FirstTimeRegistrationPage());
     case routes.QRMockRoute:
       return MaterialPageRoute(builder: (context) => QRmockPage());
     case routes.DonationAmountTypicalRoute:
