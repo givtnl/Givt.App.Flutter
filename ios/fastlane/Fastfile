@@ -41,7 +41,7 @@ platform :ios do
         sh("flutter", "clean")
         sh("flutter", "build", "ipa", "--build-number=#{build_number}")
     end
-    build_app(skip_build_archive: true, include_bitcode: true, include_symbols: true, archive_path: "../build/ios/archive/Runner.xcarchive")
+    build_app(skip_build_archive: true, include_symbols: true, archive_path: "../build/ios/archive/Runner.xcarchive")
     upload_to_testflight(
         app_identifier: app_identifier,
         api_key: api_key,
