@@ -23,8 +23,13 @@ platform :android do
 
 
   desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store_internal_app_sharing
+  lane :build_and_deploy do
+    build_number = google_play_track_version_codes(package_name: app_id, track: "internal", json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'])[0] + 1
+    Dir.chdir "../.." do
+        sh("flutter", "packages", "get")
+        sh("flutter", "clean")
+        sh("flutter", "build", "appbundle", "--build-number=#{build_number}")
+    end
+    upload_to_play_store_internal_app_sharing(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'])
   end
 end

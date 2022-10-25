@@ -14,8 +14,14 @@ jobs:
         with: 
           ruby-version: '3.0'
           bundler-cache: true
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'          
       - name: Install Fastlane
         uses: maierj/fastlane-action@v2.3.0
         with:
           lane: android deploy
           subdirectory: android
+        env:
+          GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}
