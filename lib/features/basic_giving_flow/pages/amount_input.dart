@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/donation_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/controller/input_controller.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/controller/amount_input.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/input_button_donation.dart';
 
 class DoantionAmountInput extends StatefulWidget {

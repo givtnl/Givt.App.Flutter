@@ -5,21 +5,23 @@ import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'dart:math';
 import 'dart:convert';
-import '../../../models/temp-user.dart';
-import '../../../models/registered_user.dart';
-import '../../../services/api_service.dart';
+import '../models/temp-user.dart';
+import '../models/registered_user.dart';
+import 'api_service.dart';
 
-class UserController {
+class UserService {
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
   BuildContext ctx;
   String? _firstName;
   String? _lastName;
   String? _postcode;
+  String? _email;
   final _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
 
-  UserController(this.ctx, this._firstName, this._lastName, this._postcode);
+  UserService(
+      this.ctx, this._email, this._firstName, this._lastName, this._postcode);
 
   Future<dynamic> createAndGetRegisteredUser(
       String userID, dynamic tempUser) async {
@@ -53,11 +55,11 @@ class UserController {
   TempUser createTempUser() {
     final locale = Localizations.localeOf(ctx).toString();
     return TempUser(
-        Email: getRandomGeneratedEmail(),
+        Email: _email ?? getRandomGeneratedEmail(),
         IBAN: 'FB66GIVT12345678',
         PhoneNumber: '060000000',
-        FirstName: _firstName ?? 'hihi',
-        LastName: _lastName ?? 'haha',
+        FirstName: _firstName ?? 'jhon',
+        LastName: _lastName ?? 'doe',
         Address: 'Foobarstraat 5',
         City: 'Foobar',
         PostalCode: _postcode ?? 'no zipcode',

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/notifications/snackbar.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/controller/amount_controller.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/controller/amount_final.dart';
 
 class InputController {
   BuildContext ctx;

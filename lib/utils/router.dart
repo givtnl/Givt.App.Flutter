@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/pages/input_amount_page.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/pages/typical_amount_page.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/pages/success_donation.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/pages/wepay_iframe_page.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/pages/amount_input.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/pages/amount_typical.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_success.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/pages/doantion_wepay_iframe.dart';
 import 'package:givt_mobile_apps/features/home_screen/home_screen_page.dart';
 import 'package:givt_mobile_apps/features/startup/pages/startup_page.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/sign_up_page.dart';
 import '../core/constants/route_paths.dart' as routes;
-import '../features/basic_giving_flow/pages/qr_mock_page.dart';
+import '../features/basic_giving_flow/pages/qr_mock.dart';
 import '../features/benefits/usp.dart';
 import '../features/permissions/pages/camera_permission_page.dart';
 import '../features/permissions/pages/location_permission_page.dart';

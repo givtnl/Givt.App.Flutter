@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart'
     hide LocalStorage;
-import 'package:givt_mobile_apps/models/submitted_donation.dart';
-import '../controller/user_controller.dart';
+import 'package:givt_mobile_apps/models/donation.dart';
+import '../../../services/user_service.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
@@ -11,7 +11,6 @@ import '../../../services/api_service.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class DonationController {
-  final _navigationService = locator<NavigationService>();
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
   final NavigationService navigationService = locator<NavigationService>();
 
@@ -22,20 +21,11 @@ class DonationController {
       Map<String, String> _formValue,
       InAppWebViewController webViewController,
       Function toggleLoader) async {
-    var hasSpaceChar = _formValue['name']!.contains(' ');
-    late String firstName;
-    late String lastName;
-    if (hasSpaceChar) {
-      firstName =
-          _formValue['name']!.substring(0, _formValue['name']!.indexOf(' '));
-      lastName = _formValue['name']!.substring(
-          _formValue['name']!.indexOf(' ') + 1, _formValue['name']!.length);
-    } else {
-      firstName = _formValue['name']!;
-      lastName = '';
-    }
-    final usrController =
-        UserController(context, firstName, lastName, _formValue['postalCode']);
+    late String firstName = _formValue['name']!;
+    late String lastName = '';
+
+    final usrService = UserService(
+        context, null, firstName, lastName, _formValue['postalCode']);
     toggleLoader(true);
 
     try {
@@ -43,9 +33,9 @@ class DonationController {
       LocalUser localUser =
           realmProxy.realm.all<LocalStorage>().first.userData!;
       final Map<String, dynamic> tempUserMap =
-          await usrController.createAndGetTempUser(localUser.userId);
+          await usrService.createAndGetTempUser(localUser.userId);
       //create registered user
-      final response = await usrController.createAndGetRegisteredUser(
+      final response = await usrService.createAndGetRegisteredUser(
           localUser.userId, tempUserMap["user"]);
       webViewController.evaluateJavascript(source: "tokenize();");
     } catch (error) {

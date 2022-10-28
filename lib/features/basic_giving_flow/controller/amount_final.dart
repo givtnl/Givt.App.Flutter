@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/notifications/snackbar.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/controller/user_controller.dart';
+import 'package:givt_mobile_apps/services/user_service.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/utils/connection_check.dart';
 
@@ -13,7 +13,7 @@ class AmountController {
       String mediumId, Function toggleLoader) async {
     bool connected = await tryConnection();
     String dateTime = DateTime.now().toIso8601String();
-    final usrController = UserController(context, null, null, null);
+    final usrService = UserService(context, null, null, null, null);
 
     final NavigationService navigationService = locator<NavigationService>();
     late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
@@ -23,7 +23,7 @@ class AmountController {
       try {
         //create temp user in backend and local storage
         final Map<String, dynamic> tempUserMap =
-            await usrController.createAndGetTempUser(null);
+            await usrService.createAndGetTempUser(null);
         final tempUserID = tempUserMap["userId"];
         realmProxy.addUserId(tempUserID);
         LocalUser localUser =
@@ -32,18 +32,6 @@ class AmountController {
         // store donation info locally
         realmProxy.createCachedGivt(
             mediumId, donationAmount, dateTime, tempUserID);
-
-        /// just assurances bellow
-        ///////////////////////////////////////////////////////
-        CachedGivts? localDonation = realmProxy.realm
-            .all<LocalStorage>()
-            .first
-            .cachedGivts
-            .firstWhere((element) => element.userId == tempUserID);
-        print(
-            'Sucessfully created user ${localUser.userId} that matches $tempUserID, yay ${localUser.firstName}, user wants to donate ${localDonation.donationAmount}');
-        //////////////////////////////////////////////////
-        /// just assurances above
 
         navigationService.navigateTo(routes.WepayRoute);
       } catch (error) {

@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/controller/validation_controllers.dart';
 import 'package:givt_mobile_apps/core/templates/donation_template.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/text_input_field.dart';
 import 'package:givt_mobile_apps/models/html.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
@@ -11,7 +9,7 @@ import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart'
     hide LocalStorage;
-import '../controller/donation_controller.dart';
+import '../controller/donation_wepay.dart';
 
 const String handlerName = "registrationMessageHandler";
 final logger = Logger(
@@ -91,7 +89,15 @@ class _WePayPageState extends State<WePayPage> {
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: TextFormField(
                         autofocus: false,
-                        validator: (value) => nameValidation(value),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter the cardholders\' name';
+                          }
+                          if (value.length > 30) {
+                            return 'Cannot exceed 30 characters';
+                          }
+                          return null;
+                        },
                         textInputAction: TextInputAction.next,
                         textAlign: TextAlign.start,
                         style: Theme.of(context)
@@ -144,7 +150,20 @@ class _WePayPageState extends State<WePayPage> {
                       child: TextFormField(
                         focusNode: _postFocusNode,
                         autofocus: false,
-                        validator: (value) => postCodeValidation(value),
+                        validator: (value) {
+                          bool isZipValid = false;
+                          if (value != null && value.isEmpty == false) {
+                            isZipValid = RegExp(
+                                    r"^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$",
+                                    caseSensitive: false)
+                                .hasMatch(value);
+                            if (isZipValid) {
+                              // yay zip is valid
+                              return null;
+                            }
+                          }
+                          return 'Not a Valid Post Code';
+                        },
                         textInputAction: TextInputAction.next,
                         textAlign: TextAlign.start,
                         style: Theme.of(context)
