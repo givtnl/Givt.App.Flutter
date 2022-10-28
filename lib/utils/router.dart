@@ -3,7 +3,9 @@ import 'package:givt_mobile_apps/features/basic_giving_flow/pages/input_amount_p
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/typical_amount_page.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/success_donation.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/wepay_iframe_page.dart';
+import 'package:givt_mobile_apps/features/home_screen/home_screen_page.dart';
 import 'package:givt_mobile_apps/features/startup/pages/startup_page.dart';
+import 'package:givt_mobile_apps/features/user_identity_creation/sign_up_page.dart';
 import '../core/constants/route_paths.dart' as routes;
 import '../features/basic_giving_flow/pages/qr_mock_page.dart';
 import '../features/benefits/usp.dart';
@@ -40,6 +42,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => SuccessDonationPage());
     case routes.WepayRoute:
       return MaterialPageRoute(builder: ((context) => const WePayPage()));
+    case routes.HomeScreenRoute:
+      return MaterialPageRoute(builder: (context) => HomeScreenPage());
+    case routes.SignUpRoute:
+      return MaterialPageRoute(builder: (context) => SignUpPage());
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(
