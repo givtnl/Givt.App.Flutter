@@ -62,4 +62,14 @@ class APIService {
       return response.body;
     }
   }
+
+  Future<dynamic> checkEmailExists(String email) async {
+    final url = Uri.https(baseApiUrl, '/api/v2/Users/check', {'email': email});
+    var response = await http.get(url, headers: headers);
+    if (response.statusCode >= 400) {
+      throw Exception('something went wrong :(');
+    } else {
+      return response.body;
+    }
+  }
 }
