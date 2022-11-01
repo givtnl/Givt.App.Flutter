@@ -9,7 +9,7 @@ class LogoHeaderTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+        padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
         child: SvgPicture.asset(
           'assets/svg/logo.svg',
           height: logoHeight,

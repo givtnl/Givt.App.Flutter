@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../core/templates/logo_header_template.dart';
 import '../../../core/widgets/buttons/generic_button.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginUspPage extends StatefulWidget {
+  const LoginUspPage({super.key});
+
+  @override
+  State<LoginUspPage> createState() => _LoginUspPageState();
+}
+
+class _LoginUspPageState extends State<LoginUspPage> {
+  @override
+  void initState() {
+    super.initState();
+    initialization();
+  }
+
+  void initialization() async {
+    FlutterNativeSplash.remove();
+  }
 
   @override
   Widget build(BuildContext context) {

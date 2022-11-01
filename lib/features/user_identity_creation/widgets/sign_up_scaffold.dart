@@ -3,19 +3,20 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:givt_mobile_apps/core/templates/logo_header_template.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/controller/sign_up.dart';
+import 'package:givt_mobile_apps/services/navigation_service.dart';
+import 'package:givt_mobile_apps/utils/locator.dart';
 import '../../../core/widgets/buttons/button_square_updt.dart';
 import '../../../core/widgets/navigation/appbar_bottom.dart';
+import '../../../core/constants/route_paths.dart' as routes;
 
 class SignUpScaffold extends StatelessWidget {
   final Widget content;
   final bool signup;
 
   SignUpScaffold({required this.signup, required this.content});
-
+  final NavigationService _navigationService = locator<NavigationService>();
   final _formKey = GlobalKey<FormState>();
-
   final Map<String, String> _formValue = {'email': '', 'password': ''};
-
   bool isLoading = false;
 
   @override
@@ -23,7 +24,7 @@ class SignUpScaffold extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: Theme.of(context).canvasColor,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
@@ -48,7 +49,13 @@ class SignUpScaffold extends StatelessWidget {
                             'Log in to take advantage of all Givt has to offer.'),
                   ],
                 ),
-                content
+                content,
+                TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Forgot password?',
+                      style: Theme.of(context).textTheme.subtitle2,
+                    )),
               ],
             ),
           ),
@@ -68,7 +75,9 @@ class SignUpScaffold extends StatelessWidget {
                         ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        (signup) ? print('Log in') : print('Sign up');
+                        (signup)
+                            ? _navigationService.navigateTo(routes.LoginRoute)
+                            : _navigationService.navigateTo(routes.SignUpRoute);
                       }),
               ],
             ),

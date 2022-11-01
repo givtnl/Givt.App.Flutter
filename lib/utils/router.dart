@@ -5,6 +5,7 @@ import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_succe
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/doantion_wepay_iframe.dart';
 import 'package:givt_mobile_apps/features/home_screen/home_screen_page.dart';
 import 'package:givt_mobile_apps/features/startup/pages/startup_page.dart';
+import 'package:givt_mobile_apps/features/user_identity_creation/page/login.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/page/sign_up.dart';
 import '../core/constants/route_paths.dart' as routes;
 import '../features/basic_giving_flow/pages/qr_mock.dart';
@@ -12,7 +13,7 @@ import '../features/benefits/usp.dart';
 import '../features/permissions/pages/camera_permission_page.dart';
 import '../features/permissions/pages/location_permission_page.dart';
 import '../features/registration/pages/first_time_registration_page.dart';
-import '../features/login/pages/login_page.dart';
+import '../features/archived/pages/old_login_usp.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   print(settings.name);

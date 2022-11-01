@@ -6,14 +6,14 @@ import 'package:givt_mobile_apps/features/user_identity_creation/widgets/sign_up
 import '../../../core/widgets/buttons/button_square_updt.dart';
 import '../../../core/widgets/navigation/appbar_bottom.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final Map<String, String> _formValue = {'email': '', 'password': ''};
   bool isLoading = false;
@@ -37,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return SignUpScaffold(
-      signup: true,
+      signup: false,
       content: Padding(
         padding: const EdgeInsets.fromLTRB(30, 35, 30, 0),
         child: Form(
@@ -154,14 +154,15 @@ class _SignUpPageState extends State<SignUpPage> {
               (isLoading)
                   ? const Center(child: CircularProgressIndicator())
                   : GenericButton(
-                      text: 'Sign up',
+                      text: 'Log in',
                       disabled: false,
                       onClicked: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
                           toggleLoader(true);
-                          SignUpController()
-                              .onSignUp(context, _formValue, toggleLoader);
+                          print('loggin in');
+                          // SignUpController()
+                          //     .onSignUp(context, _formValue, toggleLoader);
                         }
                       },
                     )
