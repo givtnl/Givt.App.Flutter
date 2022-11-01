@@ -42,8 +42,6 @@ class _StartupPageState extends State<StartupPage> {
 
   @override
   void initState() {
-    _model.downgradeProgress('camera');
-    _model.downgradeProgress('location');
     var current = _model.realm.all<LocalStorage>().first;
     print(
         'Progress camera is ${current.cameraAsked}; and location is  ${current.locationAsked}');
@@ -53,6 +51,7 @@ class _StartupPageState extends State<StartupPage> {
       startCarousel();
     });
   }
+
   void initialization() async {
     FlutterNativeSplash.remove();
   }
@@ -99,7 +98,14 @@ class _StartupPageState extends State<StartupPage> {
   void animationComplete() {
     if (_isExpanded) {
       Timer(const Duration(seconds: 2), () {
-        _navigationService.navigateTo(routes.LocationPermissionRoute);
+        LocalStorage current = _model.realm.all<LocalStorage>().first;
+        if (!current.locationAsked) {
+          _navigationService.navigateTo(routes.LocationPermissionRoute);
+        } else if (!current.cameraAsked) {
+          _navigationService.navigateTo(routes.CameraPermissionRoute);
+        } else if (current.locationAsked && current.cameraAsked) {
+          _navigationService.navigateTo(routes.HomeScreenRoute);
+        }
       });
     }
   }
