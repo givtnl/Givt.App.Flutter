@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import '../../core/widgets/buttons/button_square_updt.dart';
-import '../../core/widgets/navigation/appbar_bottom.dart';
+import '../../../core/widgets/buttons/button_square_updt.dart';
+import '../../../core/widgets/navigation/appbar_bottom.dart';
 
 class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});
