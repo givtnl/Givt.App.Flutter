@@ -50,12 +50,11 @@ class SuccessDonationPage extends StatelessWidget {
             ],
           ),
           GenericButton(
-            text: 'Go to home screen',
+            text: 'Create an account',
             disabled: false,
             primaryColor: Theme.of(context).canvasColor,
             textColor: Theme.of(context).colorScheme.surface,
-            onClicked: () => _navigationService
-                .navigateTo(routes.DonationAmountTypicalRoute),
+            onClicked: () => _navigationService.navigateTo(routes.SignUpRoute),
           )
         ],
       ),

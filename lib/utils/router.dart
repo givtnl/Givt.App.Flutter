@@ -5,7 +5,7 @@ import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_succe
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/doantion_wepay_iframe.dart';
 import 'package:givt_mobile_apps/features/home_screen/home_screen_page.dart';
 import 'package:givt_mobile_apps/features/startup/pages/startup_page.dart';
-import 'package:givt_mobile_apps/features/user_identity_creation/sign_up_page.dart';
+import 'package:givt_mobile_apps/features/user_identity_creation/page/sign_up.dart';
 import '../core/constants/route_paths.dart' as routes;
 import '../features/basic_giving_flow/pages/qr_mock.dart';
 import '../features/benefits/usp.dart';

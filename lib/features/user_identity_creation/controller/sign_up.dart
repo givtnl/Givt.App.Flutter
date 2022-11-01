@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../services/api_service.dart';
-import '../../core/widgets/notifications/snackbar.dart';
-import '../../models/localStorage.dart';
-import '../../services/user_service.dart';
-import '../../utils/locator.dart';
+import '../../../../services/api_service.dart';
+import '../../../core/widgets/notifications/snackbar.dart';
+import '../../../models/localStorage.dart';
+import '../../../services/user_service.dart';
+import '../../../utils/locator.dart';
 
 class SignUpController {
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
