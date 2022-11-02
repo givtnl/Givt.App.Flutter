@@ -11,17 +11,11 @@ import 'api_service.dart';
 
 class UserService {
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
-  BuildContext ctx;
-  String? _firstName;
-  String? _lastName;
-  String? _postcode;
-  String? _email;
   final _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
 
-  UserService(
-      this.ctx, this._email, this._firstName, this._lastName, this._postcode);
+  UserService();
 
   Future<dynamic> createAndGetRegisteredUser(
       String userID, dynamic tempUser) async {
@@ -33,40 +27,41 @@ class UserService {
     return registeredUser;
   }
 
-  Future<Map<String, dynamic>> createAndGetTempUser(String? userId) async {
-    final tempUser = createTempUser();
+  Future<Map<String, dynamic>> createAndGetTempUser(
+      [BuildContext? ctx,
+      String? firstName,
+      String? lastName,
+      String? postcode,
+      String? email]) async {
+    final tempUser = createTempUser(ctx, firstName, lastName, postcode, email);
     final encodedUser = getEncodedTempUser(tempUser);
-    if (userId != null) {
-      LocalUser localUser =
-          realmProxy.realm.all<LocalStorage>().first.userData!;
-      Map<String, dynamic> tempUserMap = Map<String, dynamic>();
-      tempUserMap["userId"] = localUser.userId;
-      tempUserMap["user"] = tempUser;
-      return tempUserMap;
-    } else {
-      final tempUserId = await APIService().createTempUser(encodedUser);
-      Map<String, dynamic> tempUserMap = Map<String, dynamic>();
-      tempUserMap["userId"] = tempUserId;
-      tempUserMap["user"] = tempUser;
-      return tempUserMap;
-    }
+    final tempUserId = await APIService().createTempUser(encodedUser);
+    Map<String, dynamic> tempUserMap = Map<String, dynamic>();
+    tempUserMap["userId"] = tempUserId;
+    tempUserMap["user"] = tempUser;
+    return tempUserMap;
   }
 
-  TempUser createTempUser() {
-    final locale = Localizations.localeOf(ctx).toString();
+  TempUser createTempUser(
+      [BuildContext? ctx,
+      String? firstName,
+      String? lastName,
+      String? postcode,
+      String? email]) {
     return TempUser(
-        Email: _email ?? getRandomGeneratedEmail(),
+        Email: email ?? getRandomGeneratedEmail(),
         IBAN: 'FB66GIVT12345678',
         PhoneNumber: '060000000',
-        FirstName: _firstName ?? 'jhon',
-        LastName: _lastName ?? 'doe',
+        FirstName: firstName ?? 'jhon',
+        LastName: lastName ?? 'doe',
         Address: 'Foobarstraat 5',
         City: 'Foobar',
-        PostalCode: _postcode ?? 'no zipcode',
+        PostalCode: postcode ?? 'no zipcode',
         Country: 'NL',
         Password: 'R4nd0mP@s\$w0rd123',
         AmountLimit: 499,
-        AppLanguage: locale,
+        AppLanguage:
+            (ctx != null) ? Localizations.localeOf(ctx).toString() : 'en',
         TimeZoneId: DateTime.now().timeZoneName);
   }
 

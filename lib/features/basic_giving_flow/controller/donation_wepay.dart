@@ -23,20 +23,19 @@ class DonationController {
       Function toggleLoader) async {
     late String firstName = _formValue['name']!;
     late String lastName = '';
-
-    final usrService = UserService(
-        context, null, firstName, lastName, _formValue['postalCode']);
+    final UserService usrService = locator<UserService>();
     toggleLoader(true);
 
     try {
       //update temp user with ID
       LocalUser localUser =
           realmProxy.realm.all<LocalStorage>().first.userData!;
-      final Map<String, dynamic> tempUserMap =
-          await usrService.createAndGetTempUser(localUser.userId);
+      final tempUser = usrService.createTempUser(
+          context, firstName, lastName, _formValue['postalCode']);
       //create registered user
-      final response = await usrService.createAndGetRegisteredUser(
-          localUser.userId, tempUserMap["user"]);
+      final registeredUser = await usrService.createAndGetRegisteredUser(
+          localUser.userId, tempUser);
+      realmProxy.createUser(registeredUser);
       webViewController.evaluateJavascript(source: "tokenize();");
     } catch (error) {
       toggleLoader(false);
