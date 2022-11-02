@@ -3,7 +3,7 @@ import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'dart:convert';
-import '../../../models/temp-user.dart';
+import '../../../models/temp_user.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 import '../../../services/api_service.dart';
