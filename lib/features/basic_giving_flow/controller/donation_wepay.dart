@@ -25,7 +25,7 @@ class DonationController {
     late String lastName = '';
 
     final usrService = UserService(
-        context, null, firstName, lastName, _formValue['postalCode']);
+        context, null, null, firstName, lastName, _formValue['postalCode']);
     toggleLoader(true);
 
     try {

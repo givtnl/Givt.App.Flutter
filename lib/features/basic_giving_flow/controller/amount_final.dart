@@ -13,7 +13,7 @@ class AmountController {
       String mediumId, Function toggleLoader) async {
     bool connected = await tryConnection();
     String dateTime = DateTime.now().toIso8601String();
-    final usrService = UserService(context, null, null, null, null);
+    final usrService = UserService(context, null, null, null, null, null);
 
     final NavigationService navigationService = locator<NavigationService>();
     late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();

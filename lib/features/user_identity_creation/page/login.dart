@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/controller/sign_up.dart';
-import 'package:givt_mobile_apps/features/user_identity_creation/widgets/sign_up_scaffold.dart';
+import 'package:givt_mobile_apps/features/user_identity_creation/widgets/scaffold.dart';
 import '../../../core/widgets/buttons/button_square_updt.dart';
 import '../../../core/widgets/navigation/appbar_bottom.dart';
 

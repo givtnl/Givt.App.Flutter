@@ -8,6 +8,7 @@ import 'dart:convert';
 import '../models/temp-user.dart';
 import '../models/registered_user.dart';
 import 'api_service.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class UserService {
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
@@ -16,17 +17,17 @@ class UserService {
   String? _lastName;
   String? _postcode;
   String? _email;
+  String? _password;
   final _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
 
-  UserService(
-      this.ctx, this._email, this._firstName, this._lastName, this._postcode);
+  UserService(this.ctx, this._email, this._password, this._firstName,
+      this._lastName, this._postcode);
 
   Future<dynamic> createAndGetRegisteredUser(
       String userID, dynamic tempUser) async {
     final registeredUser = RegisteredUser.fromTempUser(userID, tempUser);
-    // Update Registered user to Realms DB (Local State storage)
     realmProxy.createUser(registeredUser);
     final encodedUser = getEncodedUser(registeredUser);
     await APIService().createRegisteredUser(encodedUser);
@@ -34,9 +35,10 @@ class UserService {
   }
 
   Future<Map<String, dynamic>> createAndGetTempUser(String? userId) async {
-    final tempUser = createTempUser();
+    final tempUser = await createTempUser();
     final encodedUser = getEncodedTempUser(tempUser);
     if (userId != null) {
+      print('not null');
       LocalUser localUser =
           realmProxy.realm.all<LocalStorage>().first.userData!;
       Map<String, dynamic> tempUserMap = Map<String, dynamic>();
@@ -52,7 +54,9 @@ class UserService {
     }
   }
 
-  TempUser createTempUser() {
+  Future<TempUser> createTempUser() async {
+    final String currentTimeZone =
+        await FlutterNativeTimezone.getLocalTimezone();
     final locale = Localizations.localeOf(ctx).toString();
     return TempUser(
         Email: _email ?? getRandomGeneratedEmail(),
@@ -64,10 +68,10 @@ class UserService {
         City: 'Foobar',
         PostalCode: _postcode ?? 'no zipcode',
         Country: 'NL',
-        Password: 'R4nd0mP@s\$w0rd123',
+        Password: _password ?? 'R4nd0mP@s\$w0rd123',
         AmountLimit: 499,
         AppLanguage: locale,
-        TimeZoneId: DateTime.now().timeZoneName);
+        TimeZoneId: currentTimeZone);
   }
 
   String getRandomGeneratedEmail() {
@@ -90,13 +94,15 @@ class UserService {
       'Password': tempUser.Password,
       'AmountLimit': tempUser.AmountLimit,
       'AppLanguage': tempUser.AppLanguage,
-      'TimeZoneId': tempUser.TimeZoneId
+      'TimeZoneId': tempUser.TimeZoneId,
     });
   }
 
   String getEncodedUser(user) {
+    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
+
     return json.encode({
-      'userId': user.userId,
+      'guid': user.userId,
       'email': user.email,
       'phoneNumber': user.phoneNumber,
       'firstName': user.firstName,
