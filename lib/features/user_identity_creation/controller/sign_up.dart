@@ -16,16 +16,7 @@ class SignUpController {
   void onSignUp(BuildContext context, Map<String, String> formValue,
       Function toggleLoader) async {
     LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
-    final usrService = UserService(
-        context,
-        formValue['email'],
-        formValue['password'],
-        formValue['firstName'],
-        formValue['lastName'],
-        null);
-
-    TempUser tempUser = await usrService.createTempUser();
-    String encodedTempUser = usrService.getEncodedTempUser(tempUser);
+    final UserService _userService = locator<UserService>();
 
     final String emailStatus =
         await APIService().checkEmailExists(formValue['email']!);
@@ -51,18 +42,26 @@ class SignUpController {
     }
     if (emailStatus.contains('false')) {
       if (localUser.userId.length < 2) {
-        final tempUserMap = await usrService.createAndGetTempUser(null);
+        final tempUserMap = await _userService.createAndGetTempUser(
+            context,
+            formValue['firstName'],
+            formValue['lastName'],
+            null,
+            formValue['email']);
         print(tempUserMap['userId']);
+        realmProxy.addUserId(tempUserMap["userId"]);
+        print(localUser.userId);
         // post to api/v2/users/register creates a dashboard user
         // final response = await usrService.createAndGetRegisteredUser(
         //  tempUserMap['userId'], tempUserMap["user"]);
         toggleLoader(false);
       } else {
-        final registeredUser =
-            RegisteredUser.fromTempUser(localUser.userId, tempUser);
-        final encodedUser = usrService.getEncodedUser(registeredUser);
+        // this is all wrong now
+        // final registeredUser =
+        //     RegisteredUser.fromTempUser(localUser.userId, tempUser);
+        // final encodedUser = usrService.getEncodedUser(registeredUser);
         // post to api/v2/users/register creates a dashboard user
-        final response = await APIService().createRegisteredUser(encodedUser);
+        //final response = await APIService().createRegisteredUser(encodedUser);
         toggleLoader(false);
       }
     }

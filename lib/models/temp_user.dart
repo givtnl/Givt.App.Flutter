@@ -1,3 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
+part 'temp_user.g.dart';
+
+@JsonSerializable()
 class TempUser {
   final String Email;
   final String IBAN;
@@ -28,21 +32,8 @@ class TempUser {
       required this.AppLanguage,
       required this.TimeZoneId});
 
-  factory TempUser.fromJson(Map<String, dynamic> json) {
-    return TempUser(
-      Email: json['Email'],
-      IBAN: json['IBAN'],
-      PhoneNumber: json['PhoneNumber'],
-      FirstName: json['FirstName'],
-      LastName: json['LastName'],
-      Address: json['Address'],
-      City: json['City'],
-      PostalCode: json['PostalCode'],
-      Country: json['Country'],
-      Password: json['Password'],
-      AmountLimit: json['AmountLimit'],
-      AppLanguage: json['AppLanguage'],
-      TimeZoneId: json['TimeZoneId'],
-    );
-  }
+  factory TempUser.fromJson(Map<String, dynamic> json) =>
+      _$TempUserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TempUserToJson(this);
 }

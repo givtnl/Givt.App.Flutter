@@ -17,7 +17,6 @@ import '../features/registration/pages/first_time_registration_page.dart';
 import '../features/archived/pages/old_login_usp.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
-  print(settings.name);
   switch (settings.name) {
     case routes.StartupRoute:
       return MaterialPageRoute(builder: (context) => const StartupPage());

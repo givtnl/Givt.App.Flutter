@@ -3,10 +3,11 @@ import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'dart:convert';
-import '../../../models/temp-user.dart';
+import '../../../models/temp_user.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 import '../../../services/api_service.dart';
+import '../../../services/user_service.dart';
 
 class RegistrationController {
   bool btnDisabled;
@@ -19,6 +20,7 @@ class RegistrationController {
       this.btnDisabled, this.formKey, this.email, this.ctx, this.showLoader);
 
   final NavigationService _navigationService = locator<NavigationService>();
+  final UserService _userService = locator<UserService>();
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
 
   Future<void> handleButtonClick() async {
@@ -31,6 +33,7 @@ class RegistrationController {
         showLoader(false);
         SnackBarNotifyer(ctx)
             .showSnackBarMessage('User created successfully!', Colors.green);
+        _navigationService.navigateTo(routes.DonationAmountTypicalRoute);
       } catch (error) {
         showLoader(false);
         SnackBarNotifyer(ctx).showSnackBarMessage(error.toString(), Colors.red);
@@ -41,53 +44,7 @@ class RegistrationController {
   Future checkTLDAndCreateTempUser(String email) async {
     bool response = await APIService().checktld(email);
     if (response) {
-      final locale = Localizations.localeOf(ctx).toString();
-      final TempUser tempUser = TempUser(
-          Email: email,
-          IBAN: 'FB66GIVT12345678',
-          PhoneNumber: '060000000',
-          FirstName: 'John',
-          LastName: 'Doe',
-          Address: 'Foobarstraat 5',
-          City: 'Foobar',
-          PostalCode: '786 FB',
-          Country: 'NL',
-          Password: 'R4nd0mP@s\$w0rd123',
-          AmountLimit: 499,
-          AppLanguage: locale,
-          TimeZoneId: DateTime.now().timeZoneName);
-      final encodedUser = json.encode({
-        'Email': tempUser.Email,
-        'IBAN': tempUser.IBAN,
-        'PhoneNumber': tempUser.PhoneNumber,
-        'FirstName': tempUser.FirstName,
-        'LastName': tempUser.LastName,
-        'Address': tempUser.Address,
-        'City': tempUser.City,
-        'PostalCode': tempUser.PostalCode,
-        'Country': tempUser.Country,
-        'Password': tempUser.Password,
-        'AmountLimit': tempUser.AmountLimit,
-        'AppLanguage': tempUser.AppLanguage,
-        'TimeZoneId': tempUser.TimeZoneId
-      });
-      final String tempUserID = await APIService().createTempUser(encodedUser);
-      // create a realm local user
-      // realmProxy.createUser(
-      //   tempUser.Email,
-      //   tempUserID,
-      //   tempUser.IBAN,
-      //   tempUser.PhoneNumber,
-      //   tempUser.FirstName,
-      //   tempUser.LastName,
-      //   tempUser.Address,
-      //   tempUser.City,
-      //   tempUser.PostalCode,
-      //   tempUser.Country,
-      //   tempUser.AmountLimit,
-      // );
-      _navigationService.navigateTo(routes.DonationAmountTypicalRoute);
-      return;
+      return _userService.createAndGetTempUser();
     } else {
       throw 'Incorect Email domain used!';
     }

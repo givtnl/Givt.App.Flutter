@@ -13,7 +13,7 @@ class AmountController {
       String mediumId, Function toggleLoader) async {
     bool connected = await tryConnection();
     String dateTime = DateTime.now().toIso8601String();
-    final usrService = UserService(context, null, null, null, null, null);
+    final UserService usrService = locator<UserService>();
 
     final NavigationService navigationService = locator<NavigationService>();
     late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
@@ -23,11 +23,9 @@ class AmountController {
       try {
         //create temp user in backend and local storage
         final Map<String, dynamic> tempUserMap =
-            await usrService.createAndGetTempUser(null);
+            await usrService.createAndGetTempUser();
         final tempUserID = tempUserMap["userId"];
         realmProxy.addUserId(tempUserID);
-        LocalUser localUser =
-            realmProxy.realm.all<LocalStorage>().first.userData!;
 
         // store donation info locally
         realmProxy.createCachedGivt(
