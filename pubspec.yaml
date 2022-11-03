@@ -41,6 +41,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^1.1.5
   permission_handler: ^10.0.1
+  connectivity_plus: ^3.0.2
   provider: ^6.0.3
   email_validator: '^2.1.16'
   http: ^0.13.5

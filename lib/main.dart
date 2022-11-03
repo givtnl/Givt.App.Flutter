@@ -7,8 +7,10 @@ import 'package:givt_mobile_apps/core/language/languageIndex.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
+import 'package:provider/provider.dart';
 import 'core/themes/primary_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'utils/check_internet_connectivity.dart';
 import 'utils/router.dart' as router;
 import 'core/constants/route_paths.dart' as routes;
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -20,7 +22,8 @@ void main() async {
   if (Platform.isAndroid) {
     await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
-  runApp(MyApp());
+  runApp(
+      ChangeNotifierProvider(create: (_) => CheckInternet(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
