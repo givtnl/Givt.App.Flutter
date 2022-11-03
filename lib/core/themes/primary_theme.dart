@@ -32,6 +32,11 @@ class PrimaryTheme {
           fontWeight: FontWeight.w900,
           fontSize: 38,
         ),
+        headline2: TextStyle(
+          color: Color.fromARGB(255, 24, 72, 105),
+          fontWeight: FontWeight.w900,
+          fontSize: 32,
+        ),
         subtitle1: TextStyle(
           color: Color.fromARGB(100, 53, 80, 112),
           fontSize: 13,

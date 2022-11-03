@@ -37,6 +37,17 @@ class APIService {
     }
   }
 
+  Future<dynamic> updateUser(String jsonUser) async {
+    final url = Uri.https(baseApiUrl, '/api/v2/users');
+    var response = await http.put(url, body: jsonUser, headers: headers);
+    if (response.statusCode >= 400) {
+      print(response.body);
+      throw Exception('Failed to update a user');
+    } else {
+      return response.body;
+    }
+  }
+
   Future<dynamic> createMandate(String wepayToken, String userId) async {
     final url = Uri.https(baseApiUrl, '/api/v2/users/$userId/mandates');
     final String mandate = json.encode({

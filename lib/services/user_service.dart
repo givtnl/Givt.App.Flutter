@@ -8,6 +8,7 @@ import 'dart:convert';
 import '../models/temp_user.dart';
 import '../models/registered_user.dart';
 import 'api_service.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class UserService {
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
@@ -20,7 +21,6 @@ class UserService {
   Future<dynamic> createAndGetRegisteredUser(
       String userID, dynamic tempUser) async {
     final registeredUser = RegisteredUser.fromTempUser(userID, tempUser);
-    // Update Registered user to Realms DB (Local State storage)
     realmProxy.createUser(registeredUser);
     final encodedUser = jsonEncode(registeredUser);
     await APIService().createRegisteredUser(encodedUser);
@@ -33,7 +33,8 @@ class UserService {
       String? lastName,
       String? postcode,
       String? email]) async {
-    final tempUser = createTempUser(ctx, firstName, lastName, postcode, email);
+    final tempUser =
+        await createTempUser(ctx, firstName, lastName, postcode, email);
     final encodedUser = jsonEncode(tempUser);
     final tempUserId = await APIService().createTempUser(encodedUser);
     Map<String, dynamic> tempUserMap = Map<String, dynamic>();
@@ -42,12 +43,15 @@ class UserService {
     return tempUserMap;
   }
 
-  TempUser createTempUser(
+  Future<TempUser> createTempUser(
       [BuildContext? ctx,
       String? firstName,
       String? lastName,
       String? postcode,
-      String? email]) {
+      String? email,
+      String? password]) async {
+    final String currentTimeZone =
+        await FlutterNativeTimezone.getLocalTimezone();
     return TempUser(
         Email: email ?? getRandomGeneratedEmail(),
         IBAN: 'FB66GIVT12345678',
@@ -58,11 +62,11 @@ class UserService {
         City: 'Foobar',
         PostalCode: postcode ?? 'no zipcode',
         Country: 'NL',
-        Password: 'R4nd0mP@s\$w0rd123',
+        Password: password ?? 'R4nd0mP@s\$w0rd123',
         AmountLimit: 499,
         AppLanguage:
             (ctx != null) ? Localizations.localeOf(ctx).toString() : 'en',
-        TimeZoneId: DateTime.now().timeZoneName);
+        TimeZoneId: currentTimeZone);
   }
 
   String getRandomGeneratedEmail() {

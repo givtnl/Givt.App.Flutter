@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/controller/sign_up.dart';
-import 'package:givt_mobile_apps/features/user_identity_creation/widgets/sign_up_scaffold.dart';
+import 'package:givt_mobile_apps/features/user_identity_creation/widgets/scaffold.dart';
+import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/utils/locator.dart';
 import '../../../core/widgets/buttons/button_square_updt.dart';
 import '../../../core/widgets/navigation/appbar_bottom.dart';
 
@@ -14,12 +16,15 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
   final _formKey = GlobalKey<FormState>();
   final Map<String, String> _formValue = {'email': '', 'password': ''};
   bool isLoading = false;
 
   @override
   void initState() {
+    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
+    print('local user is ${localUser.userId}');
     super.initState();
     initialization();
   }
@@ -102,8 +107,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a password';
                   }
-                  if (value.length < 5) {
-                    return 'Password must be at least 5 characters long';
+                  if (value.length < 7) {
+                    return 'Password must be at least 7 characters long';
+                  }
+                  if (value.contains(RegExp(r'[0-9]')) == false) {
+                    return 'Password must contain a digit';
+                  }
+                  if (value.contains(RegExp(r'[A-Z]')) == false) {
+                    return 'Password must contain an upper case character';
                   }
                   return null;
                 },
