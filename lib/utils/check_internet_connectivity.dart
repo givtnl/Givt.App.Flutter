@@ -7,17 +7,6 @@ class CheckInternet extends ChangeNotifier {
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription _streamSubscription;
 
-  void checkConnectivity() async {
-    var connectionResult = await _connectivity.checkConnectivity();
-    if (connectionResult == ConnectivityResult.none) {
-      hasInternet = false;
-      notifyListeners();
-    } else {
-      hasInternet = true;
-      notifyListeners();
-    }
-  }
-
   void checkRealtimeConnection() {
     _streamSubscription = _connectivity.onConnectivityChanged.listen((event) {
       if (event == ConnectivityResult.none) {
