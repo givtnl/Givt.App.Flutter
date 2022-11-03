@@ -3,6 +3,7 @@ import 'package:givt_mobile_apps/features/basic_giving_flow/pages/amount_input.d
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/amount_typical.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_success.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/doantion_wepay_iframe.dart';
+import 'package:givt_mobile_apps/features/home_screen/pages/first_giving_options.dart';
 import 'package:givt_mobile_apps/features/home_screen/pages/first_use.dart';
 import 'package:givt_mobile_apps/features/home_screen/pages/home_screen.dart';
 import 'package:givt_mobile_apps/features/startup/pages/startup_page.dart';
@@ -17,6 +18,7 @@ import '../features/registration/pages/first_time_registration_page.dart';
 import '../features/archived/pages/old_login_usp.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
+  print(settings.name);
   switch (settings.name) {
     case routes.StartupRoute:
       return MaterialPageRoute(builder: (context) => const StartupPage());
@@ -47,6 +49,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => HomeScreenPage());
     case routes.FirstUseScreenRoute:
       return MaterialPageRoute(builder: (context) => FirstUsePage());
+    case routes.FirstOptionsRoute:
+      return MaterialPageRoute(builder: (context) => FirstOptionsPage());
     case routes.SignUpRoute:
       return MaterialPageRoute(builder: (context) => SignUpPage());
     default:
