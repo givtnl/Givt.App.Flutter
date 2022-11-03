@@ -8,7 +8,7 @@
   <!-- Include only if your app benefits from precise location access. -->
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
    <application
-        android:label="givt_mobile_apps"
+        android:label="givt 2.0"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
