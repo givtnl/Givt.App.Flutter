@@ -8,6 +8,12 @@ import '../../../utils/locator.dart';
 
 class SignUpController {
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  void onLogin(Function toggleLoader) async {
+    print('loggin in');
+    final response = await APIService().loginLocal();
+    print(response);
+    toggleLoader(false);
+  }
 
   void onSignUp(BuildContext context, Map<String, String> formValue,
       Function toggleLoader) async {
@@ -45,6 +51,7 @@ class SignUpController {
             tempUserMap['userId'], tempUserMap["user"]);
         toggleLoader(false);
       } else {
+        ////////////  HAPPY PATH ////////////
         final res = await _userService.postRegisteredUser(
           context,
           formValue['firstName'],

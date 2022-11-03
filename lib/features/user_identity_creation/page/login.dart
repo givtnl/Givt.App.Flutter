@@ -45,14 +45,14 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: <Widget>[
               TextFormField(
-                validator: (value) {
-                  if (value == null ||
-                      value.isEmpty ||
-                      value.contains('@') == false) {
-                    return 'Please enter your email adress';
-                  }
-                  return null;
-                },
+                // validator: (value) {
+                //   if (value == null ||
+                //       value.isEmpty ||
+                //       value.contains('@') == false) {
+                //     return 'Please enter your email adress';
+                //   }
+                //   return null;
+                // },
                 onSaved: ((newValue) {
                   _formValue['email'] = newValue!;
                 }),
@@ -98,15 +98,21 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 15),
               TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a password';
-                  }
-                  if (value.length < 5) {
-                    return 'Password must be at least 5 characters long';
-                  }
-                  return null;
-                },
+                // validator: (value) {
+                //   if (value == null || value.isEmpty) {
+                //     return 'Please enter a password';
+                //   }
+                //   if (value.length < 7) {
+                //     return 'Password must be at least 7 characters long';
+                //   }
+                //   if (value.contains(RegExp(r'[0-9]')) == false) {
+                //     return 'Password must contain a digit';
+                //   }
+                //   if (value.contains(RegExp(r'[A-Z]')) == false) {
+                //     return 'Password must contain an upper case character';
+                //   }
+                //   return null;
+                // },
                 onSaved: ((newValue) {
                   _formValue['password'] = newValue!;
                 }),
@@ -160,9 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
                           toggleLoader(true);
-                          print('loggin in');
-                          // SignUpController()
-                          //     .onSignUp(context, _formValue, toggleLoader);
+                          SignUpController().onLogin(toggleLoader);
                         }
                       },
                     )

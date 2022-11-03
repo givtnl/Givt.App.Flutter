@@ -47,9 +47,8 @@ class MyApp extends StatelessWidget {
       ],
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: router.generateRoute,
-      initialRoute: (current.locationAsked)
-          ? routes.FirstUseScreenRoute
-          : routes.StartupRoute,
+      initialRoute:
+          (current.locationAsked) ? routes.LoginRoute : routes.StartupRoute,
     );
   }
 }

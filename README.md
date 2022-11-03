@@ -3,6 +3,9 @@
 What are the requirements to get started?
 How should i build this application?
 
+To generate JSON serializable classes:
+flutter pub run build_runner build --delete-conflicting-outputs
+
 
 
 (DevTools)[https://docs.flutter.dev/development/tools/devtools/overview] is a suite of performance and debugging tools for Dart and Flutter.

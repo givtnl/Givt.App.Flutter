@@ -78,7 +78,41 @@ class APIService {
     final url = Uri.https(baseApiUrl, '/api/v2/Users/check', {'email': email});
     var response = await http.get(url, headers: headers);
     if (response.statusCode >= 400) {
-      throw Exception('something went wrong :(');
+      throw Exception('Failed to check email');
+    } else {
+      return response.body;
+    }
+  }
+  //   Future<dynamic> loginLocal() async {
+  //   final grantReq = GrantRequest(
+  //       grantType: 'password',
+  //       userName: Uri.encodeFull('daniela+trial@givtapp.net'),
+  //       password: 'Test123');
+  //   final encodedGrant = jsonEncode(grantReq);
+
+  //   final url = Uri.https(baseApiUrl, '/oauth2/token');
+  //   var response = await http.post(url, body: encodedGrant, headers: headers);
+  //   if (response.statusCode >= 400) {
+  //     throw Exception('Failed to log in user');
+  //   } else {
+  //     return response.body;
+  //   }
+  // }
+
+  Future<dynamic> loginLocal() async {
+    final Map data = {
+      'grant_type': 'password',
+      'userName': 'daniela+trial@givtapp.net',
+      'password': 'Test123'
+    };
+
+    final url = Uri.https(baseApiUrl, '/oauth2/token');
+    var response = await http.post(
+      url,
+      body: data,
+    );
+    if (response.statusCode >= 400) {
+      throw Exception('Failed to log in user');
     } else {
       return response.body;
     }
