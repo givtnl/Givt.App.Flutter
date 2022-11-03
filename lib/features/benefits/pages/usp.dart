@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
-import 'package:givt_mobile_apps/features/benefits/controller/usp_controller.dart';
+import 'package:givt_mobile_apps/features/benefits/controller/usp.dart';
 import 'package:givt_mobile_apps/features/benefits/widget/benefit_row.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 
-import '../../utils/locator.dart';
+import '../../../utils/locator.dart';
 
 class UspPage extends StatefulWidget {
   const UspPage({super.key});
