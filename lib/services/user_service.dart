@@ -18,6 +18,25 @@ class UserService {
 
   UserService();
 
+  Future<dynamic> postRegisteredUser(
+      [BuildContext? ctx,
+      String? firstName,
+      String? lastName,
+      String? postcode,
+      String? email,
+      String? password,
+      String? guid]) async {
+    final tempUser =
+        await createTempUser(ctx, firstName, lastName, null, email, password);
+    final registeredUser = RegisteredUser.fromTempUser(guid!, tempUser);
+    realmProxy.createUser(registeredUser);
+    final encodedUser = jsonEncode(registeredUser);
+    print(
+        'password: ${registeredUser.password}, guid ${registeredUser.guid}, email: ${registeredUser.email}');
+    await APIService().createRegisteredUser(encodedUser);
+    return registeredUser;
+  }
+
   Future<dynamic> createAndGetRegisteredUser(
       String userID, dynamic tempUser) async {
     final registeredUser = RegisteredUser.fromTempUser(userID, tempUser);
@@ -32,9 +51,10 @@ class UserService {
       String? firstName,
       String? lastName,
       String? postcode,
-      String? email]) async {
-    final tempUser =
-        await createTempUser(ctx, firstName, lastName, postcode, email);
+      String? email,
+      String? password]) async {
+    final tempUser = await createTempUser(
+        ctx, firstName, lastName, postcode, email, password);
     final encodedUser = jsonEncode(tempUser);
     final tempUserId = await APIService().createTempUser(encodedUser);
     Map<String, dynamic> tempUserMap = Map<String, dynamic>();
