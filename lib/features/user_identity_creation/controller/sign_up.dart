@@ -26,10 +26,11 @@ class SignUpController {
       SnackBarNotifyer(context).showSnackBarMessage(
           'Email already registered, login instead?',
           Theme.of(context).colorScheme.primary);
+      toggleLoader(false);
     }
     if (emailStatus.contains('dashboard')) {
       SnackBarNotifyer(context).showSnackBarMessage(
-          'Dashboard user, what now?', Theme.of(context).colorScheme.primary);
+          'Dashboard user', Theme.of(context).colorScheme.primary);
     }
     if (emailStatus.contains('temp')) {
       if (localUser.userId.isEmpty) {
@@ -42,25 +43,33 @@ class SignUpController {
     if (emailStatus.contains('false')) {
       if (localUser.userId.length < 2) {
         final tempUserMap = await _userService.createAndGetTempUser(
+          context,
+          formValue['firstName'],
+          formValue['lastName'],
+          null,
+          formValue['email'],
+        );
+        // post to api/v2/users/register creates a dashboard user
+        // this also updates the local user data
+        final response = await _userService.createAndGetRegisteredUser(
+            tempUserMap['userId'], tempUserMap["user"]);
+        toggleLoader(false);
+      } else {
+        final tempUser = await _userService.createTempUser(
             context,
             formValue['firstName'],
             formValue['lastName'],
             null,
-            formValue['email']);
-        print(tempUserMap['userId']);
-        //realmProxy.addUserId(tempUserMap["userId"]);
-        print('was user registered? well ${localUser.userId}');
-        // post to api/v2/users/register creates a dashboard user
-        // final response = await usrService.createAndGetRegisteredUser(
-        //  tempUserMap['userId'], tempUserMap["user"]);
-        toggleLoader(false);
-      } else {
-        // this is all wrong now
-        // final registeredUser =
-        //     RegisteredUser.fromTempUser(localUser.userId, tempUser);
-        // final encodedUser = usrService.getEncodedUser(registeredUser);
-        // post to api/v2/users/register creates a dashboard user
-        //final response = await APIService().createRegisteredUser(encodedUser);
+            formValue['email'],
+            formValue['password']);
+
+        final registeredUser =
+            RegisteredUser.fromTempUser(localUser.userId, tempUser);
+        realmProxy.createUser(registeredUser);
+        print(
+            'password: ${registeredUser.password}, guid ${registeredUser.guid}, email: ${registeredUser.email}');
+        final encodedUser = jsonEncode(registeredUser);
+        final response = await APIService().createRegisteredUser(encodedUser);
         toggleLoader(false);
       }
     }
