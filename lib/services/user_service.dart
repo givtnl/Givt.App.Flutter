@@ -33,7 +33,8 @@ class UserService {
       String? lastName,
       String? postcode,
       String? email]) async {
-    final tempUser = createTempUser(ctx, firstName, lastName, postcode, email);
+    final tempUser =
+        await createTempUser(ctx, firstName, lastName, postcode, email);
     final encodedUser = jsonEncode(tempUser);
     final tempUserId = await APIService().createTempUser(encodedUser);
     Map<String, dynamic> tempUserMap = Map<String, dynamic>();

@@ -104,7 +104,7 @@ class _StartupPageState extends State<StartupPage> {
         } else if (!current.cameraAsked) {
           _navigationService.navigateTo(routes.CameraPermissionRoute);
         } else if (current.locationAsked && current.cameraAsked) {
-          _navigationService.navigateTo(routes.HomeScreenRoute);
+          _navigationService.navigateTo(routes.FirstUseScreenRoute);
         }
       });
     }

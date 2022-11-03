@@ -30,7 +30,7 @@ class DonationController {
       //update temp user with ID
       LocalUser localUser =
           realmProxy.realm.all<LocalStorage>().first.userData!;
-      final tempUser = usrService.createTempUser(
+      final tempUser = await usrService.createTempUser(
           context, firstName, lastName, _formValue['postalCode']);
       //create registered user
       final registeredUser = await usrService.createAndGetRegisteredUser(

@@ -6,7 +6,6 @@ import '../../../../services/api_service.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
 import '../../../models/localStorage.dart';
 import '../../../models/registered_user.dart';
-import '../../../models/temp-user.dart';
 import '../../../services/user_service.dart';
 import '../../../utils/locator.dart';
 
@@ -49,8 +48,8 @@ class SignUpController {
             null,
             formValue['email']);
         print(tempUserMap['userId']);
-        realmProxy.addUserId(tempUserMap["userId"]);
-        print(localUser.userId);
+        //realmProxy.addUserId(tempUserMap["userId"]);
+        print('was user registered? well ${localUser.userId}');
         // post to api/v2/users/register creates a dashboard user
         // final response = await usrService.createAndGetRegisteredUser(
         //  tempUserMap['userId'], tempUserMap["user"]);
