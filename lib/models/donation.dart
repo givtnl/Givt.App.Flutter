@@ -13,10 +13,10 @@ class Donation {
   // encode into JSON using temp data
   String jsonDonation() {
     LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
-    CachedGivts? localDonation = realmProxy.realm
+    Donations? localDonation = realmProxy.realm
         .all<LocalStorage>()
         .first
-        .cachedGivts
+        .donations
         .firstWhere((element) => element.userId == localUser.userId);
 
     return jsonEncode({

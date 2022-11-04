@@ -13,7 +13,7 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
     bool locationAsked = false,
     bool cameraAsked = false,
     LocalUser? userData,
-    Iterable<CachedGivts> cachedGivts = const [],
+    Iterable<Donations> donations = const [],
   }) {
     if (!_defaultsSet) {
       _defaultsSet = RealmObject.setDefaults<LocalStorage>({
@@ -24,8 +24,8 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
     RealmObject.set(this, 'locationAsked', locationAsked);
     RealmObject.set(this, 'cameraAsked', cameraAsked);
     RealmObject.set(this, 'userData', userData);
-    RealmObject.set<RealmList<CachedGivts>>(
-        this, 'cachedGivts', RealmList<CachedGivts>(cachedGivts));
+    RealmObject.set<RealmList<Donations>>(
+        this, 'donations', RealmList<Donations>(donations));
   }
 
   LocalStorage._();
@@ -50,11 +50,10 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
       RealmObject.set(this, 'userData', value);
 
   @override
-  RealmList<CachedGivts> get cachedGivts =>
-      RealmObject.get<CachedGivts>(this, 'cachedGivts')
-          as RealmList<CachedGivts>;
+  RealmList<Donations> get donations =>
+      RealmObject.get<Donations>(this, 'donations') as RealmList<Donations>;
   @override
-  set cachedGivts(covariant RealmList<CachedGivts> value) =>
+  set donations(covariant RealmList<Donations> value) =>
       throw RealmUnsupportedSetError();
 
   @override
@@ -70,8 +69,8 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
       SchemaProperty('cameraAsked', RealmPropertyType.bool),
       SchemaProperty('userData', RealmPropertyType.object,
           optional: true, linkTarget: 'LocalUser'),
-      SchemaProperty('cachedGivts', RealmPropertyType.object,
-          linkTarget: 'CachedGivts', collectionType: RealmCollectionType.list),
+      SchemaProperty('donations', RealmPropertyType.object,
+          linkTarget: 'Donations', collectionType: RealmCollectionType.list),
     ]);
   }
 }
@@ -205,8 +204,8 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
   }
 }
 
-class CachedGivts extends _CachedGivts with RealmEntity, RealmObject {
-  CachedGivts(
+class Donations extends _Donations with RealmEntity, RealmObject {
+  Donations(
     String mediumId,
     int donationAmount,
     String dateTime,
@@ -218,7 +217,7 @@ class CachedGivts extends _CachedGivts with RealmEntity, RealmObject {
     RealmObject.set(this, 'userId', userId);
   }
 
-  CachedGivts._();
+  Donations._();
 
   @override
   String get mediumId => RealmObject.get<String>(this, 'mediumId') as String;
@@ -241,14 +240,14 @@ class CachedGivts extends _CachedGivts with RealmEntity, RealmObject {
   set userId(String value) => throw RealmUnsupportedSetError();
 
   @override
-  Stream<RealmObjectChanges<CachedGivts>> get changes =>
-      RealmObject.getChanges<CachedGivts>(this);
+  Stream<RealmObjectChanges<Donations>> get changes =>
+      RealmObject.getChanges<Donations>(this);
 
   static SchemaObject get schema => _schema ??= _initSchema();
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
-    RealmObject.registerFactory(CachedGivts._);
-    return const SchemaObject(CachedGivts, 'CachedGivts', [
+    RealmObject.registerFactory(Donations._);
+    return const SchemaObject(Donations, 'Donations', [
       SchemaProperty('mediumId', RealmPropertyType.string),
       SchemaProperty('donationAmount', RealmPropertyType.int),
       SchemaProperty('dateTime', RealmPropertyType.string),
