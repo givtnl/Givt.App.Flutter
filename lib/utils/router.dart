@@ -14,7 +14,7 @@ import '../features/basic_giving_flow/pages/qr_mock.dart';
 import '../features/benefits/pages/usp.dart';
 import '../features/permissions/pages/camera_permission.dart';
 import '../features/permissions/pages/location_permission.dart';
-import '../features/registration/pages/first_time_registration.dart';
+import '../features/registration/pages/registration.dart';
 import '../features/archived/pages/old_login_usp.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
