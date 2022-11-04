@@ -8,12 +8,12 @@ import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class AmountController {
-  Future<void> createCachedGivtandNavigate(context, int donationAmount,
-      String mediumId, Function toggleLoader) async {
+  final NavigationService navigationService = locator<NavigationService>();
+  Future<void> storeCachedGivt(context, int donationAmount, String mediumId,
+      Function toggleLoader) async {
     String dateTime = DateTime.now().toIso8601String();
     final UserService usrService = locator<UserService>();
 
-    final NavigationService navigationService = locator<NavigationService>();
     late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
     toggleLoader(true);
 
@@ -27,12 +27,15 @@ class AmountController {
       // store donation info locally
       realmProxy.createCachedGivt(
           mediumId, donationAmount, dateTime, tempUserID);
-
-      navigationService.navigateTo(routes.WepayRoute);
+      toggleLoader(false);
     } catch (error) {
       toggleLoader(false);
       SnackBarNotifyer(context)
           .showSnackBarMessage(error.toString(), Colors.red);
     }
+  }
+
+  navigateToPayment() {
+    navigationService.navigateTo(routes.WepayRoute);
   }
 }
