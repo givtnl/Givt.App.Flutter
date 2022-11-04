@@ -10,6 +10,12 @@ const String DonationSuccessRoute = 'donation-success';
 const String LoginRoute = 'login';
 const String WepayRoute = "wepay";
 const String SplashScreenRoute = "splash-screen";
+const String FirstUseScreenRoute = "first-use-screen";
+const String FirstOptionsRoute = "first-options";
+const String HomeScreenRoute = "home-screen";
+const String SignUpRoute = "sign-up";
+
+
 
 
 // Map<String, WidgetBuilder> routes = {

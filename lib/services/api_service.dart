@@ -37,6 +37,17 @@ class APIService {
     }
   }
 
+  Future<dynamic> updateUser(String jsonUser) async {
+    final url = Uri.https(baseApiUrl, '/api/v2/users');
+    var response = await http.put(url, body: jsonUser, headers: headers);
+    if (response.statusCode >= 400) {
+      print(response.body);
+      throw Exception('Failed to update a user');
+    } else {
+      return response.body;
+    }
+  }
+
   Future<dynamic> createMandate(String wepayToken, String userId) async {
     final url = Uri.https(baseApiUrl, '/api/v2/users/$userId/mandates');
     final String mandate = json.encode({
@@ -53,12 +64,22 @@ class APIService {
   }
 
   Future<dynamic> submitDonation(String userId, String donationObject) async {
-    final url = Uri.https(baseApiUrl, '/api/v2/users//$userId/givts');
+    final url = Uri.https(baseApiUrl, '/api/v2/users/$userId/givts');
     var response = await http.post(url, body: donationObject, headers: headers);
     if (response.statusCode >= 400) {
       throw Exception('Failed to process donation');
     } else {
       // returns stringified object
+      return response.body;
+    }
+  }
+
+  Future<dynamic> checkEmailExists(String email) async {
+    final url = Uri.https(baseApiUrl, '/api/v2/Users/check', {'email': email});
+    var response = await http.get(url, headers: headers);
+    if (response.statusCode >= 400) {
+      throw Exception('something went wrong :(');
+    } else {
       return response.body;
     }
   }

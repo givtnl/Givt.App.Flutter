@@ -1,9 +1,10 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:givt_mobile_apps/models/temp_user.dart';
+part 'registered_user.g.dart';
 
-import 'package:givt_mobile_apps/models/temp-user.dart';
-
+@JsonSerializable()
 class RegisteredUser {
-  final String userId;
+  final String guid;
   final String email;
   final String phoneNumber;
   final String password;
@@ -17,7 +18,7 @@ class RegisteredUser {
 
   RegisteredUser(
       {required this.email,
-      required this.userId,
+      required this.guid,
       required this.phoneNumber,
       required this.firstName,
       required this.lastName,
@@ -30,7 +31,7 @@ class RegisteredUser {
 
   factory RegisteredUser.fromTempUser(String userId, TempUser tempUser) {
     return RegisteredUser(
-      userId: userId,
+      guid: userId,
       email: tempUser.Email,
       deviceOS: 0,
       phoneNumber: tempUser.PhoneNumber,
@@ -44,17 +45,8 @@ class RegisteredUser {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        "userId": userId,
-        "email": email,
-        "deviceOS": deviceOS,
-        "phoneNumber": phoneNumber,
-        "firstName": firstName,
-        "lastName": lastName,
-        "postalCode": postalCode,
-        "country": country,
-        "password": password,
-        "appLanguage": appLanguage,
-        "timeZoneId": timeZoneId,
-      };
+  factory RegisteredUser.fromJson(Map<String, dynamic> json) =>
+      _$RegisteredUserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RegisteredUserToJson(this);
 }
