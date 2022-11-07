@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/notifications/snackbar.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
+import 'package:givt_mobile_apps/services/user_service.dart';
 import '../../../../services/api_service.dart';
 import '../../../models/localStorage.dart';
 import '../../../utils/locator.dart';
@@ -12,8 +13,9 @@ class LoginController {
   late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
   late final NavigationService _navigationService =
       locator<NavigationService>();
+  final UserService _userService = locator<UserService>();
 
-  void onLogin(BuildContext context, String email, String password,
+  void login(BuildContext context, String email, String password,
       Function toggleLoader) async {
     print('loggin in');
     final Map data = {
@@ -22,12 +24,11 @@ class LoginController {
       'password': password
     };
     try {
-      final response = await APIService().loginLocal(data);
-      final decodedRes = jsonDecode(response);
+      final response = await _userService.loginUser(data);
       // this should be stored locally or in state,
       // then there needs to be a service that keeps the login active with bearer plus access token
       // but fixes on local storage and decisions on state management should happen first
-      print('access token is: ${decodedRes['access_token']}');
+      print('access token is: ${response}');
       toggleLoader(false);
       _navigationService.navigateTo(routes.HomeScreenRoute);
     } catch (e) {

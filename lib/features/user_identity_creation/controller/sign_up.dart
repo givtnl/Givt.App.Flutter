@@ -14,34 +14,17 @@ class SignUpController {
   late final NavigationService _navigationService =
       locator<NavigationService>();
 
-  void onSignUp(BuildContext context, Map<String, String> formValue,
+  void signUp(BuildContext context, Map<String, String> formValue,
       Function toggleLoader) async {
     LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
     final UserService _userService = locator<UserService>();
 
-    final String emailStatus =
+    final String emailExists =
         await APIService().checkEmailExists(formValue['email']!);
-    print(emailStatus);
+    print(emailExists);
     toggleLoader(false);
 
-    if (emailStatus.contains('true')) {
-      SnackBarNotifyer(context).showSnackBarMessage(
-          'Email already registered, login instead?',
-          Theme.of(context).primaryColor);
-      toggleLoader(false);
-      _navigationService.navigateTo(routes.LoginRoute,
-          arguments: formValue['email']);
-    }
-    if (emailStatus.contains('dashboard') || emailStatus.contains('temp')) {
-      // these users do not have a payment details but can log in
-      SnackBarNotifyer(context).showSnackBarMessage(
-          'Email already registered, login instead?',
-          Theme.of(context).primaryColor);
-      toggleLoader(false);
-      _navigationService.navigateTo(routes.LoginRoute,
-          arguments: formValue['email']);
-    }
-    if (emailStatus.contains('false')) {
+    if (emailExists.contains('false')) {
       if (localUser.userId.length < 2) {
         // impossible to get here in our current flow, but might be used later.
         final tempUserMap = await _userService.createAndGetTempUser(
@@ -59,20 +42,27 @@ class SignUpController {
             tempUserMap['userId'], tempUserMap["user"]);
         toggleLoader(false);
         _navigationService.navigateTo(routes.HomeScreenRoute);
-      } else {
-        ////////////  HAPPY PATH in current giving flow ////////////
-        final res = await _userService.postRegisteredUser(
-          context,
-          formValue['firstName'],
-          formValue['lastName'],
-          null,
-          formValue['email'],
-          formValue['password'],
-          localUser.userId,
-        );
-        _navigationService.navigateTo(routes.HomeScreenRoute);
-        toggleLoader(false);
+        return;
       }
+      ////////////  HAPPY PATH in current giving flow ////////////
+      final res = await _userService.updateUserIdentity(
+        context,
+        formValue['firstName'],
+        formValue['lastName'],
+        null,
+        formValue['email'],
+        formValue['password'],
+        localUser.userId,
+      );
+      _navigationService.navigateTo(routes.HomeScreenRoute);
+      toggleLoader(false);
+    } else {
+      SnackBarNotifyer(context).showSnackBarMessage(
+          'Email already registered, login instead?',
+          Theme.of(context).primaryColor);
+      toggleLoader(false);
+      _navigationService.navigateTo(routes.LoginRoute,
+          arguments: formValue['email']);
     }
   }
 }

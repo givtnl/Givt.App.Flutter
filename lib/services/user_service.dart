@@ -18,7 +18,7 @@ class UserService {
 
   UserService();
 
-  Future<dynamic> postRegisteredUser(
+  Future<dynamic> updateUserIdentity(
       [BuildContext? ctx,
       String? firstName,
       String? lastName,
@@ -61,6 +61,12 @@ class UserService {
     tempUserMap["userId"] = tempUserId;
     tempUserMap["user"] = tempUser;
     return tempUserMap;
+  }
+
+  Future<String> loginUser(Map data) async {
+    final response = await APIService().loginLocal(data);
+    final decodedRes = jsonDecode(response);
+    return decodedRes['access_token'];
   }
 
   Future<TempUser> createTempUser(

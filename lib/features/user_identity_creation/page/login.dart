@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final Map<String, String> _formValue = {'email': '', 'password': ''};
   bool isLoading = false;
-  bool _passwordVisible = true;
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                 onSaved: ((newValue) {
                   _formValue['password'] = newValue!;
                 }),
-                obscureText: _passwordVisible,
+                obscureText: _obscureText,
                 textInputAction: TextInputAction.next,
                 textAlign: TextAlign.start,
                 style: Theme.of(context)
@@ -164,15 +164,13 @@ class _LoginPageState extends State<LoginPage> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       // Based on passwordVisible state choose the icon
-                      _passwordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
                       color: Theme.of(context).colorScheme.surface,
                     ),
                     onPressed: () {
                       // Update the state i.e. toogle the state of passwordVisible variable
                       setState(() {
-                        _passwordVisible = !_passwordVisible;
+                        _obscureText = !_obscureText;
                       });
                     },
                   ),
@@ -188,7 +186,7 @@ class _LoginPageState extends State<LoginPage> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
                           toggleLoader(true);
-                          LoginController().onLogin(
+                          LoginController().login(
                             context,
                             _formValue['email']!,
                             _formValue['password']!,
