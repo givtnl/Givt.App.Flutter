@@ -189,11 +189,11 @@ class _LoginPageState extends State<LoginPage> {
                           _formKey.currentState?.save();
                           toggleLoader(true);
                           LoginController().onLogin(
+                            context,
                             _formValue['email']!,
                             _formValue['password']!,
                             toggleLoader,
                           );
-                          _navigationService.navigateTo(routes.HomeScreenRoute);
                         }
                       },
                     )

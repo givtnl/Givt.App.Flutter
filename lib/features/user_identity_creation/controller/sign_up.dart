@@ -26,7 +26,8 @@ class SignUpController {
 
     if (emailStatus.contains('true')) {
       SnackBarNotifyer(context).showSnackBarMessage(
-          'Email already registered, login instead?', Colors.red);
+          'Email already registered, login instead?',
+          Theme.of(context).primaryColor);
       toggleLoader(false);
       _navigationService.navigateTo(routes.LoginRoute,
           arguments: formValue['email']);
@@ -34,7 +35,8 @@ class SignUpController {
     if (emailStatus.contains('dashboard') || emailStatus.contains('temp')) {
       // these users do not have a payment details but can log in
       SnackBarNotifyer(context).showSnackBarMessage(
-          'Email already registered, login instead?', Colors.red);
+          'Email already registered, login instead?',
+          Theme.of(context).primaryColor);
       toggleLoader(false);
       _navigationService.navigateTo(routes.LoginRoute,
           arguments: formValue['email']);
@@ -68,8 +70,8 @@ class SignUpController {
           formValue['password'],
           localUser.userId,
         );
-        toggleLoader(false);
         _navigationService.navigateTo(routes.HomeScreenRoute);
+        toggleLoader(false);
       }
     }
   }

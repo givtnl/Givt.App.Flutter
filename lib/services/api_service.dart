@@ -91,7 +91,7 @@ class APIService {
       body: data,
     );
     if (response.statusCode >= 400) {
-      throw Exception('Failed to log in user');
+      throw Exception(jsonDecode(response.body));
     } else {
       return response.body;
     }
