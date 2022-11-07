@@ -26,15 +26,16 @@ class UserService {
       String? email,
       String? password,
       String? guid]) async {
-    final tempUser =
-        await createTempUser(ctx, firstName, lastName, null, email, password);
-    final registeredUser = RegisteredUser.fromTempUser(guid!, tempUser);
-    realmProxy.createUser(registeredUser);
-    final encodedUser = jsonEncode(registeredUser);
-    print(
-        'password: ${registeredUser.password}, guid ${registeredUser.guid}, email: ${registeredUser.email}');
+    final String currentTimeZone =
+        await FlutterNativeTimezone.getLocalTimezone();
+    final String locale =
+        (ctx != null) ? Localizations.localeOf(ctx).toString() : 'en';
+    final regUser = await RegisteredUser.fromSignUpData(
+        guid!, email!, password!, currentTimeZone, locale);
+    realmProxy.createUser(regUser);
+    final encodedUser = jsonEncode(regUser);
     await APIService().createRegisteredUser(encodedUser);
-    return registeredUser;
+    return regUser;
   }
 
   Future<dynamic> createAndGetRegisteredUser(
