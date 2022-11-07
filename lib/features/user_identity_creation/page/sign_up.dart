@@ -4,9 +4,11 @@ import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/controller/sign_up.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/widgets/scaffold.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import '../../../core/widgets/buttons/button_square_updt.dart';
 import '../../../core/widgets/navigation/appbar_bottom.dart';
+import '../../../core/constants/route_paths.dart' as routes;
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -20,6 +22,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   final Map<String, String> _formValue = {'email': '', 'password': ''};
   bool isLoading = false;
+  bool _passwordVisible = true;
 
   @override
   void initState() {
@@ -121,6 +124,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 onSaved: ((newValue) {
                   _formValue['password'] = newValue!;
                 }),
+                obscureText: _passwordVisible,
                 textInputAction: TextInputAction.next,
                 textAlign: TextAlign.start,
                 style: Theme.of(context)
@@ -158,6 +162,21 @@ class _SignUpPageState extends State<SignUpPage> {
                       color: Colors.red,
                     ),
                     borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      _passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Theme.of(context).colorScheme.surface,
+                    ),
+                    onPressed: () {
+                      // Update the state i.e. toogle the state of passwordVisible variable
+                      setState(() {
+                        _passwordVisible = !_passwordVisible;
+                      });
+                    },
                   ),
                 ),
               ),

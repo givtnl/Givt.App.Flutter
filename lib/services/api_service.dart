@@ -83,29 +83,8 @@ class APIService {
       return response.body;
     }
   }
-  //   Future<dynamic> loginLocal() async {
-  //   final grantReq = GrantRequest(
-  //       grantType: 'password',
-  //       userName: Uri.encodeFull('daniela+trial@givtapp.net'),
-  //       password: 'Test123');
-  //   final encodedGrant = jsonEncode(grantReq);
 
-  //   final url = Uri.https(baseApiUrl, '/oauth2/token');
-  //   var response = await http.post(url, body: encodedGrant, headers: headers);
-  //   if (response.statusCode >= 400) {
-  //     throw Exception('Failed to log in user');
-  //   } else {
-  //     return response.body;
-  //   }
-  // }
-
-  Future<dynamic> loginLocal() async {
-    final Map data = {
-      'grant_type': 'password',
-      'userName': 'daniela+trial@givtapp.net',
-      'password': 'Test123'
-    };
-
+  Future<dynamic> loginLocal(Map data) async {
     final url = Uri.https(baseApiUrl, '/oauth2/token');
     var response = await http.post(
       url,

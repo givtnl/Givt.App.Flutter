@@ -22,7 +22,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case routes.StartupRoute:
       return MaterialPageRoute(builder: (context) => const StartupPage());
     case routes.LoginRoute:
-      return MaterialPageRoute(builder: (context) => const LoginPage());
+      final String? email = settings.arguments as String?;
+      return MaterialPageRoute(
+          builder: (context) =>  LoginPage(passedEmail: email));
     case routes.UspRoute:
       return MaterialPageRoute(builder: (context) => const UspPage());
     case routes.CameraPermissionRoute:

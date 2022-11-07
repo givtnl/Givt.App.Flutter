@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
-import 'package:givt_mobile_apps/features/user_identity_creation/controller/sign_up.dart';
+import 'package:givt_mobile_apps/features/user_identity_creation/controller/login.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/widgets/scaffold.dart';
-import '../../../core/widgets/buttons/button_square_updt.dart';
-import '../../../core/widgets/navigation/appbar_bottom.dart';
+import 'package:givt_mobile_apps/services/navigation_service.dart';
+import '../../../utils/locator.dart';
+import '../../../core/constants/route_paths.dart' as routes;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final String? passedEmail;
+  const LoginPage({this.passedEmail});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late final NavigationService _navigationService =
+      locator<NavigationService>();
   final _formKey = GlobalKey<FormState>();
   final Map<String, String> _formValue = {'email': '', 'password': ''};
   bool isLoading = false;
+  bool _passwordVisible = true;
 
   @override
   void initState() {
@@ -45,14 +50,15 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: <Widget>[
               TextFormField(
-                // validator: (value) {
-                //   if (value == null ||
-                //       value.isEmpty ||
-                //       value.contains('@') == false) {
-                //     return 'Please enter your email adress';
-                //   }
-                //   return null;
-                // },
+                validator: (value) {
+                  if (value == null ||
+                      value.isEmpty ||
+                      value.contains('@') == false) {
+                    return 'Please enter your email adress';
+                  }
+                  return null;
+                },
+                initialValue: widget.passedEmail,
                 onSaved: ((newValue) {
                   _formValue['email'] = newValue!;
                 }),
@@ -98,24 +104,25 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 15),
               TextFormField(
-                // validator: (value) {
-                //   if (value == null || value.isEmpty) {
-                //     return 'Please enter a password';
-                //   }
-                //   if (value.length < 7) {
-                //     return 'Password must be at least 7 characters long';
-                //   }
-                //   if (value.contains(RegExp(r'[0-9]')) == false) {
-                //     return 'Password must contain a digit';
-                //   }
-                //   if (value.contains(RegExp(r'[A-Z]')) == false) {
-                //     return 'Password must contain an upper case character';
-                //   }
-                //   return null;
-                // },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a password';
+                  }
+                  if (value.length < 7) {
+                    return 'Password must be at least 7 characters long';
+                  }
+                  if (value.contains(RegExp(r'[0-9]')) == false) {
+                    return 'Password must contain a digit';
+                  }
+                  if (value.contains(RegExp(r'[A-Z]')) == false) {
+                    return 'Password must contain an upper case character';
+                  }
+                  return null;
+                },
                 onSaved: ((newValue) {
                   _formValue['password'] = newValue!;
                 }),
+                obscureText: _passwordVisible,
                 textInputAction: TextInputAction.next,
                 textAlign: TextAlign.start,
                 style: Theme.of(context)
@@ -154,6 +161,21 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      // Based on passwordVisible state choose the icon
+                      _passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Theme.of(context).colorScheme.surface,
+                    ),
+                    onPressed: () {
+                      // Update the state i.e. toogle the state of passwordVisible variable
+                      setState(() {
+                        _passwordVisible = !_passwordVisible;
+                      });
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 15),
@@ -166,7 +188,12 @@ class _LoginPageState extends State<LoginPage> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
                           toggleLoader(true);
-                          SignUpController().onLogin(toggleLoader);
+                          LoginController().onLogin(
+                            _formValue['email']!,
+                            _formValue['password']!,
+                            toggleLoader,
+                          );
+                          _navigationService.navigateTo(routes.HomeScreenRoute);
                         }
                       },
                     )
