@@ -10,7 +10,7 @@ import 'package:givt_mobile_apps/features/startup/pages/startup.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/page/login.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/page/sign_up.dart';
 import '../core/constants/route_paths.dart' as routes;
-import '../features/basic_giving_flow/pages/qr_mock.dart';
+import '../features/basic_giving_flow/pages/qr_scanner.dart';
 import '../features/benefits/pages/usp.dart';
 import '../features/permissions/pages/camera_permission.dart';
 import '../features/permissions/pages/location_permission.dart';
@@ -26,13 +26,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case routes.UspRoute:
       return MaterialPageRoute(builder: (context) => const UspPage());
     case routes.CameraPermissionRoute:
-      return MaterialPageRoute(builder: (context) => const CameraPermissionPage());
+      return MaterialPageRoute(
+          builder: (context) => const CameraPermissionPage());
     case routes.LocationPermissionRoute:
-      return MaterialPageRoute(builder: (context) => const LocationPermissionPage());
+      return MaterialPageRoute(
+          builder: (context) => const LocationPermissionPage());
     case routes.RegistrationRoute:
-      return MaterialPageRoute(builder: (context) => const FirstTimeRegistrationPage());
+      return MaterialPageRoute(
+          builder: (context) => const FirstTimeRegistrationPage());
     case routes.QRMockRoute:
-      return MaterialPageRoute(builder: (context) => QRmockPage());
+      return MaterialPageRoute(builder: (context) => QRScannerPage());
     case routes.DonationAmountTypicalRoute:
       return MaterialPageRoute(builder: (context) => DoantionAmountTypical());
     case routes.DonationAmountInputRoute:

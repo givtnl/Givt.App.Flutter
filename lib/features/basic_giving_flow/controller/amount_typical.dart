@@ -2,7 +2,7 @@ bool selectedMin = false;
 bool selectedMed = false;
 bool selectedMax = false;
 bool differentChoice = false;
-int donationAmount = 0;
+double donationAmount = 0;
 Map<String, dynamic> results = {};
 
 getAmount(int amount, bool userInput, Map<String, dynamic> previous) {

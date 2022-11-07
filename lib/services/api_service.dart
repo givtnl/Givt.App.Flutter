@@ -41,7 +41,6 @@ class APIService {
     final url = Uri.https(baseApiUrl, '/api/v2/users');
     var response = await http.put(url, body: jsonUser, headers: headers);
     if (response.statusCode >= 400) {
-      print(response.body);
       throw Exception('Failed to update a user');
     } else {
       return response.body;
@@ -76,6 +75,17 @@ class APIService {
 
   Future<dynamic> checkEmailExists(String email) async {
     final url = Uri.https(baseApiUrl, '/api/v2/Users/check', {'email': email});
+    var response = await http.get(url, headers: headers);
+    if (response.statusCode >= 400) {
+      throw Exception('something went wrong :(');
+    } else {
+      return response.body;
+    }
+  }
+
+  Future<dynamic> getOrganisationDetailsFromMedium(String mediumCode) async {
+    final url = Uri.https(
+        baseApiUrl, '/api/v2/CollectGroups/medium', {'Code': mediumCode});
     var response = await http.get(url, headers: headers);
     if (response.statusCode >= 400) {
       throw Exception('something went wrong :(');

@@ -9,14 +9,13 @@ import '../../../core/constants/route_paths.dart' as routes;
 
 class AmountController {
   final NavigationService navigationService = locator<NavigationService>();
-  Future<void> storeCachedGivt(context, int donationAmount, String mediumId,
+  Future<void> storeCachedGivt(context, double donationAmount, String mediumId,
       Function toggleLoader) async {
     String dateTime = DateTime.now().toIso8601String();
     final UserService usrService = locator<UserService>();
 
     late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
     toggleLoader(true);
-
     try {
       //create temp user in backend and local storage
       final Map<String, dynamic> tempUserMap =

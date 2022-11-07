@@ -207,7 +207,7 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
 class Donations extends _Donations with RealmEntity, RealmObject {
   Donations(
     String mediumId,
-    int donationAmount,
+    double donationAmount,
     String dateTime,
     String userId,
   ) {
@@ -225,9 +225,10 @@ class Donations extends _Donations with RealmEntity, RealmObject {
   set mediumId(String value) => throw RealmUnsupportedSetError();
 
   @override
-  int get donationAmount => RealmObject.get<int>(this, 'donationAmount') as int;
+  double get donationAmount =>
+      RealmObject.get<double>(this, 'donationAmount') as double;
   @override
-  set donationAmount(int value) => throw RealmUnsupportedSetError();
+  set donationAmount(double value) => throw RealmUnsupportedSetError();
 
   @override
   String get dateTime => RealmObject.get<String>(this, 'dateTime') as String;
@@ -249,7 +250,7 @@ class Donations extends _Donations with RealmEntity, RealmObject {
     RealmObject.registerFactory(Donations._);
     return const SchemaObject(Donations, 'Donations', [
       SchemaProperty('mediumId', RealmPropertyType.string),
-      SchemaProperty('donationAmount', RealmPropertyType.int),
+      SchemaProperty('donationAmount', RealmPropertyType.double),
       SchemaProperty('dateTime', RealmPropertyType.string),
       SchemaProperty('userId', RealmPropertyType.string),
     ]);

@@ -32,7 +32,7 @@ class _Donations {
   // does it need to store more data?
   // it SEEMS TO needs to store some id/ token
   late final String mediumId;
-  late final int donationAmount;
+  late final double donationAmount;
   // this should be an ISO8601 format
   late final String dateTime;
   late final String userId;

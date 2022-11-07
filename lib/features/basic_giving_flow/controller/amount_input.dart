@@ -12,13 +12,13 @@ class InputController {
   InputController(this.ctx);
 
   void handleSubmit(inputAmount, mediumId, toggleLoader) async {
-    if (inputAmount.isEmpty || int.parse(inputAmount) <= 2) {
+    if (inputAmount.isEmpty || double.parse(inputAmount) <= 2) {
       SnackBarNotifyer(ctx)
           .showSnackBarMessage('Cannot donate less than \$2', Colors.red);
       return;
     }
-    await AmountController()
-        .storeCachedGivt(ctx, int.parse(inputAmount), mediumId, toggleLoader);
+    await AmountController().storeCachedGivt(
+        ctx, double.parse(inputAmount), mediumId, toggleLoader);
     AmountController().navigateToPayment();
   }
 }

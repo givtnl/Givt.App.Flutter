@@ -63,7 +63,7 @@ class _WePayPageState extends State<WePayPage> {
     return DonationTemplate(
         questionText: "Fill in your credit card details",
         content: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+          padding: const EdgeInsets.fromLTRB(0, 40, 0, 10),
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _form,
@@ -231,7 +231,7 @@ class _WePayPageState extends State<WePayPage> {
                             _registeredUserId);
                       },
                     )),
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
