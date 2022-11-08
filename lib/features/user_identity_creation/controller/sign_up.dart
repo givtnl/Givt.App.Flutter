@@ -6,6 +6,7 @@ import '../../../../services/api_service.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
 import '../../../models/localStorage.dart';
 import '../../../models/registered_user.dart';
+import '../../../models/temp_user.dart';
 import '../../../services/user_service.dart';
 import '../../../utils/locator.dart';
 
@@ -43,7 +44,7 @@ class SignUpController {
     }
     if (emailStatus.contains('false')) {
       if (localUser.userId.length < 2) {
-        final tempUserMap = await _userService.createAndGetTempUser(
+        final TempUser tempUser = await _userService.createAndGetTempUser(
           context,
           formValue['firstName'],
           formValue['lastName'],
@@ -52,8 +53,8 @@ class SignUpController {
         );
         // post to api/v2/users/register creates a dashboard user
         // this also updates the local user data
-        final response = await _userService.createAndGetRegisteredUser(
-            tempUserMap['userId'], tempUserMap["user"]);
+        final response =
+            await _userService.createAndGetRegisteredUser(tempUser);
         toggleLoader(false);
       } else {
         final tempUser = await _userService.createTempUser(
@@ -64,13 +65,12 @@ class SignUpController {
             formValue['email'],
             formValue['password']);
 
-        final registeredUser =
-            RegisteredUser.fromTempUser(localUser.userId, tempUser);
+        final registeredUser = RegisteredUser.fromTempUser(tempUser);
         storageProxy.createUser(registeredUser);
         print(
             'password: ${registeredUser.password}, guid ${registeredUser.guid}, email: ${registeredUser.email}');
-        final encodedUser = jsonEncode(registeredUser);
-        final response = await APIService().createRegisteredUser(encodedUser);
+        final response =
+            await APIService().createRegisteredUser(registeredUser);
         toggleLoader(false);
       }
     }

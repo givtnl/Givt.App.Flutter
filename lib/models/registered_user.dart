@@ -29,9 +29,9 @@ class RegisteredUser {
       required this.appLanguage,
       required this.timeZoneId});
 
-  factory RegisteredUser.fromTempUser(String userId, TempUser tempUser) {
+  factory RegisteredUser.fromTempUser(TempUser tempUser) {
     return RegisteredUser(
-      guid: userId,
+      guid: tempUser.Guid!,
       email: tempUser.Email,
       deviceOS: 0,
       phoneNumber: tempUser.PhoneNumber,

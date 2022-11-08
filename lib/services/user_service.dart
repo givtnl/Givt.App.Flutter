@@ -18,29 +18,24 @@ class UserService {
 
   UserService();
 
-  Future<dynamic> createAndGetRegisteredUser(
-      String userID, dynamic tempUser) async {
-    final registeredUser = RegisteredUser.fromTempUser(userID, tempUser);
+  Future<dynamic> createAndGetRegisteredUser(TempUser tempUser) async {
+    final registeredUser = RegisteredUser.fromTempUser(tempUser);
     storageProxy.createUser(registeredUser);
-    final encodedUser = jsonEncode(registeredUser);
-    await APIService().createRegisteredUser(encodedUser);
+    await APIService().createRegisteredUser(registeredUser);
     return registeredUser;
   }
 
-  Future<Map<String, dynamic>> createAndGetTempUser(
+  Future<TempUser> createAndGetTempUser(
       [BuildContext? ctx,
       String? firstName,
       String? lastName,
       String? postcode,
       String? email]) async {
-    final tempUser =
+    final TempUser tempUser =
         await createTempUser(ctx, firstName, lastName, postcode, email);
-    final encodedUser = jsonEncode(tempUser);
-    final tempUserId = await APIService().createTempUser(encodedUser);
-    Map<String, dynamic> tempUserMap = Map<String, dynamic>();
-    tempUserMap["userId"] = tempUserId;
-    tempUserMap["user"] = tempUser;
-    return tempUserMap;
+    final tempUserId = await APIService().createTempUser(tempUser);
+    tempUser.Guid = tempUserId;
+    return tempUser;
   }
 
   Future<TempUser> createTempUser(
@@ -52,7 +47,10 @@ class UserService {
       String? password]) async {
     final String currentTimeZone =
         await FlutterNativeTimezone.getLocalTimezone();
+    LocalUser localUser =
+        storageProxy.realm.all<LocalStorage>().first.userData!;
     return TempUser(
+        Guid: (localUser.userId.isNotEmpty) ? localUser.userId : null,
         Email: email ?? getRandomGeneratedEmail(),
         IBAN: 'NL62AAAA8705076482',
         PhoneNumber: '060000000',
