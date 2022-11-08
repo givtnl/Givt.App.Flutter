@@ -1,22 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/donation_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/controller/amount_input.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/input_button_donation.dart';
+import 'package:provider/provider.dart';
 
-class DoantionAmountInput extends StatefulWidget {
-  const DoantionAmountInput({super.key});
+import '../../../models/organisation.dart';
+
+class DonationAmountInput extends StatefulWidget {
+  const DonationAmountInput({super.key});
 
   @override
-  State<DoantionAmountInput> createState() => _DoantionAmountInputState();
+  State<DonationAmountInput> createState() => _DonationAmountInputState();
 }
 
-class _DoantionAmountInputState extends State<DoantionAmountInput> {
-// should be received from QR scan, gotten from database, etc
-  Map<String, dynamic> FetchedInfo = {
-    'mediumId': '61f7ed0155530122c000.c00000000003',
-  };
-  // for user input
+class _DonationAmountInputState extends State<DonationAmountInput> {
   final _amountController = TextEditingController();
   bool isLoading = false;
   void toggleLoader(bool loading) {
@@ -27,6 +27,8 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
 
   @override
   Widget build(BuildContext context) {
+    final organisationProvider =
+        Provider.of<Organisation>(context, listen: false);
     return GestureDetector(
       // exit the keyboard when clicking outside of it.
       onTap: () {
@@ -66,7 +68,7 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
             keyboardType: TextInputType.number,
             onSubmitted: (_) {
               InputController(context).handleSubmit(_amountController.text,
-                  FetchedInfo['mediumId'], toggleLoader);
+                  organisationProvider.mediumId, toggleLoader);
             },
           ),
         ),
@@ -77,7 +79,7 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
                 disabled: false,
                 onClicked: () {
                   InputController(context).handleSubmit(_amountController.text,
-                      FetchedInfo['mediumId'], toggleLoader);
+                      organisationProvider.mediumId, toggleLoader);
                 }),
       ),
     );

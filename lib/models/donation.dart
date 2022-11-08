@@ -3,7 +3,7 @@ import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 
 class Donation {
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
   final String wepayToken;
 
   Donation({
@@ -12,8 +12,9 @@ class Donation {
 
   // encode into JSON using temp data
   String jsonDonation() {
-    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
-    Donations? localDonation = realmProxy.realm
+    LocalUser localUser =
+        storageProxy.realm.all<LocalStorage>().first.userData!;
+    Donations? localDonation = storageProxy.realm
         .all<LocalStorage>()
         .first
         .donations

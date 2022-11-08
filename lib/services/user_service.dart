@@ -11,7 +11,7 @@ import 'api_service.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class UserService {
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
   final _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
@@ -21,7 +21,7 @@ class UserService {
   Future<dynamic> createAndGetRegisteredUser(
       String userID, dynamic tempUser) async {
     final registeredUser = RegisteredUser.fromTempUser(userID, tempUser);
-    realmProxy.createUser(registeredUser);
+    storageProxy.createUser(registeredUser);
     final encodedUser = jsonEncode(registeredUser);
     await APIService().createRegisteredUser(encodedUser);
     return registeredUser;
@@ -54,7 +54,7 @@ class UserService {
         await FlutterNativeTimezone.getLocalTimezone();
     return TempUser(
         Email: email ?? getRandomGeneratedEmail(),
-        IBAN: 'FB66GIVT12345678',
+        IBAN: 'NL62AAAA8705076482',
         PhoneNumber: '060000000',
         FirstName: firstName ?? 'jhon',
         LastName: lastName ?? 'doe',
