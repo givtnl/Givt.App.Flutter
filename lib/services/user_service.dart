@@ -64,8 +64,8 @@ class UserService {
     return tempUserMap;
   }
 
-  Future<String> loginUser(Map data) async {
-    final response = await APIService().loginLocal(data);
+  Future<String> loginUser(Map loginCredentials) async {
+    final response = await APIService().login(loginCredentials);
     final decodedRes = jsonDecode(response);
     return decodedRes['access_token'];
   }
@@ -81,7 +81,7 @@ class UserService {
         await FlutterNativeTimezone.getLocalTimezone();
     return TempUser(
         Email: email ?? getRandomGeneratedEmail(),
-        IBAN: 'FB66GIVT12345678',
+        IBAN: 'NL62AAAA8705076482',
         PhoneNumber: '060000000',
         FirstName: firstName ?? 'jhon',
         LastName: lastName ?? 'doe',

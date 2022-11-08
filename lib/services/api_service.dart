@@ -84,11 +84,11 @@ class APIService {
     }
   }
 
-  Future<dynamic> loginLocal(Map data) async {
+  Future<dynamic> login(Map loginCredentials) async {
     final url = Uri.https(baseApiUrl, '/oauth2/token');
     var response = await http.post(
       url,
-      body: data,
+      body: loginCredentials,
     );
     if (response.statusCode >= 400) {
       throw Exception(jsonDecode(response.body));
