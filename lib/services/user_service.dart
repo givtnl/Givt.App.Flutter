@@ -61,7 +61,7 @@ class UserService {
         Address: 'Foobarstraat 5',
         City: 'Foobar',
         PostalCode: postcode ?? 'no zipcode',
-        Country: 'NL',
+        Country: 'US',
         Password: password ?? 'R4nd0mP@s\$w0rd123',
         AmountLimit: 499,
         AppLanguage:

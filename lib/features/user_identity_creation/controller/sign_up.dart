@@ -68,7 +68,7 @@ class SignUpController {
             RegisteredUser.fromTempUser(localUser.userId, tempUser);
         storageProxy.createUser(registeredUser);
         print(
-            'password: ${registeredUser.password}, guid ${registeredUser.guid}, email: ${registeredUser.email}');
+            'password: ${registeredUser.password}, guid ${registeredUser.userId}, email: ${registeredUser.email}');
         final encodedUser = jsonEncode(registeredUser);
         final response = await APIService().createRegisteredUser(encodedUser);
         toggleLoader(false);
