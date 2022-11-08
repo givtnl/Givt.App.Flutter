@@ -20,10 +20,15 @@ class QRScannerPage extends StatefulWidget {
 }
 
 class _QRScannerPageState extends State<QRScannerPage> {
-  var status = 'Scanning';
   Barcode? result;
   MobileScannerController cameraController = MobileScannerController();
   final NavigationService _navigationService = locator<NavigationService>();
+  Column status = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        Text('Searching for a QR-code',
+            style: TextStyle(fontWeight: FontWeight.bold))
+      ]);
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +42,33 @@ class _QRScannerPageState extends State<QRScannerPage> {
               onDetect: (barcode, args) {
                 if (barcode.rawValue == null) {
                   setState(() {
-                    status = 'Failed to scan QR Code';
+                    status = Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text('This QR-code is not known in Givt.',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 234, 100, 90),
+                                  fontWeight: FontWeight.bold)),
+                          Text('Please scan another one.',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 234, 100, 90),
+                                  fontWeight: FontWeight.bold))
+                        ]);
                   });
                 } else {
                   setState(() {
-                    status =
-                        'QR code found! Retrieving organisation details...';
+                    status = Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('QR-code found!',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold)),
+                          Text('We are retrieving organization details.',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold))
+                        ]);
                   });
 
                   getOrganisationFromScannedCode(barcode.rawValue!);
@@ -50,11 +76,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
               }),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.2,
-          child: Center(
-            child: Text('$status'),
-          ),
-        )
+            height: MediaQuery.of(context).size.height * 0.2, child: status)
       ]),
       hasFooterButton: false,
       title: '',
@@ -76,7 +98,18 @@ class _QRScannerPageState extends State<QRScannerPage> {
       _navigationService.navigateTo(routes.DonationAmountTypicalRoute);
     } catch (error) {
       setState(() {
-        status = 'Failed to retrieve organisation details';
+        status = Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text('This QR-code is not known in Givt.',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 234, 100, 90),
+                      fontWeight: FontWeight.bold)),
+              Text('Please scan another one.',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 234, 100, 90),
+                      fontWeight: FontWeight.bold))
+            ]);
       });
     }
   }
