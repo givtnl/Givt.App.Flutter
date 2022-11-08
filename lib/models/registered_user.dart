@@ -18,7 +18,7 @@ class RegisteredUser {
 
   RegisteredUser(
       {required this.email,
-      required this.guid,
+      required this.userId,
       required this.phoneNumber,
       required this.firstName,
       required this.lastName,
@@ -31,7 +31,7 @@ class RegisteredUser {
 
   factory RegisteredUser.fromTempUser(String userId, TempUser tempUser) {
     return RegisteredUser(
-      guid: userId,
+      userId: userId,
       email: tempUser.Email,
       deviceOS: 0,
       phoneNumber: tempUser.PhoneNumber,
