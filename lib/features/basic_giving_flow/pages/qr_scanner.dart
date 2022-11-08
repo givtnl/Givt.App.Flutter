@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/models/organisation.dart';
@@ -10,7 +8,6 @@ import '../../../services/api_service.dart';
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
-import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QRScannerPage extends StatefulWidget {
   QRScannerPage({super.key});
@@ -32,6 +29,8 @@ class _QRScannerPageState extends State<QRScannerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final organisationProvider =
+        Provider.of<Organisation>(context, listen: false);
     return BaseTemplate(
       pageContent: Column(children: <Widget>[
         SizedBox(
@@ -39,7 +38,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
           child: MobileScanner(
               allowDuplicates: false,
               controller: cameraController,
-              onDetect: (barcode, args) {
+              onDetect: (barcode, args) async {
                 if (barcode.rawValue == null) {
                   setState(() {
                     status = Column(
@@ -70,8 +69,27 @@ class _QRScannerPageState extends State<QRScannerPage> {
                                   fontWeight: FontWeight.bold))
                         ]);
                   });
-
-                  getOrganisationFromScannedCode(barcode.rawValue!);
+                  final organisationHasBeenSet = await organisationProvider
+                      .setOrganisationFromScannedCode(barcode.rawValue!);
+                  if (organisationHasBeenSet) {
+                    _navigationService
+                        .navigateTo(routes.DonationAmountTypicalRoute);
+                  } else {
+                    setState(() {
+                      status = Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text('This QR-code is not known in Givt.',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 234, 100, 90),
+                                    fontWeight: FontWeight.bold)),
+                            Text('Please scan another one.',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 234, 100, 90),
+                                    fontWeight: FontWeight.bold))
+                          ]);
+                    });
+                  }
                 }
               }),
         ),
@@ -81,37 +99,6 @@ class _QRScannerPageState extends State<QRScannerPage> {
       hasFooterButton: false,
       title: '',
     );
-  }
-
-  void getOrganisationFromScannedCode(String code) async {
-    final organisationProvider =
-        Provider.of<Organisation>(context, listen: false);
-    try {
-      final uri = Uri.parse(code);
-      final mediumId = uri.queryParameters['code'];
-      final response =
-          await APIService().getOrganisationDetailsFromMedium(mediumId!);
-
-      Map<String, dynamic> decoded = json.decode(response);
-      organisationProvider.organisationDetails(decoded);
-      organisationProvider.setMediumId(mediumId);
-      _navigationService.navigateTo(routes.DonationAmountTypicalRoute);
-    } catch (error) {
-      setState(() {
-        status = Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text('This QR-code is not known in Givt.',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 234, 100, 90),
-                      fontWeight: FontWeight.bold)),
-              Text('Please scan another one.',
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 234, 100, 90),
-                      fontWeight: FontWeight.bold))
-            ]);
-      });
-    }
   }
 
   @override

@@ -28,11 +28,11 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
 
   @override
   Widget build(BuildContext context) {
-    final LocalStorage current = realmProxy.realm.all<LocalStorage>().first;
+    final LocalStorage current = storageProxy.realm.all<LocalStorage>().first;
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<CheckInternet>(create: (_) => CheckInternet()),

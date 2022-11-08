@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../services/api_service.dart';
 part 'organisation.g.dart';
 
 @JsonSerializable()
@@ -31,7 +35,7 @@ class Organisation extends ChangeNotifier {
       this.privacyPolicyLink,
       this.mediumId]);
 
-  void organisationDetails(Map<String, dynamic> json) {
+  void setOrganisationDetails(Map<String, dynamic> json) {
     organisationName = json['organisationName'];
     country = json['country'];
     organisationLogoLink = json['organisationLogoLink'];
@@ -46,9 +50,25 @@ class Organisation extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setMediumId(String id) {
-    mediumId = id;
+  void setMediumId(String base64MediumId) {
+    mediumId = utf8.decode(base64.decode(base64MediumId));
     notifyListeners();
+  }
+
+  Future<bool> setOrganisationFromScannedCode(String code) async {
+    try {
+      final uri = Uri.parse(code);
+      final mediumId = uri.queryParameters['code'];
+      final response =
+          await APIService().getOrganisationDetailsFromMedium(mediumId!);
+
+      Map<String, dynamic> decoded = json.decode(response);
+      setOrganisationDetails(decoded);
+      setMediumId(mediumId);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   Map<String, dynamic> toJson() => _$OrganisationToJson(this);

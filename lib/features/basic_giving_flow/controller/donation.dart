@@ -11,7 +11,7 @@ import '../../../services/api_service.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class DonationController {
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
   final NavigationService navigationService = locator<NavigationService>();
 
   late final String _registeredUserId;
@@ -29,13 +29,13 @@ class DonationController {
     try {
       //update temp user with ID
       LocalUser localUser =
-          realmProxy.realm.all<LocalStorage>().first.userData!;
+          storageProxy.realm.all<LocalStorage>().first.userData!;
       final tempUser = await usrService.createTempUser(
           context, firstName, lastName, _formValue['postalCode']);
       //create registered user
       final registeredUser = await usrService.createAndGetRegisteredUser(
           localUser.userId, tempUser);
-      realmProxy.createUser(registeredUser);
+      storageProxy.createUser(registeredUser);
       webViewController.evaluateJavascript(source: "tokenize();");
     } catch (error) {
       toggleLoader(false);
@@ -60,5 +60,34 @@ class DonationController {
       SnackBarNotifyer(context)
           .showSnackBarMessage(error.toString(), Colors.red);
     }
+  }
+
+  Future<void> storeCachedGivt(context, double donationAmount, String mediumId,
+      Function toggleLoader) async {
+    String dateTime = DateTime.now().toIso8601String();
+    final UserService usrService = locator<UserService>();
+
+    late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+    toggleLoader(true);
+    try {
+      //create temp user in backend and local storage
+      final Map<String, dynamic> tempUserMap =
+          await usrService.createAndGetTempUser();
+      final tempUserID = tempUserMap["userId"];
+      storageProxy.addUserId(tempUserID);
+
+      // store donation info into local storage
+      storageProxy.createCachedGivt(
+          mediumId, donationAmount, dateTime, tempUserID);
+      toggleLoader(false);
+    } catch (error) {
+      toggleLoader(false);
+      SnackBarNotifyer(context)
+          .showSnackBarMessage(error.toString(), Colors.red);
+    }
+  }
+
+  navigateToPayment() {
+    navigationService.navigateTo(routes.WepayRoute);
   }
 }

@@ -9,7 +9,7 @@ import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart'
     hide LocalStorage;
-import '../controller/donation_wepay.dart';
+import '../controller/donation.dart';
 
 const String handlerName = "registrationMessageHandler";
 final logger = Logger(
@@ -22,16 +22,16 @@ final logger = Logger(
         printTime: true // Should each log print contain a timestamp  ),
         ));
 
-class WePayPage extends StatefulWidget {
-  const WePayPage({super.key});
+class DonationPage extends StatefulWidget {
+  const DonationPage({super.key});
 
   @override
-  State<WePayPage> createState() => _WePayPageState();
+  State<DonationPage> createState() => _DonationPageState();
 }
 
-class _WePayPageState extends State<WePayPage> {
+class _DonationPageState extends State<DonationPage> {
   late InAppWebViewController _webViewController;
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
   final _postFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
   final Map<String, String> _formValue = {'name': '', 'postalCode': ''};
@@ -41,7 +41,8 @@ class _WePayPageState extends State<WePayPage> {
 
   @override
   void initState() {
-    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
+    LocalUser localUser =
+        storageProxy.realm.all<LocalStorage>().first.userData!;
     _registeredUserId = localUser.userId;
   }
 

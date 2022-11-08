@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
-import 'package:givt_mobile_apps/features/basic_giving_flow/controller/amount_final.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_button.dart';
 import 'package:givt_mobile_apps/core/templates/donation_template.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:provider/provider.dart';
+import '../controller/donation.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 import '../../../models/organisation.dart';
 
@@ -87,11 +87,9 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
               text: 'Next',
               disabled: donationAmount > 1.5 ? false : true,
               onClicked: () {
-                String decodedMediumId =
-                    utf8.decode(base64.decode(organisationProvider.mediumId!));
-                AmountController().storeCachedGivt(
-                    context, donationAmount, decodedMediumId, toggleLoader);
-                AmountController().navigateToPayment();
+                DonationController().storeCachedGivt(context, donationAmount,
+                    organisationProvider.mediumId!, toggleLoader);
+                DonationController().navigateToPayment();
               }),
     );
   }

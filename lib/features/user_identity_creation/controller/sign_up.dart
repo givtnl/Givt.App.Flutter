@@ -10,11 +10,12 @@ import '../../../services/user_service.dart';
 import '../../../utils/locator.dart';
 
 class SignUpController {
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
 
   void onSignUp(BuildContext context, Map<String, String> formValue,
       Function toggleLoader) async {
-    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
+    LocalUser localUser =
+        storageProxy.realm.all<LocalStorage>().first.userData!;
     final UserService _userService = locator<UserService>();
 
     final String emailStatus =
@@ -65,7 +66,7 @@ class SignUpController {
 
         final registeredUser =
             RegisteredUser.fromTempUser(localUser.userId, tempUser);
-        realmProxy.createUser(registeredUser);
+        storageProxy.createUser(registeredUser);
         print(
             'password: ${registeredUser.password}, guid ${registeredUser.guid}, email: ${registeredUser.email}');
         final encodedUser = jsonEncode(registeredUser);

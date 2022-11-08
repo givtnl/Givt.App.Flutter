@@ -16,14 +16,15 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
   final _formKey = GlobalKey<FormState>();
   final Map<String, String> _formValue = {'email': '', 'password': ''};
   bool isLoading = false;
 
   @override
   void initState() {
-    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
+    LocalUser localUser =
+        storageProxy.realm.all<LocalStorage>().first.userData!;
     print('local user is ${localUser.userId}');
     super.initState();
     initialization();

@@ -9,14 +9,14 @@ import 'package:provider/provider.dart';
 
 import '../../../models/organisation.dart';
 
-class DoantionAmountInput extends StatefulWidget {
-  const DoantionAmountInput({super.key});
+class DonationAmountInput extends StatefulWidget {
+  const DonationAmountInput({super.key});
 
   @override
-  State<DoantionAmountInput> createState() => _DoantionAmountInputState();
+  State<DonationAmountInput> createState() => _DonationAmountInputState();
 }
 
-class _DoantionAmountInputState extends State<DoantionAmountInput> {
+class _DonationAmountInputState extends State<DonationAmountInput> {
   final _amountController = TextEditingController();
   bool isLoading = false;
   void toggleLoader(bool loading) {
@@ -29,8 +29,6 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
   Widget build(BuildContext context) {
     final organisationProvider =
         Provider.of<Organisation>(context, listen: false);
-    String decodedMediumId =
-        utf8.decode(base64.decode(organisationProvider.mediumId!));
     return GestureDetector(
       // exit the keyboard when clicking outside of it.
       onTap: () {
@@ -69,8 +67,8 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
             controller: _amountController,
             keyboardType: TextInputType.number,
             onSubmitted: (_) {
-              InputController(context).handleSubmit(
-                  _amountController.text, decodedMediumId, toggleLoader);
+              InputController(context).handleSubmit(_amountController.text,
+                  organisationProvider.mediumId, toggleLoader);
             },
           ),
         ),
@@ -80,8 +78,8 @@ class _DoantionAmountInputState extends State<DoantionAmountInput> {
                 text: 'Next',
                 disabled: false,
                 onClicked: () {
-                  InputController(context).handleSubmit(
-                      _amountController.text, decodedMediumId, toggleLoader);
+                  InputController(context).handleSubmit(_amountController.text,
+                      organisationProvider.mediumId, toggleLoader);
                 }),
       ),
     );
