@@ -81,7 +81,7 @@ class UserService {
         await FlutterNativeTimezone.getLocalTimezone();
     return TempUser(
         Email: email ?? getRandomGeneratedEmail(),
-        IBAN: 'NL62AAAA8705076482',
+        IBAN: 'FB66GIVT12345678',
         PhoneNumber: '060000000',
         FirstName: firstName ?? 'jhon',
         LastName: lastName ?? 'doe',

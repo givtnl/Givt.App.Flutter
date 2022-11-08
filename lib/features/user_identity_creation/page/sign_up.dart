@@ -119,6 +119,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   if (value.contains(RegExp(r'[A-Z]')) == false) {
                     return 'Password must contain an upper case character';
                   }
+                  if (value.length > 100) {
+                    return 'Password cannot contain more than 100 characters';
+                  }
                   return null;
                 },
                 onSaved: ((newValue) {
