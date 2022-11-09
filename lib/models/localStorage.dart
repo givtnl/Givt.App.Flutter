@@ -79,7 +79,7 @@ class LocalStorageProxy {
   void createUser(RegisteredUser user) {
     realm.write(() {
       LocalUser localCurrent = realm.all<LocalStorage>().first.userData!;
-      localCurrent.userId = user.guid;
+      localCurrent.userId = user.userId;
       localCurrent.email = user.email;
       localCurrent.deviceOS = user.deviceOS;
       localCurrent.phoneNumber = user.phoneNumber;
