@@ -32,7 +32,7 @@ class UserService {
         (ctx != null) ? Localizations.localeOf(ctx).toString() : 'en';
     final regUser = await RegisteredUser.fromSignUpData(
         guid!, email!, password!, currentTimeZone, locale);
-    realmProxy.createUser(regUser);
+    storageProxy.createUser(regUser);
     final encodedUser = jsonEncode(regUser);
     await APIService().createRegisteredUser(encodedUser);
     return regUser;
@@ -67,7 +67,10 @@ class UserService {
   Future<String> loginUser(Map loginCredentials) async {
     final response = await APIService().login(loginCredentials);
     final decodedRes = jsonDecode(response);
-    return decodedRes['access_token'];
+    // the access token should be stored locally or in state,
+    // then there needs to be a service that keeps the login active with bearer plus access token
+    // but fixes on local storage and decisions on state management should happen first
+    return 'logged in';
   }
 
   Future<TempUser> createTempUser(

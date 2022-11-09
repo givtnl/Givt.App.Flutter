@@ -25,10 +25,6 @@ class LoginController {
     };
     try {
       final response = await _userService.loginUser(loginCredentials);
-      // this should be stored locally or in state,
-      // then there needs to be a service that keeps the login active with bearer plus access token
-      // but fixes on local storage and decisions on state management should happen first
-      print('access token is: ${response}');
       toggleLoader(false);
       _navigationService.navigateTo(routes.HomeScreenRoute);
     } catch (e) {

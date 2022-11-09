@@ -47,7 +47,7 @@ class RegisteredUser {
   factory RegisteredUser.fromSignUpData(String userId, String email,
       String password, String timezone, String locale) {
     return RegisteredUser(
-      guid: userId,
+      userId: userId,
       email: email,
       deviceOS: 0,
       phoneNumber: '060000000',
