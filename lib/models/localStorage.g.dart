@@ -10,19 +10,19 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
   static var _defaultsSet = false;
 
   LocalStorage({
-    bool locationAsked = false,
-    bool cameraAsked = false,
+    bool welcomed = false,
+    bool completedOneDonation = false,
     LocalUser? userData,
     Iterable<Donations> donations = const [],
   }) {
     if (!_defaultsSet) {
       _defaultsSet = RealmObject.setDefaults<LocalStorage>({
-        'locationAsked': false,
-        'cameraAsked': false,
+        'welcomed': false,
+        'completedOneDonation': false,
       });
     }
-    RealmObject.set(this, 'locationAsked', locationAsked);
-    RealmObject.set(this, 'cameraAsked', cameraAsked);
+    RealmObject.set(this, 'welcomed', welcomed);
+    RealmObject.set(this, 'completedOneDonation', completedOneDonation);
     RealmObject.set(this, 'userData', userData);
     RealmObject.set<RealmList<Donations>>(
         this, 'donations', RealmList<Donations>(donations));
@@ -31,16 +31,16 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
   LocalStorage._();
 
   @override
-  bool get locationAsked =>
-      RealmObject.get<bool>(this, 'locationAsked') as bool;
+  bool get welcomed => RealmObject.get<bool>(this, 'welcomed') as bool;
   @override
-  set locationAsked(bool value) =>
-      RealmObject.set(this, 'locationAsked', value);
+  set welcomed(bool value) => RealmObject.set(this, 'welcomed', value);
 
   @override
-  bool get cameraAsked => RealmObject.get<bool>(this, 'cameraAsked') as bool;
+  bool get completedOneDonation =>
+      RealmObject.get<bool>(this, 'completedOneDonation') as bool;
   @override
-  set cameraAsked(bool value) => RealmObject.set(this, 'cameraAsked', value);
+  set completedOneDonation(bool value) =>
+      RealmObject.set(this, 'completedOneDonation', value);
 
   @override
   LocalUser? get userData =>
@@ -65,8 +65,8 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
   static SchemaObject _initSchema() {
     RealmObject.registerFactory(LocalStorage._);
     return const SchemaObject(LocalStorage, 'LocalStorage', [
-      SchemaProperty('locationAsked', RealmPropertyType.bool),
-      SchemaProperty('cameraAsked', RealmPropertyType.bool),
+      SchemaProperty('welcomed', RealmPropertyType.bool),
+      SchemaProperty('completedOneDonation', RealmPropertyType.bool),
       SchemaProperty('userData', RealmPropertyType.object,
           optional: true, linkTarget: 'LocalUser'),
       SchemaProperty('donations', RealmPropertyType.object,

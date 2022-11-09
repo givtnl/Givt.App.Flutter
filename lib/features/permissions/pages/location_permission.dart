@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
 import 'package:givt_mobile_apps/features/permissions/controllers/location_permission.dart';
-import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/models/permission_models.dart';
 import 'package:givt_mobile_apps/services/location_service.dart';
+import '../../../core/constants/route_paths.dart' as routes;
 
 import '../../../utils/locator.dart';
 
@@ -17,7 +17,6 @@ class LocationPermissionPage extends StatefulWidget {
 
 class _LocationPermissionPageState extends State<LocationPermissionPage>
     with WidgetsBindingObserver {
-  final LocalStorageProxy _model = locator<LocalStorageProxy>();
   final LocationService _locationService = locator<LocationService>();
   final _locationController = LocationController();
   bool _detectPermission = false;
@@ -26,8 +25,6 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-
-    _model.updateProgress('location');
   }
 
   @override
@@ -89,8 +86,9 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
           ),
         ),
         bypassBtn: BypassBtn(
-            title: 'continue using the app without the permission',
-            where: _locationController.getRoute()),
+          title: 'continue using the app without the permission',
+          where: routes.CameraPermissionRoute,
+        ),
         onBtnClick: () {
           _locationController.checkPermissions();
         },

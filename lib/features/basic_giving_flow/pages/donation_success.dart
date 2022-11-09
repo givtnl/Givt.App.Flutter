@@ -14,6 +14,10 @@ class SuccessDonationPage extends StatelessWidget {
 
   final NavigationService _navigationService = locator<NavigationService>();
   late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  @override
+  void initState() {
+    storageProxy.setCompletedOneDonationFlag(true);
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -83,7 +83,7 @@ class UserService {
         Email: email ?? getRandomGeneratedEmail(),
         IBAN: 'NL62AAAA8705076482',
         PhoneNumber: '060000000',
-        FirstName: firstName ?? 'jhon',
+        FirstName: firstName ?? 'john',
         LastName: lastName ?? 'doe',
         Address: 'Foobarstraat 5',
         City: 'Foobar',

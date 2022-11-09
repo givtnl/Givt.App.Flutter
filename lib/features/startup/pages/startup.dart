@@ -30,7 +30,7 @@ class _StartupPageState extends State<StartupPage> {
   final Duration _slideDuration = const Duration(seconds: 3);
   late final _carouselController = CarouselController();
   final _storyProgressKey = GlobalKey<ProgressIndicatorState>();
-  final LocalStorageProxy _model = locator<LocalStorageProxy>();
+  final LocalStorageProxy _storageProxy = locator<LocalStorageProxy>();
   int _currentPage = 0;
   bool _isExpanded = false;
 
@@ -42,10 +42,8 @@ class _StartupPageState extends State<StartupPage> {
 
   @override
   void initState() {
-    var current = _model.realm.all<LocalStorage>().first;
-    print(
-        'Progress camera is ${current.cameraAsked}; and location is  ${current.locationAsked}');
     super.initState();
+    _storageProxy.setWelcomeFlag(true);
     initialization();
     Future.delayed(Duration.zero, () {
       startCarousel();
@@ -98,14 +96,7 @@ class _StartupPageState extends State<StartupPage> {
   void animationComplete() {
     if (_isExpanded) {
       Timer(const Duration(seconds: 2), () {
-        LocalStorage current = _model.realm.all<LocalStorage>().first;
-        if (!current.locationAsked) {
-          _navigationService.navigateTo(routes.LocationPermissionRoute);
-        } else if (!current.cameraAsked) {
-          _navigationService.navigateTo(routes.CameraPermissionRoute);
-        } else if (current.locationAsked && current.cameraAsked) {
-          _navigationService.navigateTo(routes.FirstUseScreenRoute);
-        }
+        _navigationService.navigateTo(routes.LocationPermissionRoute);
       });
     }
   }
