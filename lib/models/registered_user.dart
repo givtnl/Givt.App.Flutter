@@ -44,6 +44,22 @@ class RegisteredUser {
       timeZoneId: tempUser.TimeZoneId,
     );
   }
+  factory RegisteredUser.fromSignUpData(String userId, String email,
+      String password, String timezone, String locale) {
+    return RegisteredUser(
+      userId: userId,
+      email: email,
+      deviceOS: 0,
+      phoneNumber: '060000000',
+      firstName: 'jhon',
+      lastName: 'doe',
+      postalCode: 'no zipcode',
+      country: 'NL',
+      password: password,
+      appLanguage: locale,
+      timeZoneId: timezone,
+    );
+  }
 
   factory RegisteredUser.fromJson(Map<String, dynamic> json) =>
       _$RegisteredUserFromJson(json);
