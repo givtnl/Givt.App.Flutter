@@ -33,35 +33,29 @@ class UserService {
     final regUser = await RegisteredUser.fromSignUpData(
         guid!, email!, password!, currentTimeZone, locale);
     storageProxy.createUser(regUser);
-    final encodedUser = jsonEncode(regUser);
-    await APIService().createRegisteredUser(encodedUser);
+    await APIService().createRegisteredUser(regUser);
     return regUser;
   }
 
-  Future<dynamic> createAndGetRegisteredUser(
-      String userID, dynamic tempUser) async {
-    final registeredUser = RegisteredUser.fromTempUser(userID, tempUser);
+  Future<dynamic> createAndGetRegisteredUser(TempUser tempUser) async {
+    final registeredUser = RegisteredUser.fromTempUser(tempUser);
     storageProxy.createUser(registeredUser);
-    final encodedUser = jsonEncode(registeredUser);
-    await APIService().createRegisteredUser(encodedUser);
+    await APIService().createRegisteredUser(registeredUser);
     return registeredUser;
   }
 
-  Future<Map<String, dynamic>> createAndGetTempUser(
+  Future<TempUser> createAndGetTempUser(
       [BuildContext? ctx,
       String? firstName,
       String? lastName,
       String? postcode,
       String? email,
       String? password]) async {
-    final tempUser = await createTempUser(
+    final TempUser tempUser = await createTempUser(
         ctx, firstName, lastName, postcode, email, password);
-    final encodedUser = jsonEncode(tempUser);
-    final tempUserId = await APIService().createTempUser(encodedUser);
-    Map<String, dynamic> tempUserMap = Map<String, dynamic>();
-    tempUserMap["userId"] = tempUserId;
-    tempUserMap["user"] = tempUser;
-    return tempUserMap;
+    final tempUserId = await APIService().createTempUser(tempUser);
+    tempUser.Guid = tempUserId;
+    return tempUser;
   }
 
   Future<String> loginUser(Map loginCredentials) async {
@@ -82,7 +76,10 @@ class UserService {
       String? password]) async {
     final String currentTimeZone =
         await FlutterNativeTimezone.getLocalTimezone();
+    LocalUser localUser =
+        storageProxy.realm.all<LocalStorage>().first.userData!;
     return TempUser(
+        Guid: (localUser.userId.isNotEmpty) ? localUser.userId : null,
         Email: email ?? getRandomGeneratedEmail(),
         IBAN: 'NL62AAAA8705076482',
         PhoneNumber: '060000000',

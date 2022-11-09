@@ -3,6 +3,7 @@ part 'temp_user.g.dart';
 
 @JsonSerializable()
 class TempUser {
+  String? Guid;
   final String Email;
   final String IBAN;
   final String PhoneNumber;
@@ -18,7 +19,8 @@ class TempUser {
   final String TimeZoneId;
 
   TempUser(
-      {required this.Email,
+      {this.Guid,
+      required this.Email,
       required this.IBAN,
       required this.PhoneNumber,
       required this.FirstName,

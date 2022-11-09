@@ -4,7 +4,7 @@ part 'registered_user.g.dart';
 
 @JsonSerializable()
 class RegisteredUser {
-  final String userId;
+  final String guid;
   final String email;
   final String phoneNumber;
   final String password;
@@ -18,7 +18,7 @@ class RegisteredUser {
 
   RegisteredUser(
       {required this.email,
-      required this.userId,
+      required this.guid,
       required this.phoneNumber,
       required this.firstName,
       required this.lastName,
@@ -29,9 +29,9 @@ class RegisteredUser {
       required this.appLanguage,
       required this.timeZoneId});
 
-  factory RegisteredUser.fromTempUser(String userId, TempUser tempUser) {
+  factory RegisteredUser.fromTempUser(TempUser tempUser) {
     return RegisteredUser(
-      userId: userId,
+      guid: tempUser.Guid!,
       email: tempUser.Email,
       deviceOS: 0,
       phoneNumber: tempUser.PhoneNumber,
@@ -47,7 +47,7 @@ class RegisteredUser {
   factory RegisteredUser.fromSignUpData(String userId, String email,
       String password, String timezone, String locale) {
     return RegisteredUser(
-      userId: userId,
+      guid: userId,
       email: email,
       deviceOS: 0,
       phoneNumber: '060000000',
