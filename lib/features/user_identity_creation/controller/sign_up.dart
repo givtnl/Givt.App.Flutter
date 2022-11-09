@@ -5,18 +5,21 @@ import 'package:givt_mobile_apps/services/navigation_service.dart';
 import '../../../../services/api_service.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
 import '../../../models/localStorage.dart';
+import '../../../models/registered_user.dart';
+import '../../../models/temp_user.dart';
 import '../../../services/user_service.dart';
 import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class SignUpController {
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
   late final NavigationService _navigationService =
       locator<NavigationService>();
 
   void signUp(BuildContext context, Map<String, String> formValue,
       Function toggleLoader) async {
-    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
+    LocalUser localUser =
+        storageProxy.realm.all<LocalStorage>().first.userData!;
     final UserService _userService = locator<UserService>();
 
     final String emailExists =
@@ -27,7 +30,7 @@ class SignUpController {
     if (emailExists.contains('false')) {
       if (localUser.userId.length < 2) {
         // impossible to get here in our current flow, but might be used later.
-        final tempUserMap = await _userService.createAndGetTempUser(
+        final TempUser tempUser = await _userService.createAndGetTempUser(
           context,
           formValue['firstName'],
           formValue['lastName'],
@@ -38,8 +41,8 @@ class SignUpController {
 
         /// post to api/v2/users/register creates a dashboard user that does not get removed,
         /// but if user completes donation they become 'multiuser'/'true'
-        final response = await _userService.createAndGetRegisteredUser(
-            tempUserMap['userId'], tempUserMap["user"]);
+        final response =
+            await _userService.createAndGetRegisteredUser(tempUser);
         toggleLoader(false);
         _navigationService.navigateTo(routes.HomeScreenRoute);
         return;

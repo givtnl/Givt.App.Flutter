@@ -18,7 +18,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
   final _formKey = GlobalKey<FormState>();
   final Map<String, String> _formValue = {'email': '', 'password': ''};
   bool isLoading = false;
@@ -26,7 +26,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void initState() {
-    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
+    LocalUser localUser =
+        storageProxy.realm.all<LocalStorage>().first.userData!;
     print('local user is ${localUser.userId}');
     super.initState();
     initialization();
@@ -118,6 +119,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   }
                   if (value.contains(RegExp(r'[A-Z]')) == false) {
                     return 'Password must contain an upper case character';
+                  }
+                  if (value.length > 100) {
+                    return 'Password cannot contain more than 100 characters';
                   }
                   return null;
                 },

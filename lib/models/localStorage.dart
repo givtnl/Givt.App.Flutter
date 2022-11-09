@@ -8,8 +8,7 @@ class _LocalStorage {
   bool welcomed = false;
   bool completedOneDonation = false;
   late _LocalUser? userData;
-  // maybe this should take an array/list of type CachedGivts
-  List<_CachedGivts> cachedGivts = [];
+  List<_Donations> donations = [];
 }
 
 @RealmModel()
@@ -29,11 +28,11 @@ class _LocalUser {
 }
 
 @RealmModel()
-class _CachedGivts {
+class _Donations {
   // does it need to store more data?
   // it SEEMS TO needs to store some id/ token
   late final String mediumId;
-  late final int donationAmount;
+  late final double donationAmount;
   // this should be an ISO8601 format
   late final String dateTime;
   late final String userId;
@@ -47,7 +46,7 @@ class LocalStorageProxy {
 
   LocalStorageProxy() {
     var config = Configuration.local(
-        [LocalStorage.schema, CachedGivts.schema, LocalUser.schema]);
+        [LocalStorage.schema, Donations.schema, LocalUser.schema]);
     realm = Realm(config);
     if (realm.all<LocalStorage>().isEmpty) {
       realm.write(() {
@@ -63,8 +62,8 @@ class LocalStorageProxy {
   void createCachedGivt(mediumId, donationAmount, dateTime, userId) {
     realm.write(() {
       LocalStorage localCurrent = realm.all<LocalStorage>().first;
-      localCurrent.cachedGivts
-          .add(CachedGivts(mediumId, donationAmount, dateTime, userId));
+      localCurrent.donations
+          .add(Donations(mediumId, donationAmount, dateTime, userId));
     });
   }
 

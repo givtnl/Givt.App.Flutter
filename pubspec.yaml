@@ -52,6 +52,7 @@ dependencies:
   flutter_native_splash: ^2.2.11
   flutter_native_timezone: ^2.0.0
   json_annotation: ^4.7.0
+  mobile_scanner: ^2.0.0
   
   
 dev_dependencies:
@@ -105,7 +106,7 @@ flutter:
           weight: 700
         - asset: assets/fonts/Mulish-ExtraBold.ttf
           weight: 800
-        - asset: assets/fonts/Mulish-Semibold.ttf
+        - asset: assets/fonts/Mulish-SemiBold.ttf
           weight: 600
         - asset: assets/fonts/Mulish-Medium.ttf
           weight: 500
