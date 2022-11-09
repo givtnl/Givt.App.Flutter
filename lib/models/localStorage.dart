@@ -5,8 +5,8 @@ part 'localStorage.g.dart';
 
 @RealmModel()
 class _LocalStorage {
-  bool locationAsked = false;
-  bool cameraAsked = false;
+  bool welcomed = false;
+  bool completedOneDonation = false;
   late _LocalUser? userData;
   // maybe this should take an array/list of type CachedGivts
   List<_CachedGivts> cachedGivts = [];
@@ -49,12 +49,11 @@ class LocalStorageProxy {
     var config = Configuration.local(
         [LocalStorage.schema, CachedGivts.schema, LocalUser.schema]);
     realm = Realm(config);
-
     if (realm.all<LocalStorage>().isEmpty) {
       realm.write(() {
         realm.add(LocalStorage(
-          locationAsked: false,
-          cameraAsked: false,
+          welcomed: false,
+          completedOneDonation: false,
         ));
         realm.all<LocalStorage>().first.userData = LocalUser();
       });
@@ -96,25 +95,25 @@ class LocalStorageProxy {
   void updateProgress(String key) {
     realm.write(() {
       LocalStorage localCurrent = realm.all<LocalStorage>().first;
-      if (key == 'camera') {
-        localCurrent.cameraAsked = true;
+      if (key == 'welcomed') {
+        localCurrent.welcomed = true;
       }
-      if (key == 'location') {
-        localCurrent.locationAsked = true;
+      if (key == 'completedOneDonation') {
+        localCurrent.completedOneDonation = true;
       }
     });
   }
 
-  // this is utility for resetting the flow
-  void downgradeProgress(String key) {
-    realm.write(() {
-      LocalStorage localCurrent = realm.all<LocalStorage>().first;
-      if (key == 'camera') {
-        localCurrent.cameraAsked = false;
-      }
-      if (key == 'location') {
-        localCurrent.locationAsked = false;
-      }
-    });
-  }
+  // // this is utility for resetting the flow
+  // void downgradeProgress(String key) {
+  //   realm.write(() {
+  //     LocalStorage localCurrent = realm.all<LocalStorage>().first;
+  //     if (key == 'camera') {
+  //       localCurrent.cameraAsked = false;
+  //     }
+  //     if (key == 'location') {
+  //       localCurrent.locationAsked = false;
+  //     }
+  //   });
+  // }
 }

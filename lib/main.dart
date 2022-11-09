@@ -28,12 +28,11 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
 
   @override
   Widget build(BuildContext context) {
-    final LocalStorage current = realmProxy.realm.all<LocalStorage>().first;
-
+    final LocalStorage current = storageProxy.realm.all<LocalStorage>().first;
     return MaterialApp(
       title: 'Givt',
       debugShowCheckedModeBanner: false,
@@ -47,8 +46,10 @@ class MyApp extends StatelessWidget {
       ],
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: router.generateRoute,
-      initialRoute: (current.locationAsked)
-          ? routes.FirstUseScreenRoute
+      initialRoute: (current.welcomed)
+          ? ((current.completedOneDonation)
+              ? routes.HomeScreenRoute
+              : routes.FirstUseScreenRoute)
           : routes.StartupRoute,
     );
   }

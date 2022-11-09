@@ -20,7 +20,7 @@ class CameraPermissionPage extends StatefulWidget {
 
 class _CameraPermissionPageState extends State<CameraPermissionPage>
     with WidgetsBindingObserver {
-  final LocalStorageProxy _model = locator<LocalStorageProxy>();
+  final LocalStorageProxy _storageProxy = locator<LocalStorageProxy>();
   final CameraService _cameraService = locator<CameraService>();
   final _cameraController = CameraController();
   bool _detectPermission = false;
@@ -29,7 +29,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _model.updateProgress('camera');
+    _storageProxy.updateProgress('welcomed');
   }
 
   @override
@@ -92,7 +92,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
       ),
       bypassBtn: BypassBtn(
           title: 'continue using the app without the permission',
-          where: routes.HomeScreenRoute),
+          where: routes.FirstUseScreenRoute),
       onBtnClick: () {
         _cameraController.checkPermissions();
       },

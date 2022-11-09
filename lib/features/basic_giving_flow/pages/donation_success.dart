@@ -11,13 +11,18 @@ class SuccessDonationPage extends StatelessWidget {
   SuccessDonationPage({super.key});
 
   final NavigationService _navigationService = locator<NavigationService>();
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  @override
+  void initState() {
+    storageProxy.updateProgress('completedOneDonation');
+  }
 
   @override
   Widget build(BuildContext context) {
     // this could be state rather the quering from local storage
-    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
-    CachedGivts? localDonation = realmProxy.realm
+    LocalUser localUser =
+        storageProxy.realm.all<LocalStorage>().first.userData!;
+    CachedGivts? localDonation = storageProxy.realm
         .all<LocalStorage>()
         .first
         .cachedGivts
