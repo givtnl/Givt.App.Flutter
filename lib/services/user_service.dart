@@ -18,6 +18,25 @@ class UserService {
 
   UserService();
 
+  Future<dynamic> updateUserIdentity(
+      [BuildContext? ctx,
+      String? firstName,
+      String? lastName,
+      String? postcode,
+      String? email,
+      String? password,
+      String? guid]) async {
+    final String currentTimeZone =
+        await FlutterNativeTimezone.getLocalTimezone();
+    final String locale =
+        (ctx != null) ? Localizations.localeOf(ctx).toString() : 'en';
+    final regUser = await RegisteredUser.fromSignUpData(
+        guid!, email!, password!, currentTimeZone, locale);
+    storageProxy.createUser(regUser);
+    await APIService().createRegisteredUser(regUser);
+    return regUser;
+  }
+
   Future<dynamic> createAndGetRegisteredUser(TempUser tempUser) async {
     final registeredUser = RegisteredUser.fromTempUser(tempUser);
     storageProxy.createUser(registeredUser);
@@ -30,9 +49,10 @@ class UserService {
       String? firstName,
       String? lastName,
       String? postcode,
-      String? email]) async {
-    final TempUser tempUser =
-        await createTempUser(ctx, firstName, lastName, postcode, email);
+      String? email,
+      String? password]) async {
+    final TempUser tempUser = await createTempUser(
+        ctx, firstName, lastName, postcode, email, password);
     final tempUserId = await APIService().createTempUser(tempUser);
     tempUser.Guid = tempUserId;
     return tempUser;

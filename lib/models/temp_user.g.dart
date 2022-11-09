@@ -7,6 +7,7 @@ part of 'temp_user.dart';
 // **************************************************************************
 
 TempUser _$TempUserFromJson(Map<String, dynamic> json) => TempUser(
+      Guid: json['Guid'] as String?,
       Email: json['Email'] as String,
       IBAN: json['IBAN'] as String,
       PhoneNumber: json['PhoneNumber'] as String,
@@ -23,6 +24,7 @@ TempUser _$TempUserFromJson(Map<String, dynamic> json) => TempUser(
     );
 
 Map<String, dynamic> _$TempUserToJson(TempUser instance) => <String, dynamic>{
+      'Guid': instance.Guid,
       'Email': instance.Email,
       'IBAN': instance.IBAN,
       'PhoneNumber': instance.PhoneNumber,

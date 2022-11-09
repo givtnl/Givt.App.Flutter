@@ -30,7 +30,6 @@ class SignUpController {
     if (emailExists.contains('false')) {
       if (localUser.userId.length < 2) {
         // impossible to get here in our current flow, but might be used later.
-        final tempUserMap = await _userService.createAndGetTempUser(
         final TempUser tempUser = await _userService.createAndGetTempUser(
           context,
           formValue['firstName'],
@@ -42,8 +41,8 @@ class SignUpController {
 
         /// post to api/v2/users/register creates a dashboard user that does not get removed,
         /// but if user completes donation they become 'multiuser'/'true'
-        final response = await _userService.createAndGetRegisteredUser(
-            tempUserMap['userId'], tempUserMap["user"]);
+        final response =
+            await _userService.createAndGetRegisteredUser(tempUser);
         toggleLoader(false);
         _navigationService.navigateTo(routes.HomeScreenRoute);
         return;
