@@ -91,15 +91,17 @@ class LocalStorageProxy {
     });
   }
 
-  void updateProgress(String key) {
+  void setWelcomeFlag(bool update) {
     realm.write(() {
-      LocalStorage localCurrent = realm.all<LocalStorage>().first;
-      if (key == 'welcomed') {
-        localCurrent.welcomed = true;
-      }
-      if (key == 'completedOneDonation') {
-        localCurrent.completedOneDonation = true;
-      }
+      LocalStorage localStorage = realm.all<LocalStorage>().first;
+      localStorage.welcomed = update;
+    });
+  }
+
+  void setCompletedOeDonation(bool update) {
+    realm.write(() {
+      LocalStorage localStorage = realm.all<LocalStorage>().first;
+      localStorage.completedOneDonation = update;
     });
   }
 
