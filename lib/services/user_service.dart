@@ -54,7 +54,7 @@ class UserService {
     final TempUser tempUser = await createTempUser(
         ctx, firstName, lastName, postcode, email, password);
     final tempUserId = await APIService().createTempUser(tempUser);
-    tempUser.Guid = tempUserId;
+    tempUser.UserId = tempUserId;
     return tempUser;
   }
 
@@ -79,7 +79,7 @@ class UserService {
     LocalUser localUser =
         storageProxy.realm.all<LocalStorage>().first.userData!;
     return TempUser(
-        Guid: (localUser.userId.isNotEmpty) ? localUser.userId : null,
+        UserId: (localUser.userId.isNotEmpty) ? localUser.userId : null,
         Email: email ?? getRandomGeneratedEmail(),
         IBAN: 'NL62AAAA8705076482',
         PhoneNumber: '060000000',
