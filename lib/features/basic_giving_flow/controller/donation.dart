@@ -63,11 +63,11 @@ class DonationController {
     try {
       //create temp user in backend and local storage
       final TempUser tempUser = await usrService.createAndGetTempUser();
-      storageProxy.addUserId(tempUser.Guid!);
+      storageProxy.addUserId(tempUser.UserId!);
 
       // store donation info into local storage
       storageProxy.createCachedGivt(
-          mediumId, donationAmount, dateTime, tempUser.Guid!);
+          mediumId, donationAmount, dateTime, tempUser.UserId!);
       toggleLoader(false);
     } catch (error) {
       toggleLoader(false);
