@@ -67,7 +67,10 @@ class SignUpScaffold extends StatelessWidget {
             text: TextSpan(
               style: Theme.of(context).textTheme.bodyText2,
               children: <TextSpan>[
-                const TextSpan(text: "Already have an acctount? "),
+                TextSpan(
+                    text: (signup)
+                        ? 'Already have an account? '
+                        : 'Dont have an account yet? '),
                 TextSpan(
                     text: (signup) ? 'Log in' : 'Sign up',
                     style: Theme.of(context).textTheme.bodyText2?.copyWith(

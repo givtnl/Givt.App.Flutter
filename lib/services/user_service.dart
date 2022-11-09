@@ -38,6 +38,15 @@ class UserService {
     return tempUser;
   }
 
+  Future<String> loginUser(Map loginCredentials) async {
+    final response = await APIService().login(loginCredentials);
+    final decodedRes = jsonDecode(response);
+    // the access token should be stored locally or in state,
+    // then there needs to be a service that keeps the login active with bearer plus access token
+    // but fixes on local storage and decisions on state management should happen first
+    return 'logged in';
+  }
+
   Future<TempUser> createTempUser(
       [BuildContext? ctx,
       String? firstName,
@@ -59,7 +68,7 @@ class UserService {
         Address: 'Foobarstraat 5',
         City: 'Foobar',
         PostalCode: postcode ?? 'no zipcode',
-        Country: 'NL',
+        Country: 'US',
         Password: password ?? 'R4nd0mP@s\$w0rd123',
         AmountLimit: 499,
         AppLanguage:

@@ -105,7 +105,20 @@ class APIService {
     final url = Uri.https(baseApiUrl, '/api/v2/Users/check', {'email': email});
     var response = await http.get(url, headers: headers);
     if (response.statusCode >= 400) {
-      throw Exception('something went wrong :(');
+      throw Exception('Failed to check email');
+    } else {
+      return response.body;
+    }
+  }
+
+  Future<dynamic> login(Map loginCredentials) async {
+    final url = Uri.https(baseApiUrl, '/oauth2/token');
+    var response = await http.post(
+      url,
+      body: loginCredentials,
+    );
+    if (response.statusCode >= 400) {
+      throw Exception(jsonDecode(response.body));
     } else {
       return response.body;
     }

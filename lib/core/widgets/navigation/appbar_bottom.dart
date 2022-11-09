@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:givt_mobile_apps/services/navigation_service.dart';
+import 'package:givt_mobile_apps/utils/locator.dart';
+import '../../../core/constants/route_paths.dart' as routes;
 
 class BottomBarCustom extends StatelessWidget {
-  const BottomBarCustom({super.key});
+  late final NavigationService _navigationService =
+      locator<NavigationService>();
+  BottomBarCustom({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +65,9 @@ class BottomBarCustom extends StatelessWidget {
                             'assets/svg/user.svg',
                             height: 25,
                           ),
-                          onPressed: () {},
+                          onPressed: () =>
+                              // this should check whether user is logged in
+                              _navigationService.navigateTo(routes.LoginRoute),
                           color: Theme.of(context).textTheme.bodyText1?.color,
                         ),
                       ),
