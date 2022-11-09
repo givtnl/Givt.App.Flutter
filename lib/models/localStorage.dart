@@ -98,7 +98,7 @@ class LocalStorageProxy {
     });
   }
 
-  void setCompletedOeDonation(bool update) {
+  void setCompletedOneDonationFlag(bool update) {
     realm.write(() {
       LocalStorage localStorage = realm.all<LocalStorage>().first;
       localStorage.completedOneDonation = update;

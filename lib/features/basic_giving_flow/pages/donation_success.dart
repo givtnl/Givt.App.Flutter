@@ -16,7 +16,7 @@ class SuccessDonationPage extends StatelessWidget {
   late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
   @override
   void initState() {
-    storageProxy.setCompletedOeDonation(true);
+    storageProxy.setCompletedOneDonationFlag(true);
   }
 
   @override
