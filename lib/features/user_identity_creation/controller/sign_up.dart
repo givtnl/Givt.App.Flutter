@@ -10,13 +10,14 @@ import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class SignUpController {
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
   late final NavigationService _navigationService =
       locator<NavigationService>();
 
   void signUp(BuildContext context, Map<String, String> formValue,
       Function toggleLoader) async {
-    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
+    LocalUser localUser =
+        storageProxy.realm.all<LocalStorage>().first.userData!;
     final UserService _userService = locator<UserService>();
 
     final String emailExists =

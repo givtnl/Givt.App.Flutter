@@ -65,7 +65,6 @@ class ProgressIndicatorState extends State<ProgressIndicator>
 
   @override
   void dispose() {
-    print('disposed....');
     _controller.dispose();
     super.dispose();
   }

@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
+import 'package:provider/provider.dart';
+import '../../../models/organisation.dart';
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
@@ -11,16 +13,19 @@ class SuccessDonationPage extends StatelessWidget {
   SuccessDonationPage({super.key});
 
   final NavigationService _navigationService = locator<NavigationService>();
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
 
   @override
   Widget build(BuildContext context) {
+    final organisationProvider =
+        Provider.of<Organisation>(context, listen: false);
     // this could be state rather the quering from local storage
-    LocalUser localUser = realmProxy.realm.all<LocalStorage>().first.userData!;
-    CachedGivts? localDonation = realmProxy.realm
+    LocalUser localUser =
+        storageProxy.realm.all<LocalStorage>().first.userData!;
+    Donations? localDonation = storageProxy.realm
         .all<LocalStorage>()
         .first
-        .cachedGivts
+        .donations
         .firstWhere((element) => element.userId == localUser.userId);
 
     return Container(
@@ -40,7 +45,7 @@ class SuccessDonationPage extends StatelessWidget {
               ),
               const SizedBox(height: 70),
               Text(
-                'Thank you for your \$${localDonation.donationAmount} donation to the First Church of Atlanta!',
+                'Thank you for your \$${localDonation.donationAmount} donation to the ${organisationProvider.organisationName}',
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
                       fontWeight: FontWeight.w800,
                       fontSize: 30,

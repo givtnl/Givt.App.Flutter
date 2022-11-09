@@ -28,6 +28,7 @@ class QRmockPage extends StatelessWidget {
           ],
         ),
       ),
+      // define this function somewhere else that would contain
       onBtnClick: () =>
           _navigationService.navigateTo(routes.DonationAmountTypicalRoute),
       title: 'Donate',

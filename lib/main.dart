@@ -5,6 +5,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart'
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:givt_mobile_apps/core/language/languageIndex.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/models/organisation.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:provider/provider.dart';
@@ -22,34 +23,37 @@ void main() async {
   if (Platform.isAndroid) {
     await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
-  runApp(
-      ChangeNotifierProvider(create: (_) => CheckInternet(), child: MyApp()));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
 
   @override
   Widget build(BuildContext context) {
-    final LocalStorage current = realmProxy.realm.all<LocalStorage>().first;
-
-    return MaterialApp(
-      title: 'Givt',
-      debugShowCheckedModeBanner: false,
-      theme: PrimaryTheme.theme,
-      supportedLocales: LangIndex.all,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      navigatorKey: locator<NavigationService>().navigatorKey,
-      onGenerateRoute: router.generateRoute,
-      initialRoute: (current.locationAsked)
-          ? routes.FirstUseScreenRoute
-          : routes.StartupRoute,
-    );
+    final LocalStorage current = storageProxy.realm.all<LocalStorage>().first;
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<CheckInternet>(create: (_) => CheckInternet()),
+          ChangeNotifierProvider<Organisation>(create: (_) => Organisation()),
+        ],
+        child: MaterialApp(
+          title: 'Givt',
+          debugShowCheckedModeBanner: false,
+          theme: PrimaryTheme.theme,
+          supportedLocales: LangIndex.all,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          navigatorKey: locator<NavigationService>().navigatorKey,
+          onGenerateRoute: router.generateRoute,
+          initialRoute: (current.locationAsked)
+              ? routes.FirstUseScreenRoute
+              : routes.StartupRoute,
+        ));
   }
 }

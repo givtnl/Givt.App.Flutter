@@ -1,2 +1,1 @@
-json_key_file("../api-5231514209375470074-847258-bfb002584e68.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
 package_name("net.givtapp.flutter.alpha") # e.g. com.krausefx.app

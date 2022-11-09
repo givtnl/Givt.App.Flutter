@@ -1,11 +1,11 @@
-name: Build iOS and upload to TestFlight
+name: Build Android and upload to Play Store
 on: 
   push: 
     branches: [ pre-main ]
 jobs:
   build-ios: 
-    name: Build Flutter iOS
-    runs-on: macos-latest
+    name: Build Flutter Android
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -17,16 +17,16 @@ jobs:
       - name: Auth codesigning
         uses: webfactory/ssh-agent@v0.5.4
         with:
-          ssh-private-key: ${{ secrets.CODESIGNING_DEPLOY_KEY }}
+          ssh-private-key: ${{ secrets.CODESIGNING_DEPLOY_KEY }}          
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          channel: 'stable'          
       - name: Run Fastlane
         uses: maierj/fastlane-action@v2.3.0
         with:
-          lane: ios release
-          subdirectory: ios
-        env: 
+          lane: android build_and_deploy
+          subdirectory: android
+        env:
+          GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          APPSTORECONNECT_PRIVATE_KEY: ${{ secrets.APPSTORECONNECT_PRIVATE_KEY }}
