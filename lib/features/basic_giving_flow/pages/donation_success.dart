@@ -13,7 +13,7 @@ import '../../../core/constants/route_paths.dart' as routes;
 import '../../../core/constants/benefits.dart';
 
 class SuccessDonationPage extends StatefulWidget {
-  SuccessDonationPage({super.key});
+  const SuccessDonationPage({super.key});
 
   @override
   State<SuccessDonationPage> createState() => _SuccessDonationPageState();
@@ -27,8 +27,8 @@ class _SuccessDonationPageState extends State<SuccessDonationPage> {
   @override
   void initState() {
     storageProxy.setCompletedOneDonationFlag(true);
-    Random random = new Random();
-    int benefitNr = random.nextInt(2);
+    Random random = Random();
+    benefitNr = random.nextInt(2);
     super.initState();
   }
 
