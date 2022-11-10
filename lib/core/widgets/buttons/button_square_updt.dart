@@ -43,6 +43,7 @@ class SquareButtonE extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 11,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
