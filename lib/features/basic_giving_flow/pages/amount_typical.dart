@@ -86,9 +86,12 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
           : GenericButton(
               text: 'Next',
               disabled: donationAmount > 1.5 ? false : true,
-              onClicked: () {
-                DonationController().storeCachedGivt(context, donationAmount,
-                    organisationProvider.mediumId!, toggleLoader);
+              onClicked: () async {
+                await DonationController().storeCachedGivt(
+                    context,
+                    donationAmount,
+                    organisationProvider.mediumId!,
+                    toggleLoader);
                 DonationController().navigateToPayment();
               }),
     );

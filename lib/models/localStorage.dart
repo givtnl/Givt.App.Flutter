@@ -5,8 +5,8 @@ part 'localStorage.g.dart';
 
 @RealmModel()
 class _LocalStorage {
-  bool locationAsked = false;
-  bool cameraAsked = false;
+  bool welcomed = false;
+  bool completedOneDonation = false;
   late _LocalUser? userData;
   List<_Donations> donations = [];
 }
@@ -48,12 +48,11 @@ class LocalStorageProxy {
     var config = Configuration.local(
         [LocalStorage.schema, Donations.schema, LocalUser.schema]);
     realm = Realm(config);
-
     if (realm.all<LocalStorage>().isEmpty) {
       realm.write(() {
         realm.add(LocalStorage(
-          locationAsked: false,
-          cameraAsked: false,
+          welcomed: false,
+          completedOneDonation: false,
         ));
         realm.all<LocalStorage>().first.userData = LocalUser();
       });
@@ -92,28 +91,30 @@ class LocalStorageProxy {
     });
   }
 
-  void updateProgress(String key) {
+  void setWelcomeFlag(bool update) {
     realm.write(() {
-      LocalStorage localCurrent = realm.all<LocalStorage>().first;
-      if (key == 'camera') {
-        localCurrent.cameraAsked = true;
-      }
-      if (key == 'location') {
-        localCurrent.locationAsked = true;
-      }
+      LocalStorage localStorage = realm.all<LocalStorage>().first;
+      localStorage.welcomed = update;
     });
   }
 
-  // this is utility for resetting the flow
-  void downgradeProgress(String key) {
+  void setCompletedOneDonationFlag(bool update) {
     realm.write(() {
-      LocalStorage localCurrent = realm.all<LocalStorage>().first;
-      if (key == 'camera') {
-        localCurrent.cameraAsked = false;
-      }
-      if (key == 'location') {
-        localCurrent.locationAsked = false;
-      }
+      LocalStorage localStorage = realm.all<LocalStorage>().first;
+      localStorage.completedOneDonation = update;
     });
   }
+
+  // // this is utility for resetting the flow
+  // void downgradeProgress(String key) {
+  //   realm.write(() {
+  //     LocalStorage localCurrent = realm.all<LocalStorage>().first;
+  //     if (key == 'camera') {
+  //       localCurrent.cameraAsked = false;
+  //     }
+  //     if (key == 'location') {
+  //       localCurrent.locationAsked = false;
+  //     }
+  //   });
+  // }
 }

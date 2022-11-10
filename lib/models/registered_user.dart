@@ -29,9 +29,9 @@ class RegisteredUser {
       required this.appLanguage,
       required this.timeZoneId});
 
-  factory RegisteredUser.fromTempUser(String userId, TempUser tempUser) {
+  factory RegisteredUser.fromTempUser(TempUser tempUser) {
     return RegisteredUser(
-      userId: userId,
+      userId: tempUser.UserId!,
       email: tempUser.Email,
       deviceOS: 0,
       phoneNumber: tempUser.PhoneNumber,
@@ -51,10 +51,10 @@ class RegisteredUser {
       email: email,
       deviceOS: 0,
       phoneNumber: '060000000',
-      firstName: 'jhon',
+      firstName: 'john',
       lastName: 'doe',
       postalCode: 'no zipcode',
-      country: 'NL',
+      country: 'US',
       password: password,
       appLanguage: locale,
       timeZoneId: timezone,

@@ -2,10 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:givt_mobile_apps/core/templates/logo_header_template.dart';
+import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:provider/provider.dart';
-import '../../../core/widgets/buttons/button_square_updt.dart';
 import '../../../core/widgets/navigation/appbar_bottom.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 import '../../../utils/check_internet_connectivity.dart';
@@ -20,6 +20,7 @@ class FirstUsePage extends StatefulWidget {
 class _FirstUsePageState extends State<FirstUsePage> {
   CheckInternet? _checkInternet;
   final NavigationService _navigationService = locator<NavigationService>();
+  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
 
   @override
   void initState() {
@@ -27,6 +28,9 @@ class _FirstUsePageState extends State<FirstUsePage> {
     _checkInternet?.checkRealtimeConnection();
     initialization();
     super.initState();
+    final LocalStorage current = storageProxy.realm.all<LocalStorage>().first;
+    print(
+        'They have seen the animation is ${current.welcomed}; and completed one donation is  ${current.completedOneDonation}');
   }
 
   void initialization() async {

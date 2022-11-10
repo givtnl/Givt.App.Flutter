@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart'
     hide LocalStorage;
-import 'package:givt_mobile_apps/models/donation.dart';
+import 'package:givt_mobile_apps/models/temp_user.dart';
 import '../../../services/user_service.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
 import '../../../services/navigation_service.dart';
@@ -14,27 +14,22 @@ class DonationController {
   late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
   final NavigationService navigationService = locator<NavigationService>();
 
-  late final String _registeredUserId;
-
   void initialiseDonationProcess(
       BuildContext context,
-      Map<String, String> _formValue,
+      Map<String, String> formValue,
       InAppWebViewController webViewController,
       Function toggleLoader) async {
-    late String firstName = _formValue['name']!;
+    late String firstName = formValue['name']!;
     late String lastName = '';
     final UserService usrService = locator<UserService>();
     toggleLoader(true);
 
     try {
-      //update temp user with ID
-      LocalUser localUser =
-          storageProxy.realm.all<LocalStorage>().first.userData!;
-      final tempUser = await usrService.createTempUser(
-          context, firstName, lastName, _formValue['postalCode']);
+      final TempUser tempUser = await usrService.createTempUser(
+          context, firstName, lastName, formValue['postalCode']);
       //create registered user
-      final registeredUser = await usrService.createAndGetRegisteredUser(
-          localUser.userId, tempUser);
+      final registeredUser =
+          await usrService.createAndGetRegisteredUser(tempUser);
       storageProxy.createUser(registeredUser);
       webViewController.evaluateJavascript(source: "tokenize();");
     } catch (error) {
@@ -47,12 +42,8 @@ class DonationController {
   void createMandateAndSubmitDonation(String wePayToken, Function toggleLoader,
       BuildContext context, String userId) async {
     try {
-      // create the jsonDonation
-      final jsonDonation = Donation(wepayToken: wePayToken).jsonDonation();
-      final responseDonation =
-          await APIService().submitDonation(userId, jsonDonation);
-      final responseMandate =
-          await APIService().createMandate(wePayToken, userId);
+      await APIService().submitDonation(userId, wePayToken);
+      await APIService().createMandate(wePayToken, userId);
       navigationService.navigateTo(routes.DonationSuccessRoute);
       toggleLoader(false);
     } catch (error) {
@@ -71,14 +62,12 @@ class DonationController {
     toggleLoader(true);
     try {
       //create temp user in backend and local storage
-      final Map<String, dynamic> tempUserMap =
-          await usrService.createAndGetTempUser();
-      final tempUserID = tempUserMap["userId"];
-      storageProxy.addUserId(tempUserID);
+      final TempUser tempUser = await usrService.createAndGetTempUser();
+      storageProxy.addUserId(tempUser.UserId!);
 
       // store donation info into local storage
       storageProxy.createCachedGivt(
-          mediumId, donationAmount, dateTime, tempUserID);
+          mediumId, donationAmount, dateTime, tempUser.UserId!);
       toggleLoader(false);
     } catch (error) {
       toggleLoader(false);

@@ -49,6 +49,7 @@ class _DonationPageState extends State<DonationPage> {
   @override
   void dispose() {
     _postFocusNode.dispose();
+    super.dispose();
   }
 
   void toggleLoader(bool loading) {

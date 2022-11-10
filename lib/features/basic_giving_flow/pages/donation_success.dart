@@ -28,6 +28,10 @@ class _SuccessDonationPageState extends State<SuccessDonationPage> {
 
   final NavigationService _navigationService = locator<NavigationService>();
   late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  @override
+  void initState() {
+    storageProxy.setCompletedOneDonationFlag(true);
+  }
 
   @override
   void initState() {
