@@ -20,15 +20,12 @@ class SuccessDonationPage extends StatefulWidget {
 }
 
 class _SuccessDonationPageState extends State<SuccessDonationPage> {
-  int benefitNr = 0;
-
   final NavigationService _navigationService = locator<NavigationService>();
   late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
   @override
   void initState() {
     storageProxy.setCompletedOneDonationFlag(true);
-    Random random = Random();
-    benefitNr = random.nextInt(2);
+    benefits.shuffle();
     super.initState();
   }
 
@@ -89,7 +86,7 @@ class _SuccessDonationPageState extends State<SuccessDonationPage> {
                     ),
                     const SizedBox(height: 15),
                     Text(
-                      benefits[benefitNr]!,
+                      benefits[1],
                       style: Theme.of(context)
                           .textTheme
                           .headline6
