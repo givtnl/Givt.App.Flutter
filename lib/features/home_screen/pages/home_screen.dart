@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:givt_mobile_apps/services/navigation_service.dart';
+import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:provider/provider.dart';
 import '../../../core/widgets/buttons/button_square_updt.dart';
 import '../../../core/widgets/navigation/appbar_bottom.dart';
 import '../../../utils/check_internet_connectivity.dart';
+import '../../../core/constants/route_paths.dart' as routes;
 
 class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});
@@ -14,6 +17,7 @@ class HomeScreenPage extends StatefulWidget {
 
 class _HomeScreenPageState extends State<HomeScreenPage> {
   CheckInternet? _checkInternet;
+  final NavigationService _navigationService = locator<NavigationService>();
 
   @override
   void initState() {
@@ -66,14 +70,19 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       SquareButtonE(
+                          onClick: () {
+                            _navigationService.navigateTo(routes.QRScannerPage);
+                          },
                           title: "Scan Qr Code",
                           iconName: "qr_code",
                           background: Theme.of(context).colorScheme.surface),
                       SquareButtonE(
+                          onClick: () => print('non-functional'),
                           title: "Collection device",
                           iconName: "connection",
                           background: Theme.of(context).primaryColor),
                       SquareButtonE(
+                          onClick: () => print('non-functional'),
                           title: "Find location",
                           iconName: "connection",
                           background: Theme.of(context).primaryColor),

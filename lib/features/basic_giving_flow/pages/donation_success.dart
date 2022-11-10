@@ -10,6 +10,7 @@ import '../../../models/organisation.dart';
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
+import '../../../core/constants/benefits.dart';
 
 class SuccessDonationPage extends StatefulWidget {
   SuccessDonationPage({super.key});
@@ -19,11 +20,6 @@ class SuccessDonationPage extends StatefulWidget {
 }
 
 class _SuccessDonationPageState extends State<SuccessDonationPage> {
-  Map<int, String> benefits = {
-    0: 'You can get a personal tax statement from Givt?',
-    1: 'You can set a personal giving target in the Givt app?',
-    2: 'You can see an overview of your donation history with Givt?'
-  };
   int benefitNr = 0;
 
   final NavigationService _navigationService = locator<NavigationService>();
@@ -31,14 +27,8 @@ class _SuccessDonationPageState extends State<SuccessDonationPage> {
   @override
   void initState() {
     storageProxy.setCompletedOneDonationFlag(true);
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
     Random random = new Random();
     int benefitNr = random.nextInt(2);
-    print('random number is ${benefitNr}');
     super.initState();
   }
 
@@ -99,7 +89,7 @@ class _SuccessDonationPageState extends State<SuccessDonationPage> {
                     ),
                     const SizedBox(height: 15),
                     Text(
-                      benefits[2]!,
+                      benefits[benefitNr]!,
                       style: Theme.of(context)
                           .textTheme
                           .headline6

@@ -51,7 +51,7 @@ class FirstOptionsPage extends StatelessWidget {
                 title: 'Scan a QR-code',
                 subtitle: 'A short explanation how to use it',
                 clicked: () {
-                  _navigationService.navigateTo(routes.QRMockRoute);
+                  _navigationService.navigateTo(routes.QRScannerPage);
                 },
                 color: Theme.of(context).colorScheme.surface,
                 asset: 'qr_code',

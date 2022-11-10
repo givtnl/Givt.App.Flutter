@@ -33,7 +33,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case routes.RegistrationRoute:
       return MaterialPageRoute(
           builder: (context) => const FirstTimeRegistrationPage());
-    case routes.QRMockRoute:
+    case routes.QRScannerPage:
       return MaterialPageRoute(builder: (context) => QRScannerPage());
     case routes.DonationAmountTypicalRoute:
       return MaterialPageRoute(builder: (context) => DoantionAmountTypical());
