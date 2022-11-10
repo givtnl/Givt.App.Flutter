@@ -81,9 +81,9 @@ class UserService {
     return TempUser(
         UserId: (localUser.userId.isNotEmpty) ? localUser.userId : null,
         Email: email ?? getRandomGeneratedEmail(),
-        IBAN: 'NL62AAAA8705076482',
+        IBAN: 'FB66GIVT12345678',
         PhoneNumber: '060000000',
-        FirstName: firstName ?? 'jhon',
+        FirstName: firstName ?? 'john',
         LastName: lastName ?? 'doe',
         Address: 'Foobarstraat 5',
         City: 'Foobar',

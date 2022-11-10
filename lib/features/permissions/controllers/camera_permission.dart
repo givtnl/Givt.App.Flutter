@@ -14,6 +14,6 @@ class CameraController {
     /// await returns a bool but since we arent changing the UI based
     /// on the response then its unused.
     await _cameraService.requestCameraPermission();
-    _navigationService.navigateTo(routes.QRMockRoute);
+    _navigationService.navigateTo(routes.FirstUseScreenRoute);
   }
 }
