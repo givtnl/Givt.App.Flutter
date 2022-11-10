@@ -5,8 +5,10 @@ class SquareButtonE extends StatelessWidget {
   final String title;
   final String iconName;
   final Color background;
+  final VoidCallback onClick;
   const SquareButtonE(
       {super.key,
+      required this.onClick,
       required this.title,
       required this.iconName,
       required this.background});
@@ -25,9 +27,7 @@ class SquareButtonE extends StatelessWidget {
           //this doesnt do shit haha. gotta clip out the inkwell somehow else
           borderRadius: BorderRadius.circular(40.0),
           child: InkWell(
-            onTap: () {
-              //To be done
-            },
+            onTap: () => {onClick()},
             child: SizedBox(
               width: 100,
               height: 100,
@@ -43,6 +43,7 @@ class SquareButtonE extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 11,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),

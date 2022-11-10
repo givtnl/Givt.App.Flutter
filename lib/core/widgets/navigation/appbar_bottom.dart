@@ -14,7 +14,7 @@ class BottomBarCustom extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-      // BorderRadius.all(Radius.circular(30)),
+      //BorderRadius.all(Radius.circular(30)),
       child: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         color: Theme.of(context).canvasColor,
