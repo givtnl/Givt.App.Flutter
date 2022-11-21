@@ -188,7 +188,9 @@ class ProgressContainer extends AnimatedWidget implements Controller {
   ///[width] is divided by [progressCount]
   Row _buildProgress(double width, int index) {
     if (_progress.value > 0.99 && controller.isAnimating) {
-      if (progressCount == 1 || currentIndex != index) forward();
+      if (progressCount == 1 || currentIndex != index) {
+        forward();
+      }
     }
 
     return Row(
@@ -203,10 +205,10 @@ class ProgressContainer extends AnimatedWidget implements Controller {
             Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                decoration: new BoxDecoration(
+                decoration: BoxDecoration(
                   color: color.withOpacity(0.3),
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                 ),
                 width: width,
                 height: 4,
@@ -215,10 +217,10 @@ class ProgressContainer extends AnimatedWidget implements Controller {
             Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                decoration: new BoxDecoration(
+                decoration: BoxDecoration(
                   color: color,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                 ),
                 width: currentIndex == index
                     ? width * _progress.value
@@ -229,10 +231,10 @@ class ProgressContainer extends AnimatedWidget implements Controller {
           ],
         ),
         progressCount > 1 && index != progressCount - 1
-            ? SizedBox(
+            ? const SizedBox(
                 width: 2,
               )
-            : SizedBox(
+            : const SizedBox(
                 width: 3,
               ),
       ],

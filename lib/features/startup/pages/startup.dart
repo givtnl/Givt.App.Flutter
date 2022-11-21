@@ -42,12 +42,13 @@ class _StartupPageState extends State<StartupPage> {
 
   @override
   void initState() {
-    super.initState();
     _storageProxy.setWelcomeFlag(true);
     initialization();
+    startCarousel();
     Future.delayed(Duration.zero, () {
-      startCarousel();
+      startProgressIndicator();
     });
+    super.initState();
   }
 
   void initialization() async {
@@ -59,14 +60,13 @@ class _StartupPageState extends State<StartupPage> {
     super.dispose();
   }
 
-  void startCarousel() {
-    if (_storyProgressKey.currentState?.isPlaying() == false) {
-      _storyProgressKey.currentState?.resume();
-    }
+  void startProgressIndicator() {
+    _storyProgressKey.currentState?.resume();
+  }
 
+  void startCarousel() {
     Timer.periodic(_slideDuration, (timer) {
       _currentPage++;
-
       if (_currentPage == 3) {
         timer.cancel();
         setState(() {
@@ -262,7 +262,7 @@ class _StartupPageState extends State<StartupPage> {
         color: Theme.of(context).colorScheme.secondary,
         key: _storyProgressKey,
         progressCount: 3,
-        duration: _slideDuration,
+        duration: const Duration(milliseconds: 2700),
         onStatusChanged: (_) {},
       ),
     );
