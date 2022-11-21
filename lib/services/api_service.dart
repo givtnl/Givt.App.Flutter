@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:givt_mobile_apps/models/temp_user.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:http/http.dart' as http;
 import '../core/constants/environment_variables.dart';
-import '../models/localStorage.dart';
+import '../models/local_storage.dart';
 import '../models/registered_user.dart';
 import '../utils/locator.dart';
 

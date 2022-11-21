@@ -2,9 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/models/local_storage.dart';
 
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:provider/provider.dart';
 import '../../../models/organisation.dart';
 import '../../../services/navigation_service.dart';

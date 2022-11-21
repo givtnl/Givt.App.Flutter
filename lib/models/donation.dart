@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 
 class Donation {

@@ -1,5 +1,6 @@
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:givt_mobile_apps/services/camera_service.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;

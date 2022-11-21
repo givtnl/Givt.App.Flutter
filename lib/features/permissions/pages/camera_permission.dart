@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
 import 'package:givt_mobile_apps/features/permissions/controllers/camera_permission.dart';
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:givt_mobile_apps/models/permission_models.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 

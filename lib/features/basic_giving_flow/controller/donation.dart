@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart'
     hide LocalStorage;
 import 'package:givt_mobile_apps/models/temp_user.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import '../../../services/user_service.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
 import '../../../services/navigation_service.dart';
@@ -66,7 +67,7 @@ class DonationController {
       storageProxy.addUserId(tempUser.UserId!);
 
       // store donation info into local storage
-      storageProxy.createCachedGivt(
+      storageProxy.createLocalDonation(
           mediumId, donationAmount, dateTime, tempUser.UserId!);
       toggleLoader(false);
     } catch (error) {

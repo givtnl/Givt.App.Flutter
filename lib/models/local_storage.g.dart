@@ -1,28 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'localStorage.dart';
+part of 'local_storage.dart';
 
 // **************************************************************************
 // RealmObjectGenerator
 // **************************************************************************
 
 class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
-  static var _defaultsSet = false;
-
   LocalStorage({
-    bool welcomed = false,
-    bool completedOneDonation = false,
+    PersistentState? persistentState,
     LocalUser? userData,
     Iterable<Donations> donations = const [],
   }) {
-    if (!_defaultsSet) {
-      _defaultsSet = RealmObject.setDefaults<LocalStorage>({
-        'welcomed': false,
-        'completedOneDonation': false,
-      });
-    }
-    RealmObject.set(this, 'welcomed', welcomed);
-    RealmObject.set(this, 'completedOneDonation', completedOneDonation);
+    RealmObject.set(this, 'persistentState', persistentState);
     RealmObject.set(this, 'userData', userData);
     RealmObject.set<RealmList<Donations>>(
         this, 'donations', RealmList<Donations>(donations));
@@ -31,16 +21,12 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
   LocalStorage._();
 
   @override
-  bool get welcomed => RealmObject.get<bool>(this, 'welcomed') as bool;
+  PersistentState? get persistentState =>
+      RealmObject.get<PersistentState>(this, 'persistentState')
+          as PersistentState?;
   @override
-  set welcomed(bool value) => RealmObject.set(this, 'welcomed', value);
-
-  @override
-  bool get completedOneDonation =>
-      RealmObject.get<bool>(this, 'completedOneDonation') as bool;
-  @override
-  set completedOneDonation(bool value) =>
-      RealmObject.set(this, 'completedOneDonation', value);
+  set persistentState(covariant PersistentState? value) =>
+      RealmObject.set(this, 'persistentState', value);
 
   @override
   LocalUser? get userData =>
@@ -65,12 +51,58 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
   static SchemaObject _initSchema() {
     RealmObject.registerFactory(LocalStorage._);
     return const SchemaObject(LocalStorage, 'LocalStorage', [
-      SchemaProperty('welcomed', RealmPropertyType.bool),
-      SchemaProperty('completedOneDonation', RealmPropertyType.bool),
+      SchemaProperty('persistentState', RealmPropertyType.object,
+          optional: true, linkTarget: 'PersistentState'),
       SchemaProperty('userData', RealmPropertyType.object,
           optional: true, linkTarget: 'LocalUser'),
       SchemaProperty('donations', RealmPropertyType.object,
           linkTarget: 'Donations', collectionType: RealmCollectionType.list),
+    ]);
+  }
+}
+
+class PersistentState extends _PersistentState with RealmEntity, RealmObject {
+  static var _defaultsSet = false;
+
+  PersistentState({
+    bool welcomed = false,
+    bool completedOneDonation = false,
+  }) {
+    if (!_defaultsSet) {
+      _defaultsSet = RealmObject.setDefaults<PersistentState>({
+        'welcomed': false,
+        'completedOneDonation': false,
+      });
+    }
+    RealmObject.set(this, 'welcomed', welcomed);
+    RealmObject.set(this, 'completedOneDonation', completedOneDonation);
+  }
+
+  PersistentState._();
+
+  @override
+  bool get welcomed => RealmObject.get<bool>(this, 'welcomed') as bool;
+  @override
+  set welcomed(bool value) => RealmObject.set(this, 'welcomed', value);
+
+  @override
+  bool get completedOneDonation =>
+      RealmObject.get<bool>(this, 'completedOneDonation') as bool;
+  @override
+  set completedOneDonation(bool value) =>
+      RealmObject.set(this, 'completedOneDonation', value);
+
+  @override
+  Stream<RealmObjectChanges<PersistentState>> get changes =>
+      RealmObject.getChanges<PersistentState>(this);
+
+  static SchemaObject get schema => _schema ??= _initSchema();
+  static SchemaObject? _schema;
+  static SchemaObject _initSchema() {
+    RealmObject.registerFactory(PersistentState._);
+    return const SchemaObject(PersistentState, 'PersistentState', [
+      SchemaProperty('welcomed', RealmPropertyType.bool),
+      SchemaProperty('completedOneDonation', RealmPropertyType.bool),
     ]);
   }
 }

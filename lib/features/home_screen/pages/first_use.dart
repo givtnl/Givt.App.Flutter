@@ -2,7 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:givt_mobile_apps/core/templates/logo_header_template.dart';
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/models/local_storage.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,8 @@ class _FirstUsePageState extends State<FirstUsePage> {
     _checkInternet?.checkRealtimeConnection();
     initialization();
     super.initState();
-    final LocalStorage current = storageProxy.realm.all<LocalStorage>().first;
+    final PersistentState current =
+        storageProxy.realm.all<PersistentState>().first;
     print(
         'They have seen the animation is ${current.welcomed}; and completed one donation is  ${current.completedOneDonation}');
   }

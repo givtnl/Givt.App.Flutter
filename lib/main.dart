@@ -4,8 +4,9 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart'
     hide LocalStorage;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:givt_mobile_apps/core/language/languageIndex.dart';
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:givt_mobile_apps/models/organisation.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LocalStorage current = storageProxy.realm.all<LocalStorage>().first;
+    final PersistentState state =
+        storageProxy.realm.all<PersistentState>().first;
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<CheckInternet>(create: (_) => CheckInternet()),
@@ -51,8 +53,8 @@ class MyApp extends StatelessWidget {
           ],
           navigatorKey: locator<NavigationService>().navigatorKey,
           onGenerateRoute: router.generateRoute,
-          initialRoute: (current.welcomed)
-              ? ((current.completedOneDonation)
+          initialRoute: (state.welcomed)
+              ? ((state.completedOneDonation)
                   ? routes.HomeScreenRoute
                   : routes.FirstUseScreenRoute)
               : routes.StartupRoute,
