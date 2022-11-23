@@ -1,269 +1,243 @@
-import 'dart:async';
+import 'package:flutter/material.dart';
+
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart' hide ProgressIndicator;
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_svg/svg.dart';
+
+import 'package:givt_mobile_apps/core/templates/logo_header_template.dart';
+import 'package:givt_mobile_apps/features/startup/widgets/slide_header1.dart';
+import 'package:givt_mobile_apps/features/startup/widgets/slide_header2.dart';
+import 'package:givt_mobile_apps/features/startup/widgets/slide_header3.dart';
+import 'package:givt_mobile_apps/features/startup/widgets/intro_page_progress_bar.dart';
 import 'package:givt_mobile_apps/models/localStorage.dart';
-import 'package:givt_mobile_apps/utils/progress_indicator.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import '../../../core/templates/logo_header_template.dart';
-import '../../../core/constants/route_paths.dart' as routes;
-import '../widgets/slide_header1.dart';
-import '../widgets/slide_header2.dart';
-import '../widgets/slide_header3.dart';
-import '../../../services/navigation_service.dart';
-import '../../../utils/locator.dart';
+import 'package:givt_mobile_apps/services/navigation_service.dart';
+import 'package:givt_mobile_apps/utils/locator.dart';
+import 'package:givt_mobile_apps/core/constants/route_paths.dart' as routes;
 
 class StartupPage extends StatefulWidget {
-  const StartupPage({super.key});
+  const StartupPage({Key? key}) : super(key: key);
 
   @override
   State<StartupPage> createState() => _StartupPageState();
 }
 
+enum IntroPages {
+  intro_1(
+      backgroundSvgPath: "assets/svg/intro_background1.svg",
+      svgPath: "assets/svg/intro_1.svg"),
+  intro_2(
+      backgroundSvgPath: "assets/svg/intro_background2.svg",
+      svgPath: "assets/svg/intro_2.svg"),
+  intro_3(
+      backgroundSvgPath: "assets/svg/intro_background3.svg",
+      svgPath: "assets/svg/intro_3.svg"),
+  ;
+
+  const IntroPages({
+    required this.backgroundSvgPath,
+    required this.svgPath,
+  });
+
+  final String backgroundSvgPath;
+  final String svgPath;
+}
+
 class _StartupPageState extends State<StartupPage> {
   final NavigationService _navigationService = locator<NavigationService>();
-  final ValueNotifier<String> _notifierSVG =
-      ValueNotifier('assets/svg/intro_background1.svg');
-  final ValueNotifier<int> _notifierCurrentPage = ValueNotifier(0);
-  final Color _mainBackgroundColor = const Color(0xFFF5F5F5);
-  final Duration _slideDuration = const Duration(seconds: 3);
-  late final _carouselController = CarouselController();
-  final _storyProgressKey = GlobalKey<ProgressIndicatorState>();
   final LocalStorageProxy _storageProxy = locator<LocalStorageProxy>();
-  int _currentPage = 0;
-  bool _isExpanded = false;
+  final Color _mainBackgroundColor = const Color(0xFFF5F5F5);
+  late final _carouselController = CarouselController();
 
-  List<String> svgImages = [
-    'assets/svg/intro_1.svg',
-    'assets/svg/intro_2.svg',
-    'assets/svg/intro_3.svg'
-  ];
+  final Duration _introPageAnimationDuration =
+      const Duration(milliseconds: 3000);
+  final Duration _outroAnimationDuration = const Duration(milliseconds: 500);
+
+  bool _isCarouselStarted = false;
+  bool _isCarouselFinished = false;
+  int _currentPage = 0;
+
+  bool get isLastPage {
+    return _currentPage == IntroPages.values.length - 1;
+  }
 
   @override
   void initState() {
     super.initState();
     _storageProxy.setWelcomeFlag(true);
-    initialization();
+    _initialization();
     Future.delayed(Duration.zero, () {
-      startCarousel();
+      _startCarousel();
     });
   }
 
-  void initialization() async {
+  void _initialization() async {
     FlutterNativeSplash.remove();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  void startCarousel() {
-    if (_storyProgressKey.currentState?.isPlaying() == false) {
-      _storyProgressKey.currentState?.resume();
-    }
-
-    Timer.periodic(_slideDuration, (timer) {
-      _currentPage++;
-
-      if (_currentPage == 3) {
-        timer.cancel();
-        setState(() {
-          _isExpanded = true;
-        });
-      } else {
-        _carouselController.nextPage();
-      }
+  void _startCarousel() {
+    setState(() {
+      _isCarouselStarted = true;
     });
-  }
-
-  void setOvalBackgroundShape(int integer) {
-    _notifierCurrentPage.value = integer;
-    switch (integer) {
-      case 0:
-        _notifierSVG.value = 'assets/svg/intro_background1.svg';
-        break;
-      case 1:
-        _notifierSVG.value = 'assets/svg/intro_background2.svg';
-        break;
-      case 2:
-        _notifierSVG.value = 'assets/svg/intro_background3.svg';
-        break;
-    }
-  }
-
-  void animationComplete() {
-    if (_isExpanded) {
-      Timer(const Duration(seconds: 2), () {
-        _navigationService.navigateTo(routes.LocationPermissionRoute);
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      color: _mainBackgroundColor,
-      child: Stack(children: <Widget>[
-        _buildCircleExpansion(),
-        Column(
-          children: [
-            SafeArea(
-              child: AnimatedOpacity(
-                  opacity: _isExpanded ? 0.0 : 1.0,
-                  duration: const Duration(milliseconds: 350),
-                  child: const LogoHeaderTemplate()),
-            ),
-            Stack(
-              children: <Widget>[
-                _buildWelcomeTransition(),
-                _buildBackgroundBlob(),
-                _buildCarousel()
-              ],
-            ),
-          ],
-        ),
-      ]),
-    ));
-  }
-
-  Widget _buildCircleExpansion() {
-    return ValueListenableBuilder(
-      valueListenable: _notifierCurrentPage,
-      builder: (BuildContext context, int val, Widget? child) {
-        return Center(
+      body: AbsorbPointer(
+        absorbing: true,
+        child: Container(
+          color: _mainBackgroundColor,
           child: Stack(
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: (_isExpanded)
-                    ? const BorderRadius.all(Radius.circular(0))
-                    : const BorderRadius.all(Radius.circular(50)),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 800),
-                  color: (val == 2)
-                      ? _isExpanded
-                          ? Theme.of(context).colorScheme.surface
-                          : const Color(0xFFEDC646)
-                      : _mainBackgroundColor,
-                  width:
-                      _isExpanded ? MediaQuery.of(context).size.height * 1 : 60,
-                  height:
-                      _isExpanded ? MediaQuery.of(context).size.height * 1 : 60,
-                  onEnd: animationComplete,
+            children: [
+              if (isLastPage) _buildCircleExpansion(),
+              _buildOutroTransition(),
+              AnimatedOpacity(
+                opacity: _isCarouselFinished ? 0.0 : 1.0,
+                duration: _outroAnimationDuration,
+                child: Column(
+                  children: [
+                    const SafeArea(child: LogoHeaderTemplate()),
+                    _buildCarousel(),
+                  ],
                 ),
               ),
             ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 
-  Widget _buildWelcomeTransition() {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 100),
-      height: (MediaQuery.of(context).size.height * 0.9) -
-          MediaQuery.of(context).padding.top,
-      width: double.infinity,
-      child: AnimatedOpacity(
-        opacity: _isExpanded ? 1.0 : 0.0,
-        duration: const Duration(milliseconds: 500),
-        child: Center(
+  Widget _buildCircleExpansion() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 165),
+      child: Center(
+        child: AnimatedScale(
+          duration: _outroAnimationDuration,
+          curve: Curves.easeOut,
+          scale: _isCarouselFinished ? 4 : 1,
           child: SvgPicture.asset(
-            'assets/svg/logo_white.svg',
-            height: 100,
+            IntroPages.values.last.backgroundSvgPath,
           ),
         ),
       ),
     );
   }
 
-  Widget _buildBackgroundBlob() {
-    return Container(
-      margin: const EdgeInsets.only(top: 30),
-      child: AnimatedOpacity(
-        opacity: _isExpanded ? 0.0 : 1.0,
-        duration: const Duration(milliseconds: 500),
-        child: ValueListenableBuilder(
-            valueListenable: _notifierSVG,
-            builder: (BuildContext context, String svg, Widget? child) {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * 0.7,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Center(
-                        child: SvgPicture.asset(
-                      svg,
-                    )),
-                  ],
-                ),
-              );
-            }),
+  Widget _buildOutroTransition() {
+    return AnimatedOpacity(
+      opacity: _isCarouselFinished ? 1.0 : 0.0,
+      curve: Curves.easeOut,
+      duration: _outroAnimationDuration,
+      onEnd: onOutroAnimationEnd,
+      child: Center(
+        child: SvgPicture.asset(
+          'assets/svg/logo_white.svg',
+          height: 70,
+        ),
       ),
     );
   }
 
+  void onOutroAnimationEnd() {
+    if (_isCarouselFinished) {
+      Future.delayed(const Duration(seconds: 2), () {
+        _navigationService.navigateTo(routes.LocationPermissionRoute);
+      });
+    }
+  }
+
   Widget _buildCarousel() {
-    return AnimatedOpacity(
-      opacity: _isExpanded ? 0.0 : 1.0,
-      duration: const Duration(milliseconds: 500),
-      child: Container(
-        margin: const EdgeInsets.only(top: 30),
-        child: Column(
-          children: [
-            CarouselSlider(
-              carouselController: _carouselController,
-              options: CarouselOptions(
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  enableInfiniteScroll: false,
-                  viewportFraction: 1,
-                  onPageChanged: (integer, _) =>
-                      {setOvalBackgroundShape(integer)}),
-              items: svgImages.map((svg) {
-                return ValueListenableBuilder(
-                  valueListenable: _notifierCurrentPage,
-                  builder: (BuildContext context, int val, Widget? child) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          child: (val == 0)
-                              ? const SlideHeader1()
-                              : (val == 1)
-                                  ? const SlideHeader2()
-                                  : (val == 2)
-                                      ? SlideHeader3()
-                                      : Container(),
-                        ),
-                        Container(
-                            // color: Colors.red,
-                            //margin: const EdgeInsets.only(bottom: 0),
-                            child: SvgPicture.asset(svg, width: 320)),
-                      ],
-                    );
-                  },
-                );
-              }).toList(),
-            ),
-            _buildSliderProgressBars()
-          ],
-        ),
+    return Container(
+      margin: const EdgeInsets.only(top: 30),
+      child: Stack(
+        children: [
+          _buildBackgroundBlob(),
+          Column(
+            children: [
+              CarouselSlider(
+                carouselController: _carouselController,
+                options: CarouselOptions(
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    enableInfiniteScroll: false,
+                    autoPlay: _isCarouselStarted &&
+                        _currentPage < IntroPages.values.length - 1,
+                    autoPlayAnimationDuration:
+                        const Duration(milliseconds: 300),
+                    autoPlayInterval: _introPageAnimationDuration,
+                    viewportFraction: 1,
+                    onPageChanged: (currentPage, _) {
+                      if (currentPage == IntroPages.values.length - 1) {
+                        Future.delayed(_introPageAnimationDuration, () {
+                          setState(() {
+                            _isCarouselFinished = true;
+                          });
+                        });
+                      }
+                      setState(() {
+                        _currentPage = currentPage;
+                      });
+                    }),
+                items: IntroPages.values.map((introPage) {
+                  final Widget header;
+                  switch (introPage) {
+                    case IntroPages.intro_1:
+                      header = const SlideHeader1();
+                      break;
+                    case IntroPages.intro_2:
+                      header = const SlideHeader2();
+                      break;
+                    case IntroPages.intro_3:
+                      header = const SlideHeader3();
+                      break;
+                    default:
+                      header = Container();
+                  }
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      header,
+                      SvgPicture.asset(introPage.svgPath, width: 320),
+                    ],
+                  );
+                }).toList(),
+              ),
+              _buildSliderProgressBars(),
+            ],
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildSliderProgressBars() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(10, 50, 10, 10),
-      child: ProgressIndicator(
-        color: Theme.of(context).colorScheme.secondary,
-        key: _storyProgressKey,
-        progressCount: 3,
-        duration: _slideDuration,
-        onStatusChanged: (_) {},
+      padding: const EdgeInsets.fromLTRB(80, 50, 80, 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: IntroPages.values.map((introPage) {
+          return IntroPageProgressBar(
+            color: Theme.of(context).colorScheme.secondary,
+            duration: _introPageAnimationDuration,
+            isFilled: _isCarouselStarted && _currentPage >= introPage.index,
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildBackgroundBlob() {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.7,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Center(
+            child: SvgPicture.asset(
+              IntroPages.values[_currentPage].backgroundSvgPath,
+            ),
+          ),
+        ],
       ),
     );
   }
