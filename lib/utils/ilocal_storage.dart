@@ -1,6 +1,9 @@
+import 'package:givt_mobile_apps/models/local_storage.dart';
+
 abstract class IStateRepository {
-  void updateWelcomeFlag(bool update) {}
-  void updateCompletedOneDonationFlag(bool update) {}
+  PersistentState getPersistentState();
+  void updateWelcomeFlag(bool update);
+  void updateCompletedOneDonationFlag(bool update);
 }
 
 abstract class IDonationsRepository<Donation> {

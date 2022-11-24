@@ -5,6 +5,7 @@ import 'package:givt_mobile_apps/core/templates/logo_header_template.dart';
 import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
+import 'package:givt_mobile_apps/services/persistent_state_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:provider/provider.dart';
 import '../../../core/widgets/navigation/appbar_bottom.dart';
@@ -21,7 +22,8 @@ class FirstUsePage extends StatefulWidget {
 class _FirstUsePageState extends State<FirstUsePage> {
   CheckInternet? _checkInternet;
   final NavigationService _navigationService = locator<NavigationService>();
-  late final LocalStorageBase storageProxy = locator<LocalStorageBase>();
+  late final PersistentStateService _persistentStateService =
+      locator<PersistentStateService>();
 
   @override
   void initState() {
@@ -30,7 +32,7 @@ class _FirstUsePageState extends State<FirstUsePage> {
     initialization();
     super.initState();
     final PersistentState current =
-        storageProxy.realm.all<PersistentState>().first;
+        _persistentStateService.getPersistentState();
     print(
         'They have seen the animation is ${current.welcomed}; and completed one donation is  ${current.completedOneDonation}');
   }

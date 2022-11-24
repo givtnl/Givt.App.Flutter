@@ -10,7 +10,7 @@ class LocalStorageBase {
       PersistentState.schema,
       Donation.schema,
       LocalUser.schema
-    ], schemaVersion: 2);
+    ], schemaVersion: 3);
     realm = Realm(config);
     if (realm.all<LocalStorage>().isEmpty) {
       realm.write(() {

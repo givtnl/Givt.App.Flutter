@@ -17,4 +17,9 @@ class PersistentStateService extends LocalStorageBase
       realm.all<PersistentState>().first.welcomed = update;
     });
   }
+
+  @override
+  PersistentState getPersistentState() {
+    return realm.all<PersistentState>().first;
+  }
 }

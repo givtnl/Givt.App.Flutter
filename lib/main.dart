@@ -7,6 +7,7 @@ import 'package:givt_mobile_apps/core/language/languageIndex.dart';
 import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:givt_mobile_apps/models/organisation.dart';
 import 'package:givt_mobile_apps/services/local_storage_service.dart';
+import 'package:givt_mobile_apps/services/persistent_state_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:provider/provider.dart';
@@ -29,12 +30,12 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  late final LocalStorageBase storageProxy = locator<LocalStorageBase>();
+  late final PersistentStateService _persistentStateService =
+      locator<PersistentStateService>();
 
   @override
   Widget build(BuildContext context) {
-    final PersistentState state =
-        storageProxy.realm.all<PersistentState>().first;
+    final PersistentState state = _persistentStateService.getPersistentState();
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<CheckInternet>(create: (_) => CheckInternet()),
