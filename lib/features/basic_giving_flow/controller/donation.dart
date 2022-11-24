@@ -31,7 +31,7 @@ class DonationController {
       //create registered user
       final registeredUser =
           await usrService.createAndGetRegisteredUser(tempUser);
-      storageProxy.createUser(registeredUser);
+      storageProxy.postLocalUser(registeredUser);
       webViewController.evaluateJavascript(source: "tokenize();");
     } catch (error) {
       toggleLoader(false);
@@ -64,11 +64,11 @@ class DonationController {
     try {
       //create temp user in backend and local storage
       final TempUser tempUser = await usrService.createAndGetTempUser();
-      storageProxy.addUserId(tempUser.UserId!);
-
+      storageProxy.updateLocalUserGuid(tempUser.UserId!);
+      Donation donationEntity =
+          Donation(mediumId, donationAmount, dateTime, tempUser.UserId!);
       // store donation info into local storage
-      storageProxy.createLocalDonation(
-          mediumId, donationAmount, dateTime, tempUser.UserId!);
+      storageProxy.createDonation(donationEntity);
       toggleLoader(false);
     } catch (error) {
       toggleLoader(false);

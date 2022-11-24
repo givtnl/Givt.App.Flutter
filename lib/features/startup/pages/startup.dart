@@ -44,7 +44,7 @@ class _StartupPageState extends State<StartupPage> {
   @override
   void initState() {
     super.initState();
-    _storageProxy.setWelcomeFlag(true);
+    _storageProxy.updateWelcomeFlag(true);
     initialization();
     Future.delayed(Duration.zero, () {
       startCarousel();

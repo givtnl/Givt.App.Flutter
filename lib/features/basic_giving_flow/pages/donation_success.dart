@@ -25,7 +25,7 @@ class _SuccessDonationPageState extends State<SuccessDonationPage> {
   late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
   @override
   void initState() {
-    storageProxy.setCompletedOneDonationFlag(true);
+    storageProxy.updateCompletedOneDonationFlag(true);
     benefits.shuffle();
     super.initState();
   }
@@ -37,11 +37,11 @@ class _SuccessDonationPageState extends State<SuccessDonationPage> {
     // this could be state rather the quering from local storage
     LocalUser localUser =
         storageProxy.realm.all<LocalStorage>().first.userData!;
-    Donations? localDonation = storageProxy.realm
+    Donation? localDonation = storageProxy.realm
         .all<LocalStorage>()
         .first
         .donations
-        .firstWhere((element) => element.userId == localUser.userId);
+        .firstWhere((element) => element.guid == localUser.userId);
 
     return Container(
       color: Theme.of(context).colorScheme.surface,

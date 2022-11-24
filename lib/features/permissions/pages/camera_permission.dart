@@ -30,7 +30,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _storageProxy.setWelcomeFlag(true);
+    _storageProxy.updateWelcomeFlag(true);
   }
 
   @override
