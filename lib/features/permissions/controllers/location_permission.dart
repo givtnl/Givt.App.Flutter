@@ -8,7 +8,7 @@ import '../../../core/constants/route_paths.dart' as routes;
 
 class LocationController {
   late final LocalStorage current =
-      locator<LocalStorageProxy>().realm.all<LocalStorage>().first;
+      locator<LocalStorageBase>().realm.all<LocalStorage>().first;
   final NavigationService _navigationService = locator<NavigationService>();
   final LocationService _locationService = locator<LocationService>();
 

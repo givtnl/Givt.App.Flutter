@@ -3,13 +3,14 @@ abstract class IStateRepository {
   void updateCompletedOneDonationFlag(bool update) {}
 }
 
-abstract class IDonationsRepository<TEntity> {
-  void createDonation(TEntity entity);
-  void updateDonation(TEntity entity);
-  void deleteDonation(TEntity entity);
-  List<TEntity> getAllDonations();
+abstract class IDonationsRepository<Donation> {
+  void createDonation(Donation entity);
+  void updateDonation(Donation entity);
+  void deleteDonation(Donation entity);
+  List<Donation> getAllDonations();
   // it needs some sort of id, maybe it gets returned by donation
-  TEntity getDonationByTime(String dateTime);
+  Donation getDonationByTime(String dateTime);
+  Donation getDonationsById(String guid);
 }
 
 abstract class ILocalUserRepository<TEntity> {
@@ -19,7 +20,6 @@ abstract class ILocalUserRepository<TEntity> {
   void deleteLocalUser();
   TEntity getLocalUser();
 }
-
 
 // abstract class IRepository<TEntity> {
 //   // CRUD

@@ -10,6 +10,7 @@ import '../../../core/constants/route_paths.dart' as routes;
 
 import '../../../services/camera_service.dart';
 import '../../../services/navigation_service.dart';
+import '../../../services/persistent_state_service.dart';
 import '../../../utils/locator.dart';
 
 class CameraPermissionPage extends StatefulWidget {
@@ -21,7 +22,8 @@ class CameraPermissionPage extends StatefulWidget {
 
 class _CameraPermissionPageState extends State<CameraPermissionPage>
     with WidgetsBindingObserver {
-  final LocalStorageProxy _storageProxy = locator<LocalStorageProxy>();
+  final PersistentStateService _stateService =
+      locator<PersistentStateService>();
   final CameraService _cameraService = locator<CameraService>();
   final _cameraController = CameraController();
   bool _detectPermission = false;
@@ -30,7 +32,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _storageProxy.updateWelcomeFlag(true);
+    _stateService.updateWelcomeFlag(true);
   }
 
   @override

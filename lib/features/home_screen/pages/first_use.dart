@@ -21,7 +21,7 @@ class FirstUsePage extends StatefulWidget {
 class _FirstUsePageState extends State<FirstUsePage> {
   CheckInternet? _checkInternet;
   final NavigationService _navigationService = locator<NavigationService>();
-  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  late final LocalStorageBase storageProxy = locator<LocalStorageBase>();
 
   @override
   void initState() {

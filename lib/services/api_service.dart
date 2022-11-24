@@ -9,7 +9,7 @@ import '../models/registered_user.dart';
 import '../utils/locator.dart';
 
 class APIService {
-  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  late final LocalStorageBase storageProxy = locator<LocalStorageBase>();
 
   Map<String, String> get headers => {
         "Content-Type": "application/json",

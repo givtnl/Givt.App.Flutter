@@ -29,7 +29,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  late final LocalStorageBase storageProxy = locator<LocalStorageBase>();
 
   @override
   Widget build(BuildContext context) {

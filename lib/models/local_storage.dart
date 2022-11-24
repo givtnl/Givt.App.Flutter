@@ -37,8 +37,12 @@ class _Donation {
   // it SEEMS TO needs to store some id/ token
   late final String mediumId;
   late final double donationAmount;
-  // this should be an ISO8601 format
+
+  /// this should be an ISO8601 format string
+  /// but it could be a DateTime object that only converted when encoded
   late final String dateTime;
+
+  /// could be a Uuid
   late final String guid;
   // should this then have a token? -- no for now
 }

@@ -7,7 +7,7 @@ import '../../../core/constants/route_paths.dart' as routes;
 
 class CameraController {
   late final LocalStorage current =
-      locator<LocalStorageProxy>().realm.all<LocalStorage>().first;
+      locator<LocalStorageBase>().realm.all<LocalStorage>().first;
   final NavigationService _navigationService = locator<NavigationService>();
   final CameraService _cameraService = locator<CameraService>();
 

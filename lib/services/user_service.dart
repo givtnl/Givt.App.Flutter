@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/models/local_storage.dart';
-import 'package:givt_mobile_apps/services/local_storage_service.dart';
+import 'package:givt_mobile_apps/services/local_user_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'dart:math';
 import 'dart:convert';
@@ -10,7 +10,7 @@ import 'api_service.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class UserService {
-  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  late final LocalUserService localUserService = locator<LocalUserService>();
   final _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
@@ -31,14 +31,14 @@ class UserService {
         (ctx != null) ? Localizations.localeOf(ctx).toString() : 'en';
     final regUser = await RegisteredUser.fromSignUpData(
         guid!, email!, password!, currentTimeZone, locale);
-    storageProxy.postLocalUser(regUser);
+    localUserService.postLocalUser(regUser);
     await APIService().createRegisteredUser(regUser);
     return regUser;
   }
 
   Future<dynamic> createAndGetRegisteredUser(TempUser tempUser) async {
     final registeredUser = RegisteredUser.fromTempUser(tempUser);
-    storageProxy.postLocalUser(registeredUser);
+    localUserService.postLocalUser(registeredUser);
     await APIService().createRegisteredUser(registeredUser);
     return registeredUser;
   }
@@ -75,8 +75,8 @@ class UserService {
       String? password]) async {
     final String currentTimeZone =
         await FlutterNativeTimezone.getLocalTimezone();
-    LocalUser localUser =
-        storageProxy.realm.all<LocalStorage>().first.userData!;
+
+    LocalUser localUser = localUserService.getLocalUser();
     return TempUser(
         UserId: (localUser.userId.isNotEmpty) ? localUser.userId : null,
         Email: email ?? getRandomGeneratedEmail(),

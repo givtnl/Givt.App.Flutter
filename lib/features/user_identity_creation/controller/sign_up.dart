@@ -13,7 +13,7 @@ import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class SignUpController {
-  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  late final LocalStorageBase storageProxy = locator<LocalStorageBase>();
   late final NavigationService _navigationService =
       locator<NavigationService>();
 

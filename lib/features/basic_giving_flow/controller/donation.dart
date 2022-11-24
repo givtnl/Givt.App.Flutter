@@ -4,6 +4,8 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart'
     hide LocalStorage;
 import 'package:givt_mobile_apps/models/temp_user.dart';
 import 'package:givt_mobile_apps/services/local_storage_service.dart';
+import '../../../services/local_donation_service.dart';
+import '../../../services/local_user_service.dart';
 import '../../../services/user_service.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
 import '../../../services/navigation_service.dart';
@@ -12,7 +14,9 @@ import '../../../services/api_service.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class DonationController {
-  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  final LocalUserService _localUserService = locator<LocalUserService>();
+  final LocalDonationService _localDonationService =
+      locator<LocalDonationService>();
   final NavigationService navigationService = locator<NavigationService>();
 
   void initialiseDonationProcess(
@@ -31,7 +35,7 @@ class DonationController {
       //create registered user
       final registeredUser =
           await usrService.createAndGetRegisteredUser(tempUser);
-      storageProxy.postLocalUser(registeredUser);
+      _localUserService.postLocalUser(registeredUser);
       webViewController.evaluateJavascript(source: "tokenize();");
     } catch (error) {
       toggleLoader(false);
@@ -54,21 +58,21 @@ class DonationController {
     }
   }
 
-  Future<void> storeCachedGivt(context, double donationAmount, String mediumId,
+  Future<void> completeDonation(context, double donationAmount, String mediumId,
       Function toggleLoader) async {
     String dateTime = DateTime.now().toIso8601String();
     final UserService usrService = locator<UserService>();
 
-    late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+    late final LocalStorageBase storageProxy = locator<LocalStorageBase>();
     toggleLoader(true);
     try {
       //create temp user in backend and local storage
       final TempUser tempUser = await usrService.createAndGetTempUser();
-      storageProxy.updateLocalUserGuid(tempUser.UserId!);
+      _localUserService.updateLocalUserGuid(tempUser.UserId!);
       Donation donationEntity =
           Donation(mediumId, donationAmount, dateTime, tempUser.UserId!);
       // store donation info into local storage
-      storageProxy.createDonation(donationEntity);
+      _localDonationService.createDonation(donationEntity);
       toggleLoader(false);
     } catch (error) {
       toggleLoader(false);

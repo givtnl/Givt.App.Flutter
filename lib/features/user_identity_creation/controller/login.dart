@@ -11,7 +11,7 @@ import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class LoginController {
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageBase realmProxy = locator<LocalStorageBase>();
   late final NavigationService _navigationService =
       locator<NavigationService>();
   final UserService _userService = locator<UserService>();
