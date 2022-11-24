@@ -3,7 +3,8 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/controller/sign_up.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/widgets/scaffold.dart';
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/models/local_storage.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import '../../../core/widgets/buttons/button_square_updt.dart';
@@ -18,7 +19,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  late final LocalStorageBase storageProxy = locator<LocalStorageBase>();
   final _formKey = GlobalKey<FormState>();
   final Map<String, String> _formValue = {'email': '', 'password': ''};
   bool isLoading = false;

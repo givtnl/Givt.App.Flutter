@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/donation_button.dart';
 import 'package:givt_mobile_apps/core/templates/donation_template.dart';
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +11,7 @@ import '../../../core/constants/route_paths.dart' as routes;
 import '../../../models/organisation.dart';
 
 class DoantionAmountTypical extends StatefulWidget {
-  DoantionAmountTypical({super.key});
+  const DoantionAmountTypical({super.key});
 
   @override
   State<DoantionAmountTypical> createState() => _DoantionAmountTypicalState();
@@ -21,7 +19,7 @@ class DoantionAmountTypical extends StatefulWidget {
 
 class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
   final NavigationService _navigationService = locator<NavigationService>();
-  final LocalStorageProxy _model = locator<LocalStorageProxy>();
+  final LocalStorageBase _model = locator<LocalStorageBase>();
 
   double donationAmount = 0;
   int selection = -1;
@@ -87,7 +85,7 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
               text: 'Next',
               disabled: donationAmount > 1.5 ? false : true,
               onClicked: () async {
-                await DonationController().storeCachedGivt(
+                await DonationController().completeDonation(
                     context,
                     donationAmount,
                     organisationProvider.mediumId!,

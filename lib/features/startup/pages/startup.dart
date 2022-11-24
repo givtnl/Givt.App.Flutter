@@ -3,11 +3,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart' hide ProgressIndicator;
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/models/local_storage.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/utils/progress_indicator.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import '../../../core/templates/logo_header_template.dart';
 import '../../../core/constants/route_paths.dart' as routes;
+import '../../../services/persistent_state_service.dart';
 import '../widgets/slide_header1.dart';
 import '../widgets/slide_header2.dart';
 import '../widgets/slide_header3.dart';
@@ -30,7 +32,8 @@ class _StartupPageState extends State<StartupPage> {
   final Duration _slideDuration = const Duration(seconds: 3);
   late final _carouselController = CarouselController();
   final _storyProgressKey = GlobalKey<ProgressIndicatorState>();
-  final LocalStorageProxy _storageProxy = locator<LocalStorageProxy>();
+  final PersistentStateService _stateService =
+      locator<PersistentStateService>();
   int _currentPage = 0;
   bool _isExpanded = false;
 
@@ -43,7 +46,7 @@ class _StartupPageState extends State<StartupPage> {
   @override
   void initState() {
     super.initState();
-    _storageProxy.setWelcomeFlag(true);
+    _stateService.updateWelcomeFlag(true);
     initialization();
     Future.delayed(Duration.zero, () {
       startCarousel();

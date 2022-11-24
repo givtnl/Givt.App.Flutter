@@ -1,34 +1,84 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'localStorage.dart';
+part of 'local_storage.dart';
 
 // **************************************************************************
 // RealmObjectGenerator
 // **************************************************************************
 
 class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
+  LocalStorage({
+    PersistentState? persistentState,
+    LocalUser? userData,
+    Iterable<Donation> donations = const [],
+  }) {
+    RealmObject.set(this, 'persistentState', persistentState);
+    RealmObject.set(this, 'userData', userData);
+    RealmObject.set<RealmList<Donation>>(
+        this, 'donations', RealmList<Donation>(donations));
+  }
+
+  LocalStorage._();
+
+  @override
+  PersistentState? get persistentState =>
+      RealmObject.get<PersistentState>(this, 'persistentState')
+          as PersistentState?;
+  @override
+  set persistentState(covariant PersistentState? value) =>
+      RealmObject.set(this, 'persistentState', value);
+
+  @override
+  LocalUser? get userData =>
+      RealmObject.get<LocalUser>(this, 'userData') as LocalUser?;
+  @override
+  set userData(covariant LocalUser? value) =>
+      RealmObject.set(this, 'userData', value);
+
+  @override
+  RealmList<Donation> get donations =>
+      RealmObject.get<Donation>(this, 'donations') as RealmList<Donation>;
+  @override
+  set donations(covariant RealmList<Donation> value) =>
+      throw RealmUnsupportedSetError();
+
+  @override
+  Stream<RealmObjectChanges<LocalStorage>> get changes =>
+      RealmObject.getChanges<LocalStorage>(this);
+
+  static SchemaObject get schema => _schema ??= _initSchema();
+  static SchemaObject? _schema;
+  static SchemaObject _initSchema() {
+    RealmObject.registerFactory(LocalStorage._);
+    return const SchemaObject(LocalStorage, 'LocalStorage', [
+      SchemaProperty('persistentState', RealmPropertyType.object,
+          optional: true, linkTarget: 'PersistentState'),
+      SchemaProperty('userData', RealmPropertyType.object,
+          optional: true, linkTarget: 'LocalUser'),
+      SchemaProperty('donations', RealmPropertyType.object,
+          linkTarget: 'Donation', collectionType: RealmCollectionType.list),
+    ]);
+  }
+}
+
+class PersistentState extends _PersistentState with RealmEntity, RealmObject {
   static var _defaultsSet = false;
 
-  LocalStorage({
+  PersistentState({
     bool welcomed = false,
     bool completedOneDonation = false,
-    LocalUser? userData,
-    Iterable<Donations> donations = const [],
   }) {
     if (!_defaultsSet) {
-      _defaultsSet = RealmObject.setDefaults<LocalStorage>({
+      _defaultsSet = RealmObject.setDefaults<PersistentState>({
         'welcomed': false,
         'completedOneDonation': false,
       });
     }
     RealmObject.set(this, 'welcomed', welcomed);
     RealmObject.set(this, 'completedOneDonation', completedOneDonation);
-    RealmObject.set(this, 'userData', userData);
-    RealmObject.set<RealmList<Donations>>(
-        this, 'donations', RealmList<Donations>(donations));
   }
 
-  LocalStorage._();
+  PersistentState._();
 
   @override
   bool get welcomed => RealmObject.get<bool>(this, 'welcomed') as bool;
@@ -43,34 +93,16 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
       RealmObject.set(this, 'completedOneDonation', value);
 
   @override
-  LocalUser? get userData =>
-      RealmObject.get<LocalUser>(this, 'userData') as LocalUser?;
-  @override
-  set userData(covariant LocalUser? value) =>
-      RealmObject.set(this, 'userData', value);
-
-  @override
-  RealmList<Donations> get donations =>
-      RealmObject.get<Donations>(this, 'donations') as RealmList<Donations>;
-  @override
-  set donations(covariant RealmList<Donations> value) =>
-      throw RealmUnsupportedSetError();
-
-  @override
-  Stream<RealmObjectChanges<LocalStorage>> get changes =>
-      RealmObject.getChanges<LocalStorage>(this);
+  Stream<RealmObjectChanges<PersistentState>> get changes =>
+      RealmObject.getChanges<PersistentState>(this);
 
   static SchemaObject get schema => _schema ??= _initSchema();
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
-    RealmObject.registerFactory(LocalStorage._);
-    return const SchemaObject(LocalStorage, 'LocalStorage', [
+    RealmObject.registerFactory(PersistentState._);
+    return const SchemaObject(PersistentState, 'PersistentState', [
       SchemaProperty('welcomed', RealmPropertyType.bool),
       SchemaProperty('completedOneDonation', RealmPropertyType.bool),
-      SchemaProperty('userData', RealmPropertyType.object,
-          optional: true, linkTarget: 'LocalUser'),
-      SchemaProperty('donations', RealmPropertyType.object,
-          linkTarget: 'Donations', collectionType: RealmCollectionType.list),
     ]);
   }
 }
@@ -204,8 +236,8 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
   }
 }
 
-class Donations extends _Donations with RealmEntity, RealmObject {
-  Donations(
+class Donation extends _Donation with RealmEntity, RealmObject {
+  Donation(
     String mediumId,
     double donationAmount,
     String dateTime,
@@ -217,7 +249,7 @@ class Donations extends _Donations with RealmEntity, RealmObject {
     RealmObject.set(this, 'userId', userId);
   }
 
-  Donations._();
+  Donation._();
 
   @override
   String get mediumId => RealmObject.get<String>(this, 'mediumId') as String;
@@ -236,19 +268,19 @@ class Donations extends _Donations with RealmEntity, RealmObject {
   set dateTime(String value) => throw RealmUnsupportedSetError();
 
   @override
-  String get userId => RealmObject.get<String>(this, 'userId') as String;
+  String get guid => RealmObject.get<String>(this, 'userId') as String;
   @override
-  set userId(String value) => throw RealmUnsupportedSetError();
+  set guid(String value) => throw RealmUnsupportedSetError();
 
   @override
-  Stream<RealmObjectChanges<Donations>> get changes =>
-      RealmObject.getChanges<Donations>(this);
+  Stream<RealmObjectChanges<Donation>> get changes =>
+      RealmObject.getChanges<Donation>(this);
 
   static SchemaObject get schema => _schema ??= _initSchema();
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
-    RealmObject.registerFactory(Donations._);
-    return const SchemaObject(Donations, 'Donations', [
+    RealmObject.registerFactory(Donation._);
+    return const SchemaObject(Donation, 'Donation', [
       SchemaProperty('mediumId', RealmPropertyType.string),
       SchemaProperty('donationAmount', RealmPropertyType.double),
       SchemaProperty('dateTime', RealmPropertyType.string),

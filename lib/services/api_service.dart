@@ -1,14 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:givt_mobile_apps/models/temp_user.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:http/http.dart' as http;
 import '../core/constants/environment_variables.dart';
-import '../models/localStorage.dart';
+import '../models/local_storage.dart';
 import '../models/registered_user.dart';
 import '../utils/locator.dart';
 
 class APIService {
-  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  late final LocalStorageBase storageProxy = locator<LocalStorageBase>();
 
   Map<String, String> get headers => {
         "Content-Type": "application/json",
@@ -77,11 +78,11 @@ class APIService {
   String getEncodedDonation(wepayToken) {
     LocalUser localUser =
         storageProxy.realm.all<LocalStorage>().first.userData!;
-    Donations? localDonation = storageProxy.realm
+    Donation? localDonation = storageProxy.realm
         .all<LocalStorage>()
         .first
         .donations
-        .firstWhere((element) => element.userId == localUser.userId);
+        .firstWhere((element) => element.guid == localUser.userId);
 
     return jsonEncode({
       "donations": [

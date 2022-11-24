@@ -3,7 +3,9 @@ import 'package:flutter/gestures.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/generic_button.dart';
 import 'package:givt_mobile_apps/core/templates/donation_template.dart';
 import 'package:givt_mobile_apps/models/html.dart';
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/models/local_storage.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
+import 'package:givt_mobile_apps/services/local_user_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +33,7 @@ class DonationPage extends StatefulWidget {
 
 class _DonationPageState extends State<DonationPage> {
   late InAppWebViewController _webViewController;
-  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  late final LocalUserService _localUserService = locator<LocalUserService>();
   final _postFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
   final Map<String, String> _formValue = {'name': '', 'postalCode': ''};
@@ -41,8 +43,7 @@ class _DonationPageState extends State<DonationPage> {
 
   @override
   void initState() {
-    LocalUser localUser =
-        storageProxy.realm.all<LocalStorage>().first.userData!;
+    LocalUser localUser = _localUserService.getLocalUser();
     _registeredUserId = localUser.userId;
   }
 

@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import '../../../../services/api_service.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
-import '../../../models/localStorage.dart';
+import '../../../models/local_storage.dart';
 import '../../../models/registered_user.dart';
 import '../../../models/temp_user.dart';
 import '../../../services/user_service.dart';
@@ -12,7 +13,7 @@ import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class SignUpController {
-  late final LocalStorageProxy storageProxy = locator<LocalStorageProxy>();
+  late final LocalStorageBase storageProxy = locator<LocalStorageBase>();
   late final NavigationService _navigationService =
       locator<NavigationService>();
 

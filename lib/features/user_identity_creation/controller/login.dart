@@ -2,15 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/widgets/notifications/snackbar.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/services/user_service.dart';
 import '../../../../services/api_service.dart';
-import '../../../models/localStorage.dart';
+import '../../../models/local_storage.dart';
 import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class LoginController {
-  late final LocalStorageProxy realmProxy = locator<LocalStorageProxy>();
+  late final LocalStorageBase realmProxy = locator<LocalStorageBase>();
   late final NavigationService _navigationService =
       locator<NavigationService>();
   final UserService _userService = locator<UserService>();
