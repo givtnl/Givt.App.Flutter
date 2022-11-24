@@ -78,11 +78,11 @@ class APIService {
   String getEncodedDonation(wepayToken) {
     LocalUser localUser =
         storageProxy.realm.all<LocalStorage>().first.userData!;
-    Donations? localDonation = storageProxy.realm
+    Donation? localDonation = storageProxy.realm
         .all<LocalStorage>()
         .first
         .donations
-        .firstWhere((element) => element.userId == localUser.userId);
+        .firstWhere((element) => element.guid == localUser.userId);
 
     return jsonEncode({
       "donations": [

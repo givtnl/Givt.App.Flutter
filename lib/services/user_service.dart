@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:givt_mobile_apps/services/local_storage_service.dart';
@@ -33,14 +31,14 @@ class UserService {
         (ctx != null) ? Localizations.localeOf(ctx).toString() : 'en';
     final regUser = await RegisteredUser.fromSignUpData(
         guid!, email!, password!, currentTimeZone, locale);
-    storageProxy.createUser(regUser);
+    storageProxy.postLocalUser(regUser);
     await APIService().createRegisteredUser(regUser);
     return regUser;
   }
 
   Future<dynamic> createAndGetRegisteredUser(TempUser tempUser) async {
     final registeredUser = RegisteredUser.fromTempUser(tempUser);
-    storageProxy.createUser(registeredUser);
+    storageProxy.postLocalUser(registeredUser);
     await APIService().createRegisteredUser(registeredUser);
     return registeredUser;
   }

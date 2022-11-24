@@ -6,7 +6,7 @@ part 'local_storage.g.dart';
 class _LocalStorage {
   late _PersistentState? persistentState;
   late _LocalUser? userData;
-  List<_Donations> donations = [];
+  List<_Donation> donations = [];
 }
 
 @RealmModel()
@@ -32,13 +32,13 @@ class _LocalUser {
 }
 
 @RealmModel()
-class _Donations {
+class _Donation {
   // does it need to store more data?
   // it SEEMS TO needs to store some id/ token
   late final String mediumId;
   late final double donationAmount;
   // this should be an ISO8601 format
   late final String dateTime;
-  late final String userId;
+  late final String guid;
   // should this then have a token? -- no for now
 }
