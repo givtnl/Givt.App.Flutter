@@ -35,9 +35,9 @@ platform :ios do
         issuer_id: "69a6de8f-dee3-47e3-e053-5b8c7c11a4d1",
         key_content: ENV['APPSTORECONNECT_PRIVATE_KEY']
     )
-    build_number = 1.0.2
+    build_number = "1.0.2"
     Dir.chdir "../.." do
-        sh("flutter", "packages", "get")
+        sh("flutter", "pub", "get")
         sh("flutter", "clean")
         sh("flutter", "build", "ipa", "--build-number=#{build_number}")
     end
