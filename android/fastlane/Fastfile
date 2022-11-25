@@ -41,6 +41,7 @@ platform :android do
                     override_keystore: false)
     upload_to_play_store(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], 
                         aab: signed_aab_path,
+                        version_code: flutter_version()["version_code"],
                         release_status: "completed",
                         track: "internal")
   end
