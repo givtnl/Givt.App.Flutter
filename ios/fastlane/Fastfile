@@ -29,7 +29,7 @@ platform :ios do
       app_identifier = "net.givtapp.flutter.alpha"
     end
     version_info = flutter_version(
-    pubspec_location: '../../pubspec.yaml'
+    pubspec_location: '../pubspec.yaml'
     )
     setup_ci
     sync_code_signing(type: "appstore", readonly: true, app_identifier: app_identifier, git_url: git_url)
