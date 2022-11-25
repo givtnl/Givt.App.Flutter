@@ -49,5 +49,13 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSCameraUsageDescription</key>
+		<string>We need your camera to scan a QR code</string>
+		<key>NSLocationUsageDescription</key>
+		<string>We need your location for event based giving</string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>We need your location for event based giving</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>We need your location for event based giving</string>
 	</dict>
 </plist>
