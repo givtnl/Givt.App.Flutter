@@ -40,6 +40,19 @@ enum IntroPages {
 
   final String backgroundSvgPath;
   final String svgPath;
+
+  Widget get header {
+    switch (this) {
+      case IntroPages.intro_1:
+        return const SlideHeader1();
+      case IntroPages.intro_2:
+        return const SlideHeader2();
+      case IntroPages.intro_3:
+        return const SlideHeader3();
+      default:
+        return Container();
+    }
+  }
 }
 
 class _StartupPageState extends State<StartupPage> {
@@ -51,6 +64,8 @@ class _StartupPageState extends State<StartupPage> {
   final Duration _introPageAnimationDuration =
       const Duration(milliseconds: 3000);
   final Duration _outroAnimationDuration = const Duration(milliseconds: 500);
+
+  final String _outroLogoSvgPath = "assets/svg/logo_white.svg";
 
   bool _isCarouselStarted = false;
   bool _isCarouselFinished = false;
@@ -132,7 +147,7 @@ class _StartupPageState extends State<StartupPage> {
       onEnd: onOutroAnimationEnd,
       child: Center(
         child: SvgPicture.asset(
-          'assets/svg/logo_white.svg',
+          _outroLogoSvgPath,
           height: 70,
         ),
       ),
@@ -179,24 +194,10 @@ class _StartupPageState extends State<StartupPage> {
                       });
                     }),
                 items: IntroPages.values.map((introPage) {
-                  final Widget header;
-                  switch (introPage) {
-                    case IntroPages.intro_1:
-                      header = const SlideHeader1();
-                      break;
-                    case IntroPages.intro_2:
-                      header = const SlideHeader2();
-                      break;
-                    case IntroPages.intro_3:
-                      header = const SlideHeader3();
-                      break;
-                    default:
-                      header = Container();
-                  }
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      header,
+                      introPage.header,
                       SvgPicture.asset(introPage.svgPath, width: 320),
                     ],
                   );
