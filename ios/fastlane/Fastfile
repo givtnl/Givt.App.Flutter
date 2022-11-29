@@ -44,8 +44,15 @@ platform :ios do
     build_app(
       skip_build_archive: true, 
       include_symbols: true, 
-      archive_path: "../build/ios/archive/Runner.xcarchive",
-      export_method: "package"
+      archive_path: "../build/ios/archive/Runner.xcarchive"
+    )
+    set_github_release(
+      repository_name: "givtnl/Givt.App.Flutter",
+      api_token: ENV["PERSONAL_ACCESS_KEY"], 
+      name: "Attempt upload ipa to github",
+      tag_name: "pre-main-v1.0.3+#{build_number}",
+      description: ("Publish github release with build number #{build_number}"),
+      upload_assets:[lane_context[SharedValues::IPA_OUTPUT_PATH]]
     )
     upload_to_testflight(
         app_identifier: app_identifier,
