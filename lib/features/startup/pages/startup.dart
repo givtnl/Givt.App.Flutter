@@ -9,7 +9,7 @@ import 'package:givt_mobile_apps/features/startup/widgets/slide_header1.dart';
 import 'package:givt_mobile_apps/features/startup/widgets/slide_header2.dart';
 import 'package:givt_mobile_apps/features/startup/widgets/slide_header3.dart';
 import 'package:givt_mobile_apps/features/startup/widgets/intro_page_progress_bar.dart';
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/services/persistent_state_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:givt_mobile_apps/core/constants/route_paths.dart' as routes;
@@ -57,7 +57,7 @@ enum IntroPages {
 
 class _StartupPageState extends State<StartupPage> {
   final NavigationService _navigationService = locator<NavigationService>();
-  final LocalStorageProxy _storageProxy = locator<LocalStorageProxy>();
+  final PersistentStateService _stateService = locator<PersistentStateService>();
   final Color _mainBackgroundColor = const Color(0xFFF5F5F5);
   late final _carouselController = CarouselController();
 
@@ -78,7 +78,7 @@ class _StartupPageState extends State<StartupPage> {
   @override
   void initState() {
     super.initState();
-    _storageProxy.setWelcomeFlag(true);
+    _stateService.updateWelcomeFlag(true);
     _initialization();
     Future.delayed(Duration.zero, () {
       _startCarousel();

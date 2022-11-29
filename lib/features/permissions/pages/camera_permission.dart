@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/bypass_button.dart';
 import 'package:givt_mobile_apps/features/permissions/controllers/camera_permission.dart';
-import 'package:givt_mobile_apps/models/localStorage.dart';
+import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:givt_mobile_apps/models/permission_models.dart';
+import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:provider/provider.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 import '../../../services/camera_service.dart';
 import '../../../services/navigation_service.dart';
+import '../../../services/persistent_state_service.dart';
 import '../../../utils/locator.dart';
 
 class CameraPermissionPage extends StatefulWidget {
@@ -20,7 +22,8 @@ class CameraPermissionPage extends StatefulWidget {
 
 class _CameraPermissionPageState extends State<CameraPermissionPage>
     with WidgetsBindingObserver {
-  final LocalStorageProxy _storageProxy = locator<LocalStorageProxy>();
+  final PersistentStateService _stateService =
+      locator<PersistentStateService>();
   final CameraService _cameraService = locator<CameraService>();
   final _cameraController = CameraController();
   bool _detectPermission = false;
@@ -29,7 +32,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _storageProxy.setWelcomeFlag(true);
+    _stateService.updateWelcomeFlag(true);
   }
 
   @override

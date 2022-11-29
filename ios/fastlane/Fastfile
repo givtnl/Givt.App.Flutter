@@ -41,11 +41,18 @@ platform :ios do
         sh("flutter", "clean")
         sh("flutter", "build", "ipa", "--build-number=#{build_number}")
     end
-    build_app(skip_build_archive: true, include_symbols: true, archive_path: "../build/ios/archive/Runner.xcarchive")
-    upload_to_testflight(
-        app_identifier: app_identifier,
-        api_key: api_key,
-        skip_waiting_for_build_processing: true
+    build_app(
+      skip_build_archive: true, 
+      include_symbols: true, 
+      archive_path: "../build/ios/archive/Runner.xcarchive"
+    )
+    set_github_release(
+      repository_name: "givtnl/Givt.App.Flutter",
+      api_token: ENV['GITHUB_API_TOKEN'], 
+      name: "Attempt upload ipa to github",
+      tag_name: "pre-main-v1.0.3+#{build_number}",
+      description: ("Publish github release with build number #{build_number}"),
+      upload_assets:[lane_context[SharedValues::IPA_OUTPUT_PATH]]
     )
   end
 end

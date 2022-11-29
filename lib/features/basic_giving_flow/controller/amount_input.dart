@@ -4,7 +4,6 @@ import 'package:givt_mobile_apps/core/widgets/notifications/snackbar.dart';
 import 'donation.dart';
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
-import '../../../core/constants/route_paths.dart' as routes;
 
 class InputController {
   final NavigationService navigationService = locator<NavigationService>();
@@ -17,7 +16,7 @@ class InputController {
           .showSnackBarMessage('Cannot donate less than \$2', Colors.red);
       return;
     }
-    await DonationController().storeCachedGivt(
+    await DonationController().completeDonation(
         ctx, double.parse(inputAmount), mediumId, toggleLoader);
     DonationController().navigateToPayment();
   }
