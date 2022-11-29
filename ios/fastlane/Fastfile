@@ -48,7 +48,7 @@ platform :ios do
     )
     set_github_release(
       repository_name: "givtnl/Givt.App.Flutter",
-      api_token: ENV["PERSONAL_ACCESS_KEY"], 
+      api_token: ENV['PERSONAL_ACCESS_KEY'], 
       name: "Attempt upload ipa to github",
       tag_name: "pre-main-v1.0.3+#{build_number}",
       description: ("Publish github release with build number #{build_number}"),
