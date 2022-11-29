@@ -54,10 +54,5 @@ platform :ios do
       description: ("Publish github release with build number #{build_number}"),
       upload_assets:[lane_context[SharedValues::IPA_OUTPUT_PATH]]
     )
-    upload_to_testflight(
-        app_identifier: app_identifier,
-        api_key: api_key,
-        skip_waiting_for_build_processing: true
-    )
   end
 end

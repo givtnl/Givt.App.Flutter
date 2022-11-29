@@ -1,0 +1,21 @@
+name: Upload iOS ipa to testflight
+on: 
+  workflow_run: 
+    workflows: [Build and sign iOS]
+    types: 
+      - completed
+jobs:
+  upload-ios: 
+    name: Build Flutter iOS
+    runs-on: macos-latest
+    steps:
+      - name: 'Get latest tag'
+        run: |
+          echo "latest_tag=$(git tag | sort --version-sort | tail -n1)" >> $GITHUB_ENV
+      - name: 'Upload app to TestFlight'
+        uses: apple-actions/upload-testflight-build@v1
+        with: 
+          app-path: "https://github.com/givtnl/Givt.App.Flutter/releases/tag/$env:latest_tag" 
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORECONNECT_PRIVATE_KEY }}
