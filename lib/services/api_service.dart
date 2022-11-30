@@ -126,8 +126,8 @@ class APIService {
   }
 
   Future<dynamic> getOrganisationDetailsFromMedium(String mediumCode) async {
-    final url = Uri.https(
-        baseApiUrl, '/api/v2/CollectGroups/medium', {'Code': mediumCode});
+    final url =
+        Uri.https(baseApiUrl, '/api/v3/campaigns', {'code': mediumCode});
     var response = await http.get(url, headers: headers);
     if (response.statusCode >= 400) {
       throw Exception('something went wrong :(');
