@@ -49,9 +49,8 @@ platform :ios do
     set_github_release(
       repository_name: "givtnl/Givt.App.Flutter",
       api_token: ENV['GITHUB_API_TOKEN'], 
-      name: "Attempt upload ipa to github",
-      tag_name: "pre-main-v1.0.3+#{build_number}",
-      description: ("Publish github release with build number #{build_number}"),
+      name: "ios.ipa",
+      tag_name: flutter_version()["version_code"],
       upload_assets:[lane_context[SharedValues::IPA_OUTPUT_PATH]]
     )
   end
