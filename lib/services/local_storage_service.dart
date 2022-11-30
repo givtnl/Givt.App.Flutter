@@ -13,9 +13,11 @@ class LocalStorageBase {
     ], schemaVersion: 3);
     realm = Realm(config);
     if (realm.all<LocalStorage>().isEmpty) {
+      final localStorage = LocalStorage();
       realm.write(() {
-        realm.all<LocalStorage>().first.persistentState = PersistentState();
-        realm.all<LocalStorage>().first.userData = LocalUser();
+        realm.add(localStorage);
+        localStorage.persistentState = PersistentState();
+        localStorage.userData = LocalUser();
       });
     }
     if (realm.all<PersistentState>().isEmpty) {

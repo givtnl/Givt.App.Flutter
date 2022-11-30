@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SlideHeader3 extends StatelessWidget {
-  SlideHeader3({super.key});
+  const SlideHeader3({super.key});
 
   @override
   Widget build(BuildContext context) {
