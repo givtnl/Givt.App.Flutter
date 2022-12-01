@@ -92,7 +92,7 @@ class _LocationPermissionPageState extends State<LocationPermissionPage>
         onBtnClick: () {
           _locationController.checkPermissions();
         },
-        title: 'Enable Location',
+        title: 'Let\'s do it',
         isBtnDisabled: false);
   }
 }

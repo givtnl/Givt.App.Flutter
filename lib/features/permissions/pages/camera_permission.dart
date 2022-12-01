@@ -99,7 +99,7 @@ class _CameraPermissionPageState extends State<CameraPermissionPage>
       onBtnClick: () {
         _cameraController.checkPermissions();
       },
-      title: 'Enable Camera',
+      title: 'Yes please',
       isBtnDisabled: false,
     );
   }
