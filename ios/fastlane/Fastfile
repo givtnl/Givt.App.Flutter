@@ -50,7 +50,7 @@ platform :ios do
       repository_name: "givtnl/Givt.App.Flutter",
       api_token: ENV['GITHUB_API_TOKEN'], 
       name: "ios.ipa",
-      tag_name: flutter_version()["version_name"],
+      tag_name: flutter_version(should_omit_version_code: true)["version_name"],
       upload_assets:[lane_context[SharedValues::IPA_OUTPUT_PATH]]
     )
   end
