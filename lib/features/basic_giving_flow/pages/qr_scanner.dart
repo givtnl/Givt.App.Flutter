@@ -1,13 +1,9 @@
-import 'dart:convert';
 import 'package:givt_mobile_apps/core/templates/logo_header_template.dart';
-import 'package:givt_mobile_apps/core/widgets/navigation/appbar_bottom.dart';
 import 'package:givt_mobile_apps/utils/check_internet_connectivity.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter/material.dart';
-import 'package:givt_mobile_apps/core/templates/base_template.dart';
 import 'package:givt_mobile_apps/models/organisation.dart';
 import 'package:provider/provider.dart';
-import '../../../services/api_service.dart';
 import '../../../services/navigation_service.dart';
 import '../../../utils/locator.dart';
 import '../../../core/constants/route_paths.dart' as routes;

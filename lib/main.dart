@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:givt_mobile_apps/core/language/languageIndex.dart';
 import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:givt_mobile_apps/models/organisation.dart';
-import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/services/persistent_state_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
