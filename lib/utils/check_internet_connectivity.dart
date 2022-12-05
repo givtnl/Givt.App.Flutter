@@ -7,7 +7,7 @@ class CheckInternet extends ChangeNotifier {
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription _streamSubscription;
 
-  checkInitialConnection() async {
+  void checkInitialConnection() async {
     final status = await _connectivity.checkConnectivity();
     if (status == ConnectivityResult.none) {
       hasInternet = false;
