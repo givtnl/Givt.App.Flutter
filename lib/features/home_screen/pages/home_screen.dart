@@ -24,7 +24,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
   @override
   void initState() {
     _checkInternet = Provider.of<CheckInternet>(context, listen: false);
-    _checkInternet?.checkRealtimeConnection();
+    _checkInternet?.initiateRealtimeConnectionSubscribtion();
     initialization();
     super.initState();
   }

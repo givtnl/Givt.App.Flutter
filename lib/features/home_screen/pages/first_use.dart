@@ -28,7 +28,7 @@ class _FirstUsePageState extends State<FirstUsePage> {
   @override
   void initState() {
     _checkInternet = Provider.of<CheckInternet>(context, listen: false);
-    _checkInternet?.checkRealtimeConnection();
+    _checkInternet?.initiateRealtimeConnectionSubscribtion();
     initialization();
     super.initState();
     final PersistentState current =
