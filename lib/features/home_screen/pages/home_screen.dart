@@ -61,8 +61,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                 style: Theme.of(context).textTheme.subtitle2,
               ),
               SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              Center(
                 child: OptionsButton(
                   title: 'Donate now',
                   subtitle: 'Scan a campaign QR-code',

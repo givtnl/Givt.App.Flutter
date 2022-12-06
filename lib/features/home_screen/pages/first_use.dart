@@ -87,14 +87,16 @@ class _FirstUsePageState extends State<FirstUsePage> {
                     ),
                   ),
                   const SizedBox(height: 15),
-                  OptionsButton(
-                    title: 'Donate now',
-                    subtitle: 'Scan a campaign QR-code',
-                    clicked: () {
-                      _navigationService.navigateTo(routes.QRScannerPage);
-                    },
-                    color: Theme.of(context).colorScheme.surface,
-                    asset: 'qr_code',
+                  Center(
+                    child: OptionsButton(
+                      title: 'Donate now',
+                      subtitle: 'Scan a campaign QR-code',
+                      clicked: () {
+                        _navigationService.navigateTo(routes.QRScannerPage);
+                      },
+                      color: Theme.of(context).colorScheme.surface,
+                      asset: 'qr_code',
+                    ),
                   ),
                 ],
               ),
