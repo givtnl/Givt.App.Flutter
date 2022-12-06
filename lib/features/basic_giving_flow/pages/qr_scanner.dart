@@ -62,8 +62,9 @@ class _QRScannerPageState extends State<QRScannerPage> {
             setState(() {
               status = StatusColumn(
                 textColor: const Color.fromARGB(255, 234, 100, 90),
-                lineOne: 'Cannot scan QR-code without internet.',
-                lineTwo: 'Please try with an active connection.',
+                lineOne: 'Whoops!',
+                lineTwo: 'Looks like you’re not connected to the internet.',
+                lineThree: 'Try again when you are connected.',
               );
             });
           } else {
@@ -71,16 +72,18 @@ class _QRScannerPageState extends State<QRScannerPage> {
               setState(() {
                 status = StatusColumn(
                   textColor: const Color.fromARGB(255, 234, 100, 90),
-                  lineOne: 'This QR-code is not known in Givt.',
-                  lineTwo: 'Please scan another one.',
+                  lineOne:
+                      'Alas, this code cannot be used within the Givt app.',
+                  lineTwo: 'Please scan a Givt QR code.',
                 );
               });
             } else {
               setState(() {
                 status = StatusColumn(
                   textColor: Theme.of(context).primaryColor,
-                  lineOne: 'QR-code found!',
-                  lineTwo: 'We are retrieving organization details.',
+                  lineOne: 'Hey! Great that you want to give with a QR code!',
+                  lineTwo:
+                      'Hold on while we are directing you to the campaign.',
                 );
               });
               final organisationHasBeenSet = await organisationProvider
@@ -92,8 +95,9 @@ class _QRScannerPageState extends State<QRScannerPage> {
                 setState(() {
                   status = StatusColumn(
                     textColor: const Color.fromARGB(255, 234, 100, 90),
-                    lineOne: 'This QR-code is not known in Givt.',
-                    lineTwo: 'Please scan another one.',
+                    lineOne:
+                        'Alas, this code cannot be used within the Givt app.',
+                    lineTwo: 'Please scan a Givt QR code.',
                   );
                 });
               }
