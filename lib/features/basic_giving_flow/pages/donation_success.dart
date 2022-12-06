@@ -42,8 +42,6 @@ class _SuccessDonationPageState extends State<SuccessDonationPage> {
   Widget build(BuildContext context) {
     final organisationProvider =
         Provider.of<Organisation>(context, listen: false);
-    final PersistentState state = _stateService.getPersistentState();
-
     // this could be state rather the quering from local storage
     LocalUser localUser = _localUserService.getLocalUser();
     //this only works because our donation flow always creates a user with a new guid, we should have a donation guid.
@@ -117,9 +115,7 @@ class _SuccessDonationPageState extends State<SuccessDonationPage> {
               ),
               TextButton(
                   onPressed: () {
-                    _navigationService.navigateTo((state.completedOneDonation)
-                        ? routes.HomeScreenRoute
-                        : routes.FirstUseScreenRoute);
+                    _navigationService.navigateTo(routes.HomeScreenRoute);
                   },
                   child: Text('Continue giving anonymously',
                       style: Theme.of(context).textTheme.headline6)),
