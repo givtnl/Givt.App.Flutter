@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:givt_mobile_apps/core/templates/logo_header_template.dart';
+import 'package:givt_mobile_apps/features/home_screen/widgets/option_button.dart';
 import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
@@ -102,62 +103,14 @@ class _FirstUsePageState extends State<FirstUsePage> {
                   SizedBox(
                     height: 15,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: ElevatedButton(
-                      onPressed: () => _navigationService
-                          .navigateTo(routes.FirstOptionsRoute),
-                      style: ElevatedButton.styleFrom(
-                        elevation: 7.0,
-                        backgroundColor: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width - 45 * 2,
-                        height: 80,
-                        child: Center(
-                          child: Text(
-                            'I want to donate now',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6
-                                ?.copyWith(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Text(' ---------- or ---------- ',
-                      style: Theme.of(context).textTheme.bodyText1),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        elevation: 7.0,
-                        backgroundColor: Theme.of(context).colorScheme.surface,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width - 45 * 2,
-                        height: 100,
-                        child: Center(
-                          child: Text(
-                            'I want to select \n\n my favorite organization(s)',
-                            textAlign: TextAlign.center,
-                            style:
-                                Theme.of(context).textTheme.headline6?.copyWith(
-                                      color: Colors.white,
-                                      height: 0.8,
-                                    ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  OptionsButton(
+                    title: 'Donate now',
+                    subtitle: 'Scan a campaign QR-code',
+                    clicked: () {
+                      _navigationService.navigateTo(routes.QRScannerPage);
+                    },
+                    color: Theme.of(context).colorScheme.surface,
+                    asset: 'qr_code',
                   ),
                 ],
               ),
