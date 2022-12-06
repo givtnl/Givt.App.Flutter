@@ -1,6 +1,6 @@
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/qr_stack.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/widgets/status_column.dart';
-import 'package:givt_mobile_apps/utils/check_internet_connectivity.dart';
+import 'package:givt_mobile_apps/services/check_internet_connectivity.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/models/organisation.dart';
@@ -28,9 +28,9 @@ class _QRScannerPageState extends State<QRScannerPage> {
       ]);
   @override
   void initState() {
-    final connectivityCheck =
-        Provider.of<CheckInternet>(context, listen: false);
-    connectivityCheck.initiateRealtimeConnectionSubscribtion();
+    final internetConnectivtyProvider =
+        Provider.of<ConnectivityService>(context, listen: false);
+    internetConnectivtyProvider.initiateRealtimeConnectionSubscribtion();
     super.initState();
   }
 
@@ -38,7 +38,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: Consumer<CheckInternet>(
+      body: Consumer<ConnectivityService>(
         builder: (context, provider, child) {
           return QRStack(
               mobileScanner: _mobileScanner(provider.hasInternet),

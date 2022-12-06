@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 
-class CheckInternet extends ChangeNotifier {
+class ConnectivityService extends ChangeNotifier {
   bool hasInternet = true;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription _streamSubscription;

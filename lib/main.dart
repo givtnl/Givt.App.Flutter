@@ -12,7 +12,7 @@ import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:provider/provider.dart';
 import 'core/themes/primary_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'utils/check_internet_connectivity.dart';
+import 'services/check_internet_connectivity.dart';
 import 'utils/router.dart' as router;
 import 'core/constants/route_paths.dart' as routes;
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
     final PersistentState state = _persistentStateService.getPersistentState();
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider<CheckInternet>(create: (_) => CheckInternet()),
+          ChangeNotifierProvider<ConnectivityService>(
+              create: (_) => ConnectivityService()),
           ChangeNotifierProvider<Organisation>(create: (_) => Organisation()),
         ],
         child: MaterialApp(

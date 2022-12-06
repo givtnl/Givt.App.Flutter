@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import '../../../core/widgets/buttons/button_square_updt.dart';
 import '../../../core/widgets/navigation/appbar_bottom.dart';
 import '../../../core/widgets/notifications/no_connection_bar.dart';
-import '../../../utils/check_internet_connectivity.dart';
+import '../../../services/check_internet_connectivity.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class HomeScreenPage extends StatefulWidget {
@@ -19,13 +19,13 @@ class HomeScreenPage extends StatefulWidget {
 }
 
 class _HomeScreenPageState extends State<HomeScreenPage> {
-  CheckInternet? _checkInternet;
   final NavigationService _navigationService = locator<NavigationService>();
 
   @override
   void initState() {
-    _checkInternet = Provider.of<CheckInternet>(context, listen: false);
-    _checkInternet?.initiateRealtimeConnectionSubscribtion();
+    final internetConnectivtyProvider =
+        Provider.of<ConnectivityService>(context, listen: false);
+    internetConnectivtyProvider.initiateRealtimeConnectionSubscribtion();
     initialization();
     super.initState();
   }
@@ -38,7 +38,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: Consumer<CheckInternet>(
+      body: Consumer<ConnectivityService>(
         builder: (context, provider, child) {
           return Stack(
             children: [
