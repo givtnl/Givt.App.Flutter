@@ -30,8 +30,8 @@ class SignUpScaffold extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                LogoHeaderTemplate(),
-                SizedBox(height: 25),
+                const LogoHeaderTemplate(),
+                const SizedBox(height: 25),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -43,9 +43,9 @@ class SignUpScaffold extends StatelessWidget {
                       ),
                     ),
                     (signup)
-                        ? Text(
+                        ? const Text(
                             'Sign up to take advantage of all Givt has to offer.')
-                        : Text(
+                        : const Text(
                             'Log in to take advantage of all Givt has to offer.'),
                   ],
                 ),
