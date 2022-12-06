@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:givt_mobile_apps/core/templates/logo_header_template.dart';
+import 'package:givt_mobile_apps/core/widgets/notifications/no_connection_bar.dart';
 import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
@@ -50,22 +51,7 @@ class _FirstUsePageState extends State<FirstUsePage> {
             return Stack(
               children: [
                 child!,
-                (!provider.hasInternet)
-                    ? Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: Container(
-                          width: double.maxFinite,
-                          height: 40,
-                          color: Colors.black54,
-                          child: const Center(
-                            child: Text(
-                              'No internet connection, you are now in offline mode.',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      )
-                    : const SizedBox(),
+                (!provider.hasInternet) ? noConnectionBar() : const SizedBox(),
               ],
             );
           },

@@ -7,6 +7,7 @@ import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:provider/provider.dart';
 import '../../../core/widgets/buttons/button_square_updt.dart';
 import '../../../core/widgets/navigation/appbar_bottom.dart';
+import '../../../core/widgets/notifications/no_connection_bar.dart';
 import '../../../utils/check_internet_connectivity.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
@@ -42,22 +43,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
           return Stack(
             children: [
               child!,
-              (!provider.hasInternet)
-                  ? Align(
-                      alignment: FractionalOffset.bottomCenter,
-                      child: Container(
-                        width: double.maxFinite,
-                        height: 40,
-                        color: Colors.black54,
-                        child: const Center(
-                          child: Text(
-                            'No internet connection, you are now in offline mode.',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    )
-                  : const SizedBox(),
+              (!provider.hasInternet) ? noConnectionBar() : const SizedBox(),
             ],
           );
         },
