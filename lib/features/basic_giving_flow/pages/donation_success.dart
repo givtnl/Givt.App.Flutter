@@ -33,14 +33,9 @@ class _SuccessDonationPageState extends State<SuccessDonationPage> {
       locator<LocalDonationService>();
   @override
   void initState() {
-    initialization();
     _stateService.updateCompletedOneDonationFlag(true);
     benefits.shuffle();
     super.initState();
-  }
-
-  void initialization() async {
-    FlutterNativeSplash.remove();
   }
 
   @override
