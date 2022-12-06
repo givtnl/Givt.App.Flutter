@@ -7,7 +7,8 @@ import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:provider/provider.dart';
 import '../../../core/widgets/buttons/button_square_updt.dart';
 import '../../../core/widgets/navigation/appbar_bottom.dart';
-import '../../../utils/check_internet_connectivity.dart';
+import '../../../core/widgets/notifications/no_connection_bar.dart';
+import '../../../services/check_internet_connectivity.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 
 class HomeScreenPage extends StatefulWidget {
@@ -18,13 +19,13 @@ class HomeScreenPage extends StatefulWidget {
 }
 
 class _HomeScreenPageState extends State<HomeScreenPage> {
-  CheckInternet? _checkInternet;
   final NavigationService _navigationService = locator<NavigationService>();
 
   @override
   void initState() {
-    _checkInternet = Provider.of<CheckInternet>(context, listen: false);
-    _checkInternet?.checkRealtimeConnection();
+    final internetConnectivtyProvider =
+        Provider.of<ConnectivityService>(context, listen: false);
+    internetConnectivtyProvider.initiateRealtimeConnectionSubscribtion();
     initialization();
     super.initState();
   }
@@ -37,27 +38,12 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: Consumer<CheckInternet>(
+      body: Consumer<ConnectivityService>(
         builder: (context, provider, child) {
           return Stack(
             children: [
               child!,
-              (!provider.hasInternet)
-                  ? Align(
-                      alignment: FractionalOffset.bottomCenter,
-                      child: Container(
-                        width: double.maxFinite,
-                        height: 40,
-                        color: Colors.black54,
-                        child: const Center(
-                          child: Text(
-                            'No internet connection, you are now in offline mode.',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    )
-                  : const SizedBox(),
+              (!provider.hasInternet) ? noConnectionBar() : const SizedBox(),
             ],
           );
         },
