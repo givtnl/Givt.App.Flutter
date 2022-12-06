@@ -122,7 +122,8 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomBarCustom(),
+      //Temporarily disabled
+      //bottomNavigationBar: BottomBarCustom(),
     );
   }
 }

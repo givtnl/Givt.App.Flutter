@@ -163,7 +163,8 @@ class _FirstUsePageState extends State<FirstUsePage> {
               ),
             ),
           )),
-      bottomNavigationBar: BottomBarCustom(),
+      //Temporarily disabled
+      //bottomNavigationBar: BottomBarCustom(),
     );
   }
 }
