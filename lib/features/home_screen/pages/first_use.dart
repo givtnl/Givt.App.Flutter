@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:givt_mobile_apps/core/templates/logo_header_template.dart';
-import 'package:givt_mobile_apps/features/home_screen/widgets/option_button.dart';
+import 'package:givt_mobile_apps/core/widgets/notifications/no_connection_bar.dart';
 import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
@@ -11,7 +11,7 @@ import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:provider/provider.dart';
 import '../../../core/widgets/navigation/appbar_bottom.dart';
 import '../../../core/constants/route_paths.dart' as routes;
-import '../../../utils/check_internet_connectivity.dart';
+import '../../../services/check_internet_connectivity.dart';
 
 class FirstUsePage extends StatefulWidget {
   const FirstUsePage({super.key});
@@ -21,15 +21,15 @@ class FirstUsePage extends StatefulWidget {
 }
 
 class _FirstUsePageState extends State<FirstUsePage> {
-  CheckInternet? _checkInternet;
   final NavigationService _navigationService = locator<NavigationService>();
   late final PersistentStateService _persistentStateService =
       locator<PersistentStateService>();
 
   @override
   void initState() {
-    _checkInternet = Provider.of<CheckInternet>(context, listen: false);
-    _checkInternet?.checkRealtimeConnection();
+    final internetConnectivtyProvider =
+        Provider.of<ConnectivityService>(context, listen: false);
+    internetConnectivtyProvider.initiateRealtimeConnectionSubscribtion();
     initialization();
     super.initState();
     final PersistentState current =
@@ -46,27 +46,12 @@ class _FirstUsePageState extends State<FirstUsePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: Consumer<CheckInternet>(
+      body: Consumer<ConnectivityService>(
           builder: (context, provider, child) {
             return Stack(
               children: [
                 child!,
-                (!provider.hasInternet)
-                    ? Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: Container(
-                          width: double.maxFinite,
-                          height: 40,
-                          color: Colors.black54,
-                          child: const Center(
-                            child: Text(
-                              'No internet connection, you are now in offline mode.',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      )
-                    : const SizedBox(),
+                (!provider.hasInternet) ? noConnectionBar() : const SizedBox(),
               ],
             );
           },
