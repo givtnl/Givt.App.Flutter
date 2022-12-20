@@ -166,12 +166,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      // Based on passwordVisible state choose the icon
                       _obscureText ? Icons.visibility : Icons.visibility_off,
                       color: Theme.of(context).colorScheme.surface,
                     ),
                     onPressed: () {
-                      // Update the state i.e. toogle the state of passwordVisible variable
                       setState(() {
                         _obscureText = !_obscureText;
                       });
