@@ -102,15 +102,6 @@ class _FirstUsePageState extends State<FirstUsePage> {
               ),
             ),
           )),
-      //Temporarily disabled
-      //bottomNavigationBar: BottomBarCustom(),
-      //Temporary link to sign up/log in
-      floatingActionButton: FloatingCenteredButton(
-        asset: 'user',
-        clicked: () {
-          _navigationService.navigateTo(routes.LoginRoute);
-        },
-      ),
     );
   }
 }

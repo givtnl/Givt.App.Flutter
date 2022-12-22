@@ -79,12 +79,12 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
       //Temporarily disabled
       //bottomNavigationBar: BottomBarCustom(),
       //Temporary link to sign up/log in
-      floatingActionButton: FloatingCenteredButton(
-        asset: 'user',
-        clicked: () {
-          _navigationService.navigateTo(routes.LoginRoute);
-        },
-      ),
+      // floatingActionButton: FloatingCenteredButton(
+      //   asset: 'user',
+      //   clicked: () {
+      //     _navigationService.navigateTo(routes.LoginRoute);
+      //   },
+      // ),
     );
   }
 }
