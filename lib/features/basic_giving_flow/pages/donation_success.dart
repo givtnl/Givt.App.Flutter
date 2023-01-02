@@ -33,7 +33,7 @@ class _SuccessDonationPageState extends State<SuccessDonationPage> {
       locator<LocalDonationService>();
   @override
   void initState() {
-    _stateService.updateCompletedOneDonationFlag(true);
+    _stateService.updateCompletedOneFlowFlag(true);
     benefits.shuffle();
     super.initState();
   }

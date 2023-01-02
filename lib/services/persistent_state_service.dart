@@ -5,7 +5,7 @@ import '../models/local_storage.dart';
 class PersistentStateService extends LocalStorageBase
     implements IStateRepository {
   @override
-  void updateCompletedOneDonationFlag(bool update) {
+  void updateCompletedOneFlowFlag(bool update) {
     realm.write(() {
       realm.all<PersistentState>().first.completedOneDonation = update;
     });

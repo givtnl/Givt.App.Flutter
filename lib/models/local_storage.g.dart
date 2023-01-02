@@ -11,11 +11,14 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
     PersistentState? persistentState,
     LocalUser? userData,
     Iterable<Donation> donations = const [],
+    Iterable<ChildUser> children = const [],
   }) {
     RealmObject.set(this, 'persistentState', persistentState);
     RealmObject.set(this, 'userData', userData);
     RealmObject.set<RealmList<Donation>>(
         this, 'donations', RealmList<Donation>(donations));
+    RealmObject.set<RealmList<ChildUser>>(
+        this, 'children', RealmList<ChildUser>(children));
   }
 
   LocalStorage._();
@@ -43,6 +46,13 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
       throw RealmUnsupportedSetError();
 
   @override
+  RealmList<ChildUser> get children =>
+      RealmObject.get<ChildUser>(this, 'children') as RealmList<ChildUser>;
+  @override
+  set children(covariant RealmList<ChildUser> value) =>
+      throw RealmUnsupportedSetError();
+
+  @override
   Stream<RealmObjectChanges<LocalStorage>> get changes =>
       RealmObject.getChanges<LocalStorage>(this);
 
@@ -57,6 +67,8 @@ class LocalStorage extends _LocalStorage with RealmEntity, RealmObject {
           optional: true, linkTarget: 'LocalUser'),
       SchemaProperty('donations', RealmPropertyType.object,
           linkTarget: 'Donation', collectionType: RealmCollectionType.list),
+      SchemaProperty('children', RealmPropertyType.object,
+          linkTarget: 'ChildUser', collectionType: RealmCollectionType.list),
     ]);
   }
 }
@@ -103,6 +115,34 @@ class PersistentState extends _PersistentState with RealmEntity, RealmObject {
     return const SchemaObject(PersistentState, 'PersistentState', [
       SchemaProperty('welcomed', RealmPropertyType.bool),
       SchemaProperty('completedOneDonation', RealmPropertyType.bool),
+    ]);
+  }
+}
+
+class ChildUser extends _ChildUser with RealmEntity, RealmObject {
+  ChildUser(
+    String childName,
+  ) {
+    RealmObject.set(this, 'childName', childName);
+  }
+
+  ChildUser._();
+
+  @override
+  String get childName => RealmObject.get<String>(this, 'childName') as String;
+  @override
+  set childName(String value) => RealmObject.set(this, 'childName', value);
+
+  @override
+  Stream<RealmObjectChanges<ChildUser>> get changes =>
+      RealmObject.getChanges<ChildUser>(this);
+
+  static SchemaObject get schema => _schema ??= _initSchema();
+  static SchemaObject? _schema;
+  static SchemaObject _initSchema() {
+    RealmObject.registerFactory(ChildUser._);
+    return const SchemaObject(ChildUser, 'ChildUser', [
+      SchemaProperty('childName', RealmPropertyType.string),
     ]);
   }
 }
@@ -241,12 +281,12 @@ class Donation extends _Donation with RealmEntity, RealmObject {
     String mediumId,
     double donationAmount,
     String dateTime,
-    String userId,
+    String guid,
   ) {
     RealmObject.set(this, 'mediumId', mediumId);
     RealmObject.set(this, 'donationAmount', donationAmount);
     RealmObject.set(this, 'dateTime', dateTime);
-    RealmObject.set(this, 'userId', userId);
+    RealmObject.set(this, 'guid', guid);
   }
 
   Donation._();
@@ -268,7 +308,7 @@ class Donation extends _Donation with RealmEntity, RealmObject {
   set dateTime(String value) => throw RealmUnsupportedSetError();
 
   @override
-  String get guid => RealmObject.get<String>(this, 'userId') as String;
+  String get guid => RealmObject.get<String>(this, 'guid') as String;
   @override
   set guid(String value) => throw RealmUnsupportedSetError();
 
@@ -284,7 +324,7 @@ class Donation extends _Donation with RealmEntity, RealmObject {
       SchemaProperty('mediumId', RealmPropertyType.string),
       SchemaProperty('donationAmount', RealmPropertyType.double),
       SchemaProperty('dateTime', RealmPropertyType.string),
-      SchemaProperty('userId', RealmPropertyType.string),
+      SchemaProperty('guid', RealmPropertyType.string),
     ]);
   }
 }

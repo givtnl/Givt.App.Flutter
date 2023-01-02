@@ -48,12 +48,6 @@ class _DonationAmountInputState extends State<DonationAmountInput> {
                   fontSize: 16,
                 ),
             decoration: InputDecoration(
-              // none of these ever show up the hell...
-              hoverColor: Colors.red,
-              focusColor: Colors.green,
-              fillColor: Colors.yellow,
-              // up to here
-
               prefix: Text(
                 '\$',
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
