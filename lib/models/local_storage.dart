@@ -7,12 +7,18 @@ class _LocalStorage {
   late _PersistentState? persistentState;
   late _LocalUser? userData;
   List<_Donation> donations = [];
+  List<_ChildUser> children = [];
 }
 
 @RealmModel()
 class _PersistentState {
   bool welcomed = false;
   bool completedOneDonation = false;
+}
+
+@RealmModel()
+class _ChildUser {
+  late String childName;
 }
 
 @RealmModel()

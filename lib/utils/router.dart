@@ -4,6 +4,7 @@ import 'package:givt_mobile_apps/features/basic_giving_flow/pages/amount_typical
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_success.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation.dart';
 import 'package:givt_mobile_apps/features/archived/pages/first_giving_options.dart';
+import 'package:givt_mobile_apps/features/child_create/pages/child_account_form.dart';
 import 'package:givt_mobile_apps/features/home_screen/pages/first_use.dart';
 import 'package:givt_mobile_apps/features/home_screen/pages/home_screen.dart';
 import 'package:givt_mobile_apps/features/startup/pages/startup.dart';
@@ -51,6 +52,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => FirstOptionsPage());
     case routes.SignUpRoute:
       return MaterialPageRoute(builder: (context) => SignUpPage());
+    case routes.ChildCreation:
+      return MaterialPageRoute(builder: (context) => CreateChildPage());
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(

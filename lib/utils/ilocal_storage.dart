@@ -3,7 +3,14 @@ import 'package:givt_mobile_apps/models/local_storage.dart';
 abstract class IStateRepository {
   PersistentState getPersistentState();
   void updateWelcomeFlag(bool update);
-  void updateCompletedOneDonationFlag(bool update);
+  void updateCompletedOneFlowFlag(bool update);
+}
+
+abstract class IChildUsersRepository<ChildUser> {
+  void createChildUser(ChildUser entity);
+  void updateChildUser(ChildUser entity);
+  void deleteChildUser(ChildUser entity);
+  List<ChildUser> getAllChildUsers();
 }
 
 abstract class IDonationsRepository<Donation> {

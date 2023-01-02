@@ -9,8 +9,9 @@ class LocalStorageBase {
       LocalStorage.schema,
       PersistentState.schema,
       Donation.schema,
-      LocalUser.schema
-    ], schemaVersion: 3);
+      LocalUser.schema,
+      ChildUser.schema,
+    ], schemaVersion: 4);
     realm = Realm(config);
     if (realm.all<LocalStorage>().isEmpty) {
       final localStorage = LocalStorage();
