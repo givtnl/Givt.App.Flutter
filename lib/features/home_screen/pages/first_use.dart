@@ -47,89 +47,95 @@ class _FirstUsePageState extends State<FirstUsePage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: Consumer<ConnectivityService>(
-            builder: (context, provider, child) {
-              return Stack(
-                children: [
-                  child!,
-                  (!provider.hasInternet)
-                      ? noConnectionBar()
-                      : const SizedBox(),
-                ],
-              );
-            },
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: SingleChildScrollView(
-                child: Column(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Scaffold(
+          backgroundColor: Theme.of(context).backgroundColor,
+          body: Consumer<ConnectivityService>(
+              builder: (context, provider, child) {
+                return Stack(
                   children: [
-                    const LogoHeaderTemplate(),
-                    const SizedBox(height: 25),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width - 30 * 2,
-                            child: Text(
-                              'Welcome, ',
-                              style: Theme.of(context).textTheme.headline1,
+                    child!,
+                    (!provider.hasInternet)
+                        ? noConnectionBar()
+                        : const SizedBox(),
+                  ],
+                );
+              },
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const LogoHeaderTemplate(),
+                      const SizedBox(height: 25),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width - 30 * 2,
+                              child: Text(
+                                'Welcome, ',
+                                style: Theme.of(context).textTheme.headline1,
+                              ),
                             ),
-                          ),
-                          Text(
-                            'choose to start using Givt!',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6
-                                ?.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.surface),
-                          ),
-                        ],
+                            Text(
+                              'choose to start using Givt!',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .surface),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 15),
-                    Center(
-                      child: OptionsButton(
-                        title: 'Donate now',
-                        subtitle: 'Scan a campaign QR-code',
-                        clicked: () {
-                          _navigationService.navigateTo(routes.QRScannerPage);
-                        },
-                        color: Theme.of(context).primaryColor,
-                        asset: 'qr_code',
+                      const SizedBox(height: 15),
+                      Center(
+                        child: OptionsButton(
+                          title: 'Donate now',
+                          subtitle: 'Scan a campaign QR-code',
+                          clicked: () {
+                            _navigationService.navigateTo(routes.QRScannerPage);
+                          },
+                          color: Theme.of(context).primaryColor,
+                          asset: 'qr_code',
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 25),
-                    Text(
-                      'My family',
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                    SizedBox(height: 10),
-                    TextButton.icon(
-                      onPressed: () {
-                        _navigationService.navigateTo(routes.ChildCreation);
-                      },
-                      icon: SvgPicture.asset('assets/svg/add_green.svg'),
-                      label: Text(
-                        'Add child account',
+                      SizedBox(height: 25),
+                      Text(
+                        'My family',
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 10),
+                      TextButton.icon(
+                        onPressed: () {
+                          _navigationService.navigateTo(routes.ChildCreation);
+                        },
+                        icon: SvgPicture.asset('assets/svg/add_green.svg'),
+                        label: Text(
+                          'Add child account',
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            )),
-      ),
-    );
+              )),
+          floatingActionButton: FloatingCenteredButton(
+            asset: 'user',
+            clicked: () {
+              _navigationService.navigateTo(routes.LoginRoute);
+            },
+          ),
+        ));
   }
 }
