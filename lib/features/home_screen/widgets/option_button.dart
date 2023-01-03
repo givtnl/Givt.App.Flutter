@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../../../core/widgets/notifications/snackbar.dart';
+import '../../../core/constants/environment_variables.dart';
 
 class OptionsButton extends StatelessWidget {
   final VoidCallback clicked;
@@ -21,6 +25,13 @@ class OptionsButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 7.0),
       child: ElevatedButton(
         onPressed: () => {clicked()},
+        onLongPress: () {
+          kReleaseMode
+              ? SnackBarNotifyer(context)
+                  .showSnackBarMessage('PRODUCTION: ${baseApiURL}', Colors.red)
+              : SnackBarNotifyer(context).showSnackBarMessage(
+                  'DEBUG: ${baseApiURL}', Theme.of(context).primaryColor);
+        },
         style: ElevatedButton.styleFrom(
           elevation: 7.0,
           backgroundColor: color,
