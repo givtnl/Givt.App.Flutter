@@ -109,6 +109,12 @@ class _FirstUsePageState extends State<FirstUsePage> {
                         asset: 'qr_code',
                       ),
                     ),
+                    SizedBox(height: 25),
+                    Text(
+                      'My family',
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                    SizedBox(height: 10),
                     TextButton.icon(
                       onPressed: () {
                         _navigationService.navigateTo(routes.ChildCreation);
