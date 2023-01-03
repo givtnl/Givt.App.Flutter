@@ -14,6 +14,7 @@ class UserService {
   final _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   final Random _rnd = Random();
+  final apiService = locator<APIService>();
 
   UserService();
 
@@ -32,14 +33,14 @@ class UserService {
     final regUser = await RegisteredUser.fromSignUpData(
         guid!, email!, password!, currentTimeZone, locale);
     localUserService.postLocalUser(regUser);
-    await APIService().createRegisteredUser(regUser);
+    await apiService.createRegisteredUser(regUser);
     return regUser;
   }
 
   Future<dynamic> createAndGetRegisteredUser(TempUser tempUser) async {
     final registeredUser = RegisteredUser.fromTempUser(tempUser);
     localUserService.postLocalUser(registeredUser);
-    await APIService().createRegisteredUser(registeredUser);
+    await apiService.createRegisteredUser(registeredUser);
     return registeredUser;
   }
 
@@ -52,13 +53,13 @@ class UserService {
       String? password]) async {
     final TempUser tempUser = await createTempUser(
         ctx, firstName, lastName, postcode, email, password);
-    final tempUserId = await APIService().createTempUser(tempUser);
+    final tempUserId = await apiService.createTempUser(tempUser);
     tempUser.UserId = tempUserId;
     return tempUser;
   }
 
   Future<String> loginUser(Map loginCredentials) async {
-    final response = await APIService().login(loginCredentials);
+    final response = await apiService.login(loginCredentials);
     final decodedRes = jsonDecode(response);
     // the access token should be stored locally or in state,
     // then there needs to be a service that keeps the login active with bearer plus access token

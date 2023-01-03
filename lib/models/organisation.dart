@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../services/api_service.dart';
+import '../utils/locator.dart';
 part 'organisation.g.dart';
 
 @JsonSerializable()
@@ -34,6 +35,7 @@ class Organisation extends ChangeNotifier {
       this.wantKnowMoreLink,
       this.privacyPolicyLink,
       this.mediumId]);
+  final apiService = locator<APIService>();
 
   void setOrganisationDetails(Map<String, dynamic> json) {
     organisationName = json['organisationName'];
@@ -60,7 +62,7 @@ class Organisation extends ChangeNotifier {
       final uri = Uri.parse(code);
       final mediumId = uri.queryParameters['code'];
       final response =
-          await APIService().getOrganisationDetailsFromMedium(mediumId!);
+          await apiService.getOrganisationDetailsFromMedium(mediumId!);
 
       Map<String, dynamic> decoded = json.decode(response);
       setOrganisationDetails(decoded);

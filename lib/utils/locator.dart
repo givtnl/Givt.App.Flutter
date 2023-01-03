@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:givt_mobile_apps/services/api_service.dart';
 import 'package:givt_mobile_apps/services/camera_service.dart';
 import 'package:givt_mobile_apps/services/local_donation_service.dart';
 import 'package:givt_mobile_apps/services/local_storage_service.dart';
@@ -21,4 +22,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => LocalUserService());
   locator.registerLazySingleton(() => CameraService());
   locator.registerLazySingleton(() => LocationService());
+  locator.registerLazySingleton(() => APIService());
 }

@@ -16,6 +16,7 @@ class SignUpController {
   late final LocalStorageBase storageProxy = locator<LocalStorageBase>();
   late final NavigationService _navigationService =
       locator<NavigationService>();
+  final apiService = locator<APIService>();
 
   void signUp(BuildContext context, Map<String, String> formValue,
       Function toggleLoader) async {
@@ -24,7 +25,7 @@ class SignUpController {
     final UserService _userService = locator<UserService>();
 
     final String emailExists =
-        await APIService().checkEmailExists(formValue['email']!);
+        await apiService.checkEmailExists(formValue['email']!);
     print(emailExists);
     toggleLoader(false);
 

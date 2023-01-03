@@ -18,6 +18,7 @@ class DonationController {
   final LocalDonationService _localDonationService =
       locator<LocalDonationService>();
   final NavigationService navigationService = locator<NavigationService>();
+  final apiService = locator<APIService>();
 
   void initialiseDonationProcess(
       BuildContext context,
@@ -47,8 +48,8 @@ class DonationController {
   void createMandateAndSubmitDonation(String wePayToken, Function toggleLoader,
       BuildContext context, String userId) async {
     try {
-      await APIService().submitDonation(userId, wePayToken);
-      await APIService().createMandate(wePayToken, userId);
+      await apiService.submitDonation(userId, wePayToken);
+      await apiService.createMandate(wePayToken, userId);
       navigationService.navigateTo(routes.DonationSuccessRoute);
       toggleLoader(false);
     } catch (error) {

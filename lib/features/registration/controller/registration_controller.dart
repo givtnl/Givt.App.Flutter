@@ -23,6 +23,7 @@ class RegistrationController {
   final NavigationService _navigationService = locator<NavigationService>();
   final UserService _userService = locator<UserService>();
   late final LocalStorageBase storageProxy = locator<LocalStorageBase>();
+  final apiService = locator<APIService>();
 
   Future<void> handleButtonClick() async {
     final form = formKey.currentState;
@@ -43,7 +44,7 @@ class RegistrationController {
   }
 
   Future checkTLDAndCreateTempUser(String email) async {
-    bool response = await APIService().checktld(email);
+    bool response = await apiService.checktld(email);
     if (response) {
       return _userService.createAndGetTempUser();
     } else {
