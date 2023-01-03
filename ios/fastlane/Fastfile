@@ -46,12 +46,18 @@ platform :ios do
       include_symbols: true, 
       archive_path: "../build/ios/archive/Runner.xcarchive"
     )
-    set_github_release(
-      repository_name: "givtnl/Givt.App.Flutter",
-      api_token: ENV['GITHUB_API_TOKEN'], 
-      name: "ios.ipa",
-      tag_name: flutter_version(should_omit_version_code: true)["version_name"],
-      upload_assets:[lane_context[SharedValues::IPA_OUTPUT_PATH]]
+    # set_github_release(
+    #   repository_name: "givtnl/Givt.App.Flutter",
+    #   api_token: ENV['GITHUB_API_TOKEN'], 
+    #   name: "ios.ipa",
+    #   tag_name: flutter_version(should_omit_version_code: true)["version_name"],
+    #   upload_assets:[lane_context[SharedValues::IPA_OUTPUT_PATH]]
+    # )
+    dsym_zip
+    upload_to_testflight(
+      app_identifier: app_identifier,
+      api_key: api_key,
+      skip_waiting_for_build_processing: true
     )
   end
 end
