@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,12 +7,10 @@ import 'package:givt_mobile_apps/core/templates/logo_header_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/floating_centered.dart';
 import 'package:givt_mobile_apps/core/widgets/notifications/no_connection_bar.dart';
 import 'package:givt_mobile_apps/models/local_storage.dart';
-import 'package:givt_mobile_apps/services/local_storage_service.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/services/persistent_state_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:provider/provider.dart';
-import '../../../core/widgets/navigation/appbar_bottom.dart';
 import '../../../core/constants/route_paths.dart' as routes;
 import '../../../services/check_internet_connectivity.dart';
 import '../widgets/option_button.dart';
@@ -36,7 +36,7 @@ class _FirstUsePageState extends State<FirstUsePage> {
     super.initState();
     final PersistentState current =
         _persistentStateService.getPersistentState();
-    print(
+    log(
         'They have seen the animation is ${current.welcomed}; and completed one donation is  ${current.completedOneDonation}');
   }
 
@@ -61,7 +61,7 @@ class _FirstUsePageState extends State<FirstUsePage> {
                   children: [
                     child!,
                     (!provider.hasInternet)
-                        ? noConnectionBar()
+                        ? const noConnectionBar()
                         : const SizedBox(),
                   ],
                 );
@@ -110,12 +110,12 @@ class _FirstUsePageState extends State<FirstUsePage> {
                           asset: 'qr_code',
                         ),
                       ),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       Text(
                         'My family',
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       TextButton.icon(
                         onPressed: () {
                           _navigationService.navigateTo(routes.ChildCreation);

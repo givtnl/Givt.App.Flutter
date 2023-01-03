@@ -7,8 +7,6 @@ import 'package:givt_mobile_apps/features/home_screen/widgets/child_card.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:provider/provider.dart';
-import '../../../core/widgets/buttons/button_square_updt.dart';
-import '../../../core/widgets/navigation/appbar_bottom.dart';
 import '../../../core/widgets/notifications/no_connection_bar.dart';
 import '../../../models/local_storage.dart';
 import '../../../services/check_internet_connectivity.dart';
@@ -58,7 +56,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
             return Stack(
               children: [
                 child!,
-                (!provider.hasInternet) ? noConnectionBar() : const SizedBox(),
+                (!provider.hasInternet) ? const noConnectionBar() : const SizedBox(),
               ],
             );
           },
@@ -67,13 +65,13 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                LogoHeaderTemplate(),
-                SizedBox(height: 25),
+                const LogoHeaderTemplate(),
+                const SizedBox(height: 25),
                 Text(
                   'Giving in the moment',
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Center(
                   child: OptionsButton(
                     title: 'Donate now',
@@ -85,13 +83,13 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                     asset: 'qr_code',
                   ),
                 ),
-                SizedBox(height: 25),
+                const SizedBox(height: 25),
                 Text(
                   'My family',
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
-                SizedBox(height: 10),
-                (childrenList.length > 0)
+                const SizedBox(height: 10),
+                (childrenList.isNotEmpty)
                     ? SizedBox(
                         height: 180,
                         child: ListView.builder(
@@ -103,7 +101,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                               );
                             }),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
                 TextButton.icon(
                   onPressed: () {
                     _navigationService.navigateTo(routes.ChildCreation);
