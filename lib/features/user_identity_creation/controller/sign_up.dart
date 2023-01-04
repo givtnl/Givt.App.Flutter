@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/services/local_storage_service.dart';
@@ -6,7 +6,6 @@ import 'package:givt_mobile_apps/services/navigation_service.dart';
 import '../../../../services/api_service.dart';
 import '../../../core/widgets/notifications/snackbar.dart';
 import '../../../models/local_storage.dart';
-import '../../../models/registered_user.dart';
 import '../../../models/temp_user.dart';
 import '../../../services/user_service.dart';
 import '../../../utils/locator.dart';
@@ -26,7 +25,7 @@ class SignUpController {
 
     final String emailExists =
         await apiService.checkEmailExists(formValue['email']!);
-    print(emailExists);
+    log(emailExists);
     toggleLoader(false);
 
     if (emailExists.contains('false')) {
