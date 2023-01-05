@@ -12,9 +12,10 @@ class BottomBarCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-      //BorderRadius.all(Radius.circular(30)),
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
       child: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         color: Theme.of(context).canvasColor,
@@ -24,62 +25,34 @@ class BottomBarCustom extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(5, 8, 5, 0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 40,
-                        child: IconButton(
-                          padding: const EdgeInsets.all(0),
-                          tooltip: 'Curch overview',
-                          icon: SvgPicture.asset(
-                            'assets/svg/church.svg',
-                            height: 25,
-                          ),
-                          onPressed: () {},
-                          color: Theme.of(context).textTheme.bodyText1?.color,
-                        ),
-                      ),
-                      Text(
-                        'my church',
-                        style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                              fontSize: 12,
-                            ),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 40,
-                        child: IconButton(
-                          padding: const EdgeInsets.all(0),
-                          tooltip: 'Profile',
-                          icon: SvgPicture.asset(
-                            'assets/svg/user.svg',
-                            height: 25,
-                          ),
-                          onPressed: () =>
-                              // this should check whether user is logged in
-                              _navigationService.navigateTo(routes.LoginRoute),
-                          color: Theme.of(context).textTheme.bodyText1?.color,
-                        ),
-                      ),
-                      Text(
-                        'profile',
-                        style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                              fontSize: 12,
-                            ),
-                      )
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                //   child: Column(
+                //     children: [
+                //       SizedBox(
+                //         height: 40,
+                //         child: IconButton(
+                //           padding: const EdgeInsets.all(0),
+                //           tooltip: 'Curch overview',
+                //           icon: SvgPicture.asset(
+                //             'assets/svg/church.svg',
+                //             height: 25,
+                //           ),
+                //           onPressed: () {},
+                //           color: Theme.of(context).textTheme.bodyText1?.color,
+                //         ),
+                //       ),
+                //       Text(
+                //         'my church',
+                //         style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                //               fontSize: 12,
+                //             ),
+                //       )
+                //     ],
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
@@ -125,6 +98,34 @@ class BottomBarCustom extends StatelessWidget {
                       ),
                       Text(
                         'overview',
+                        style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                              fontSize: 12,
+                            ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 40,
+                        child: IconButton(
+                          padding: const EdgeInsets.all(0),
+                          tooltip: 'Profile',
+                          icon: SvgPicture.asset(
+                            'assets/svg/user.svg',
+                            height: 25,
+                          ),
+                          onPressed: () =>
+                              // this should check whether user is logged in
+                              _navigationService.navigateTo(routes.LoginRoute),
+                          color: Theme.of(context).textTheme.bodyText1?.color,
+                        ),
+                      ),
+                      Text(
+                        'profile',
                         style: Theme.of(context).textTheme.subtitle2?.copyWith(
                               fontSize: 12,
                             ),

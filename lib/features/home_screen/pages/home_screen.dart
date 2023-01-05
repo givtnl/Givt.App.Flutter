@@ -3,8 +3,10 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:givt_mobile_apps/core/templates/logo_header_template.dart';
 import 'package:givt_mobile_apps/core/widgets/buttons/floating_centered.dart';
+import 'package:givt_mobile_apps/core/widgets/navigation/appbar_bottom.dart';
 import 'package:givt_mobile_apps/features/home_screen/widgets/child_card.dart';
 import 'package:givt_mobile_apps/services/navigation_service.dart';
+import 'package:givt_mobile_apps/services/user_service.dart';
 import 'package:givt_mobile_apps/utils/locator.dart';
 import 'package:provider/provider.dart';
 import '../../../core/widgets/notifications/no_connection_bar.dart';
@@ -23,6 +25,7 @@ class HomeScreenPage extends StatefulWidget {
 
 class _HomeScreenPageState extends State<HomeScreenPage> {
   final NavigationService _navigationService = locator<NavigationService>();
+  final UserService _userService = locator<UserService>();
   final LocalChildUserService _childUserService =
       locator<LocalChildUserService>();
 
@@ -42,6 +45,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
   @override
   Widget build(BuildContext context) {
     List<ChildUser> childrenList = _childUserService.getAllChildUsers();
+    String firstName = _userService.localUserService.getLocalUser().email;
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -56,7 +60,9 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
             return Stack(
               children: [
                 child!,
-                (!provider.hasInternet) ? const noConnectionBar() : const SizedBox(),
+                (!provider.hasInternet)
+                    ? const noConnectionBar()
+                    : const SizedBox(),
               ],
             );
           },
@@ -68,7 +74,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                 const LogoHeaderTemplate(),
                 const SizedBox(height: 25),
                 Text(
-                  'Giving in the moment',
+                  'Welcome back $firstName',
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
                 const SizedBox(height: 10),
@@ -117,14 +123,14 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
           ),
         ),
         //Temporarily disabled
-        //bottomNavigationBar: BottomBarCustom(),
+        bottomNavigationBar: BottomBarCustom(),
         //Temporary link to sign up/log in
-        floatingActionButton: FloatingCenteredButton(
-          asset: 'user',
-          clicked: () {
-            _navigationService.navigateTo(routes.LoginRoute);
-          },
-        ),
+        // floatingActionButton: FloatingCenteredButton(
+        //   asset: 'user',
+        //   clicked: () {
+        //     _navigationService.navigateTo(routes.LoginRoute);
+        //   },
+        // ),
       ),
     );
   }
