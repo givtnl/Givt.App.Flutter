@@ -15,7 +15,6 @@ import '../features/basic_giving_flow/pages/qr_scanner.dart';
 import '../features/permissions/pages/camera_permission.dart';
 import '../features/permissions/pages/location_permission.dart';
 import '../features/registration/pages/registration.dart';
-import '../features/archived/pages/old_login_usp.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -37,23 +36,23 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case routes.QRScannerPage:
       return MaterialPageRoute(builder: (context) => QRScannerPage());
     case routes.DonationAmountTypicalRoute:
-      return MaterialPageRoute(builder: (context) => DoantionAmountTypical());
+      return MaterialPageRoute(builder: (context) => const DoantionAmountTypical());
     case routes.DonationAmountInputRoute:
-      return MaterialPageRoute(builder: (context) => DonationAmountInput());
+      return MaterialPageRoute(builder: (context) => const DonationAmountInput());
     case routes.DonationSuccessRoute:
-      return MaterialPageRoute(builder: (context) => SuccessDonationPage());
+      return MaterialPageRoute(builder: (context) => const SuccessDonationPage());
     case routes.WepayRoute:
       return MaterialPageRoute(builder: ((context) => const DonationPage()));
     case routes.HomeScreenRoute:
-      return MaterialPageRoute(builder: (context) => HomeScreenPage());
+      return MaterialPageRoute(builder: (context) => const HomeScreenPage());
     case routes.FirstUseScreenRoute:
-      return MaterialPageRoute(builder: (context) => FirstUsePage());
+      return MaterialPageRoute(builder: (context) => const FirstUsePage());
     case routes.FirstOptionsRoute:
       return MaterialPageRoute(builder: (context) => FirstOptionsPage());
     case routes.SignUpRoute:
-      return MaterialPageRoute(builder: (context) => SignUpPage());
-    case routes.ChildCreation:
-      return MaterialPageRoute(builder: (context) => CreateChildPage());
+      return MaterialPageRoute(builder: (context) => const SignUpPage());
+    case routes.ChildCreationRoute:
+      return MaterialPageRoute(builder: (context) => const CreateChildPage());
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(

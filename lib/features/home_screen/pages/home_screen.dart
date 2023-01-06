@@ -110,7 +110,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                     : const SizedBox(),
                 TextButton.icon(
                   onPressed: () {
-                    _navigationService.navigateTo(routes.ChildCreation);
+                    _navigationService.navigateTo(routes.ChildCreationRoute);
                   },
                   icon: SvgPicture.asset('assets/svg/add_green.svg'),
                   label: Text(

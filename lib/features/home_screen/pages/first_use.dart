@@ -118,7 +118,7 @@ class _FirstUsePageState extends State<FirstUsePage> {
                       const SizedBox(height: 10),
                       TextButton.icon(
                         onPressed: () {
-                          _navigationService.navigateTo(routes.ChildCreation);
+                          _navigationService.navigateTo(routes.ChildCreationRoute);
                         },
                         icon: SvgPicture.asset('assets/svg/add_green.svg'),
                         label: Text(

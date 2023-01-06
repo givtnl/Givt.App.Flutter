@@ -14,7 +14,7 @@ const String FirstUseScreenRoute = "first-use-screen";
 const String FirstOptionsRoute = "first-options";
 const String HomeScreenRoute = "home-screen";
 const String SignUpRoute = "sign-up";
-const String ChildCreation = 'child-creation';
+const String ChildCreationRoute = 'child-creation';
 
 
 
