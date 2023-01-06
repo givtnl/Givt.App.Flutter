@@ -92,7 +92,8 @@ class BottomBarCustom extends StatelessWidget {
                             'assets/svg/overview.svg',
                             height: 20,
                           ),
-                          onPressed: () {},
+                          onPressed: () => _navigationService
+                              .navigateTo(routes.OverviewRoute),
                           color: Theme.of(context).textTheme.bodyText1?.color,
                         ),
                       ),

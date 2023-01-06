@@ -8,6 +8,7 @@ import 'package:givt_mobile_apps/features/child_create/pages/child_account_form.
 import 'package:givt_mobile_apps/features/home_screen/pages/first_use.dart';
 import 'package:givt_mobile_apps/features/home_screen/pages/home_screen.dart';
 import 'package:givt_mobile_apps/features/startup/pages/startup.dart';
+import 'package:givt_mobile_apps/features/user/pages/overview.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/page/login.dart';
 import 'package:givt_mobile_apps/features/user_identity_creation/page/sign_up.dart';
 import '../core/constants/route_paths.dart' as routes;
@@ -53,6 +54,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const SignUpPage());
     case routes.ChildCreationRoute:
       return MaterialPageRoute(builder: (context) => const CreateChildPage());
+    case routes.OverviewRoute:
+      return MaterialPageRoute(builder: (context) => const OverviewPage());
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(
