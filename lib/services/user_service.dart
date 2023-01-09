@@ -63,26 +63,34 @@ class UserService {
   Future<void> loginUser(Map loginCredentials) async {
     final response = await apiService.login(loginCredentials);
     final decodedRes = jsonDecode(response);
-    // the access token should be stored locally or in state,
-    // then there needs to be a service that keeps the login active with bearer plus access token
-    // but fixes on local storage and decisions on state management should happen first
-    final user = RegisteredUser.fromLoginData(
-        decodedRes['GUID'],
-        decodedRes['Email'],
-        decodedRes['access_token'],
-        decodedRes['refresh_token'],
-        decodedRes['.expires'],
-        decodedRes['expires_in']);
+
     /// Save token into localUserService
-    localUserService.postLocalUser(user);
+    localUserService.postLocalUser(
+      RegisteredUser.fromLoginData(
+          decodedRes['GUID'],
+          decodedRes['Email'],
+          decodedRes['access_token'],
+          decodedRes['refresh_token'],
+          decodedRes['.expires'],
+          decodedRes['expires_in']),
+    );
   }
 
   Future<void> refreshToken() async {
     final localUser = localUserService.getLocalUser();
     final response = await apiService.refreshToken(localUser.refreshToken);
     final decodedRes = jsonDecode(response);
+
     /// Save token into localUserService
-    // localUserService.postLocalUser(user);
+    localUserService.postLocalUser(
+      RegisteredUser.fromLoginData(
+          decodedRes['GUID'],
+          decodedRes['Email'],
+          decodedRes['access_token'],
+          decodedRes['refresh_token'],
+          decodedRes['.expires'],
+          decodedRes['expires_in']),
+    );
   }
 
   Future<TempUser> createTempUser(
