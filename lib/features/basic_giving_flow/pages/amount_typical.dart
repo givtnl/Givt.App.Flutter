@@ -83,7 +83,7 @@ class _DoantionAmountTypicalState extends State<DoantionAmountTypical> {
           ? const Center(child: CircularProgressIndicator())
           : GenericButton(
               text: 'Next',
-              disabled: donationAmount > 1.5 ? false : true,
+              disabled: donationAmount > 2 ? false : true,
               onClicked: () async {
                 await DonationController().completeDonation(
                     context,

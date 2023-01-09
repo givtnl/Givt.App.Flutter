@@ -10,10 +10,10 @@ class InputController {
   BuildContext ctx;
   InputController(this.ctx);
 
-  void handleSubmit(inputAmount, mediumId, toggleLoader) async {
-    if (inputAmount.isEmpty || double.parse(inputAmount) <= 2) {
+  void handleSubmit(inputAmount, mediumId, toggleLoader, snackColor) async {
+    if (inputAmount.isEmpty || double.parse(inputAmount) < 2) {
       SnackBarNotifyer(ctx)
-          .showSnackBarMessage('Cannot donate less than \$2', Colors.red);
+          .showSnackBarMessage('Cannot donate less than \$2', snackColor);
       return;
     }
     await DonationController().completeDonation(

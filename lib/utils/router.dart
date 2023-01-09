@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/amount_input.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/amount_typical.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_success.dart';
+import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation_failure.dart';
 import 'package:givt_mobile_apps/features/basic_giving_flow/pages/donation.dart';
 import 'package:givt_mobile_apps/features/archived/pages/first_giving_options.dart';
 import 'package:givt_mobile_apps/features/child_create/pages/child_account_form.dart';
@@ -42,6 +43,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => DonationAmountInput());
     case routes.DonationSuccessRoute:
       return MaterialPageRoute(builder: (context) => SuccessDonationPage());
+    case routes.DonationFailedRoute:
+      return MaterialPageRoute(builder: (context) => DonationFailedPage());
     case routes.WepayRoute:
       return MaterialPageRoute(builder: ((context) => const DonationPage()));
     case routes.HomeScreenRoute:

@@ -7,6 +7,7 @@ const String QRScannerPage = 'qr-scanner';
 const String DonationAmountTypicalRoute = 'donation-amount';
 const String DonationAmountInputRoute = 'donation-input';
 const String DonationSuccessRoute = 'donation-success';
+const String DonationFailedRoute = 'donation-fail';
 const String LoginRoute = 'login';
 const String WepayRoute = "wepay";
 const String SplashScreenRoute = "splash-screen";
