@@ -15,19 +15,28 @@ class RegisteredUser {
   final String firstName;
   final String lastName;
   final String timeZoneId;
+  final String accessToken;
+  final String refreshToken;
+  final String expires;
+  final int expiresIn;
 
-  RegisteredUser(
-      {required this.email,
-      required this.userId,
-      required this.phoneNumber,
-      required this.firstName,
-      required this.lastName,
-      required this.deviceOS,
-      required this.postalCode,
-      required this.country,
-      required this.password,
-      required this.appLanguage,
-      required this.timeZoneId});
+  RegisteredUser({
+    required this.email,
+    required this.userId,
+    required this.phoneNumber,
+    required this.firstName,
+    required this.lastName,
+    required this.deviceOS,
+    required this.postalCode,
+    required this.country,
+    required this.password,
+    required this.appLanguage,
+    required this.timeZoneId,
+    required this.accessToken,
+    required this.refreshToken,
+    required this.expires,
+    required this.expiresIn,
+  });
 
   factory RegisteredUser.fromTempUser(TempUser tempUser) {
     return RegisteredUser(
@@ -42,6 +51,10 @@ class RegisteredUser {
       password: tempUser.Password,
       appLanguage: tempUser.AppLanguage,
       timeZoneId: tempUser.TimeZoneId,
+      accessToken: '',
+      expires: '',
+      expiresIn: 0,
+      refreshToken: '',
     );
   }
   factory RegisteredUser.fromSignUpData(String userId, String email,
@@ -58,6 +71,37 @@ class RegisteredUser {
       password: password,
       appLanguage: locale,
       timeZoneId: timezone,
+      accessToken: '',
+      expires: '',
+      expiresIn: 0,
+      refreshToken: '',
+    );
+  }
+
+  factory RegisteredUser.fromLoginData(
+    String userId,
+    String email,
+    String accessToken,
+    String refreshToken,
+    String expires,
+    int expiresIn,
+  ) {
+    return RegisteredUser(
+      userId: userId,
+      email: email,
+      deviceOS: 0,
+      phoneNumber: '060000000',
+      firstName: 'john',
+      lastName: 'doe',
+      postalCode: 'no zipcode',
+      country: 'US',
+      password: '',
+      appLanguage: 'en',
+      timeZoneId: '',
+      accessToken: accessToken,
+      expires: expires,
+      expiresIn: expiresIn,
+      refreshToken: refreshToken,
     );
   }
 

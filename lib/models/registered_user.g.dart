@@ -19,6 +19,10 @@ RegisteredUser _$RegisteredUserFromJson(Map<String, dynamic> json) =>
       password: json['password'] as String,
       appLanguage: json['appLanguage'] as String,
       timeZoneId: json['timeZoneId'] as String,
+      accessToken: json['accessToken'] as String,
+      refreshToken: json['refreshToken'] as String,
+      expires: json['expires'] as String,
+      expiresIn: json['expiresIn'] as int,
     );
 
 Map<String, dynamic> _$RegisteredUserToJson(RegisteredUser instance) =>
@@ -34,4 +38,8 @@ Map<String, dynamic> _$RegisteredUserToJson(RegisteredUser instance) =>
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'timeZoneId': instance.timeZoneId,
+      'accessToken': instance.accessToken,
+      'refreshToken': instance.refreshToken,
+      'expires': instance.expires,
+      'expiresIn': instance.expiresIn,
     };

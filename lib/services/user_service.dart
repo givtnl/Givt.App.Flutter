@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:givt_mobile_apps/models/local_storage.dart';
 import 'package:givt_mobile_apps/services/local_user_service.dart';
@@ -58,13 +60,21 @@ class UserService {
     return tempUser;
   }
 
-  Future<String> loginUser(Map loginCredentials) async {
+  Future<void> loginUser(Map loginCredentials) async {
     final response = await apiService.login(loginCredentials);
     final decodedRes = jsonDecode(response);
     // the access token should be stored locally or in state,
     // then there needs to be a service that keeps the login active with bearer plus access token
     // but fixes on local storage and decisions on state management should happen first
-    return 'logged in';
+    final user = RegisteredUser.fromLoginData(
+        decodedRes['GUID'],
+        decodedRes['Email'],
+        decodedRes['access_token'],
+        decodedRes['refresh_token'],
+        decodedRes['.expires'],
+        decodedRes['expires_in']);
+    /// Save token into localUserService
+    localUserService.postLocalUser(user);
   }
 
   Future<TempUser> createTempUser(

@@ -23,7 +23,7 @@ class LoginController {
       'password': password
     };
     try {
-      final response = await _userService.loginUser(loginCredentials);
+      await _userService.loginUser(loginCredentials);
       toggleLoader(false);
       _navigationService.navigateTo(routes.HomeScreenRoute);
     } catch (e) {
