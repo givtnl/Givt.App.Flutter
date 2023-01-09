@@ -67,6 +67,7 @@ class PrimaryTheme {
         tertiary: Color.fromARGB(45, 24, 72, 105),
         surface: Color.fromARGB(255, 24, 72, 105),
         onSurface: Colors.white,
+        error: Color.fromARGB(255, 211, 114, 109),
       ),
       fontFamily: 'Mulish',
     );
