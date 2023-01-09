@@ -128,12 +128,11 @@ class APIService {
   }
 
   Future<dynamic> login(Map loginCredentials) async {
-    final url = Uri.https(apiURL, '/api/Givts',
-        {'UserId': '698c3dcf-8083-49e3-a80d-d6591d0a41c7'});
+    final url = Uri.https(apiURL, '/oauth2/token');
     // might need to use api/v2/users/login
-    var response = await client.get(
+    var response = await client.post(
       url,
-      // body: loginCredentials,
+      body: loginCredentials,
     );
     if (response.statusCode >= 400) {
       throw Exception(jsonDecode(response.body));
