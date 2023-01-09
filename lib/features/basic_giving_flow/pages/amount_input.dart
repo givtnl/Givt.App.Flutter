@@ -61,8 +61,11 @@ class _DonationAmountInputState extends State<DonationAmountInput> {
             controller: _amountController,
             keyboardType: TextInputType.number,
             onSubmitted: (_) {
-              InputController(context).handleSubmit(_amountController.text,
-                  organisationProvider.mediumId, toggleLoader);
+              InputController(context).handleSubmit(
+                  _amountController.text,
+                  organisationProvider.mediumId,
+                  toggleLoader,
+                  Theme.of(context).colorScheme.error);
             },
           ),
         ),
@@ -72,8 +75,11 @@ class _DonationAmountInputState extends State<DonationAmountInput> {
                 text: 'Next',
                 disabled: false,
                 onClicked: () {
-                  InputController(context).handleSubmit(_amountController.text,
-                      organisationProvider.mediumId, toggleLoader);
+                  InputController(context).handleSubmit(
+                      _amountController.text,
+                      organisationProvider.mediumId,
+                      toggleLoader,
+                      Theme.of(context).colorScheme.error);
                 }),
       ),
     );

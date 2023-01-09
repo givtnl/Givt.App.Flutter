@@ -54,8 +54,9 @@ class DonationController {
       toggleLoader(false);
     } catch (error) {
       toggleLoader(false);
-      SnackBarNotifyer(context)
-          .showSnackBarMessage(error.toString(), Colors.red);
+      SnackBarNotifyer(context).showSnackBarMessage(
+          error.toString(), Theme.of(context).colorScheme.error);
+      navigationService.navigateTo(routes.DonationFailedRoute);
     }
   }
 
@@ -77,8 +78,9 @@ class DonationController {
       toggleLoader(false);
     } catch (error) {
       toggleLoader(false);
-      SnackBarNotifyer(context)
-          .showSnackBarMessage(error.toString(), Colors.red);
+      SnackBarNotifyer(context).showSnackBarMessage(
+          error.toString(), Theme.of(context).colorScheme.error);
+      navigationService.navigateTo(routes.DonationFailedRoute);
     }
   }
 
