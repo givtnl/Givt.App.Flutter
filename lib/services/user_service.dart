@@ -77,6 +77,14 @@ class UserService {
     localUserService.postLocalUser(user);
   }
 
+  Future<void> refreshToken() async {
+    final localUser = localUserService.getLocalUser();
+    final response = await apiService.refreshToken(localUser.refreshToken);
+    final decodedRes = jsonDecode(response);
+    /// Save token into localUserService
+    // localUserService.postLocalUser(user);
+  }
+
   Future<TempUser> createTempUser(
       [BuildContext? ctx,
       String? firstName,
