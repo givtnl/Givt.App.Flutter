@@ -45,6 +45,7 @@ dependencies:
   provider: ^6.0.3
   email_validator: '^2.1.16'
   http: ^0.13.5
+  http_interceptor: ^1.0.2
   realm: ^0.4.0+beta
   get_it: ^7.2.0
   carousel_slider: ^4.1.1
