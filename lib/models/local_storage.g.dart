@@ -162,6 +162,10 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
     String password = "",
     String appLanguage = "",
     String timeZoneId = "",
+    String accessToken = "",
+    String refreshToken = "",
+    String expires = "",
+    int expiresIn = 0,
   }) {
     if (!_defaultsSet) {
       _defaultsSet = RealmObject.setDefaults<LocalUser>({
@@ -176,6 +180,10 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
         'password': "",
         'appLanguage': "",
         'timeZoneId': "",
+        'accessToken': "",
+        'refreshToken': "",
+        'expires': "",
+        'expiresIn': 0,
       });
     }
     RealmObject.set(this, 'email', email);
@@ -189,6 +197,10 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
     RealmObject.set(this, 'password', password);
     RealmObject.set(this, 'appLanguage', appLanguage);
     RealmObject.set(this, 'timeZoneId', timeZoneId);
+    RealmObject.set(this, 'accessToken', accessToken);
+    RealmObject.set(this, 'refreshToken', refreshToken);
+    RealmObject.set(this, 'expires', expires);
+    RealmObject.set(this, 'expiresIn', expiresIn);
   }
 
   LocalUser._();
@@ -253,6 +265,29 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
   set timeZoneId(String value) => RealmObject.set(this, 'timeZoneId', value);
 
   @override
+  String get accessToken =>
+      RealmObject.get<String>(this, 'accessToken') as String;
+  @override
+  set accessToken(String value) => RealmObject.set(this, 'accessToken', value);
+
+  @override
+  String get refreshToken =>
+      RealmObject.get<String>(this, 'refreshToken') as String;
+  @override
+  set refreshToken(String value) =>
+      RealmObject.set(this, 'refreshToken', value);
+
+  @override
+  String get expires => RealmObject.get<String>(this, 'expires') as String;
+  @override
+  set expires(String value) => RealmObject.set(this, 'expires', value);
+
+  @override
+  int get expiresIn => RealmObject.get<int>(this, 'expiresIn') as int;
+  @override
+  set expiresIn(int value) => RealmObject.set(this, 'expiresIn', value);
+
+  @override
   Stream<RealmObjectChanges<LocalUser>> get changes =>
       RealmObject.getChanges<LocalUser>(this);
 
@@ -272,6 +307,10 @@ class LocalUser extends _LocalUser with RealmEntity, RealmObject {
       SchemaProperty('password', RealmPropertyType.string),
       SchemaProperty('appLanguage', RealmPropertyType.string),
       SchemaProperty('timeZoneId', RealmPropertyType.string),
+      SchemaProperty('accessToken', RealmPropertyType.string),
+      SchemaProperty('refreshToken', RealmPropertyType.string),
+      SchemaProperty('expires', RealmPropertyType.string),
+      SchemaProperty('expiresIn', RealmPropertyType.int),
     ]);
   }
 }

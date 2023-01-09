@@ -35,6 +35,10 @@ class _LocalUser {
   String password = "";
   String appLanguage = "";
   String timeZoneId = "";
+  String accessToken = "";
+  String refreshToken = "";
+  String expires = "";
+  int expiresIn = 0;
 }
 
 @RealmModel()
