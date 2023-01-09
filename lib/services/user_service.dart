@@ -78,7 +78,13 @@ class UserService {
 
   Future<void> refreshToken() async {
     final localUser = localUserService.getLocalUser();
-    final response = await apiService.refreshToken(localUser.refreshToken);
+    final response = await apiService.refreshToken(
+      {
+        'grant_type': 'refresh_token',
+        'userName': localUser.email,
+        'refresh_token': localUser.refreshToken,
+      },
+    );
     final decodedRes = jsonDecode(response);
 
     /// Save token into localUserService

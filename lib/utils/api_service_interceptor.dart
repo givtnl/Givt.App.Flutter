@@ -17,7 +17,11 @@ class GivtApiInterceptor implements InterceptorContract {
       if (accessToken.isNotEmpty) {
         data.headers['Authorization'] = 'Bearer $accessToken';
       }
-      data.headers['Content-Type'] = 'application/json';
+
+      /// If there is no content type, we set it to application/json
+      if (!data.headers.containsKey('Content-Type')) {
+        data.headers['Content-Type'] = 'application/json';
+      }
       data.headers['Accept'] = 'application/json';
     } catch (e) {
       log(e.toString());
@@ -41,8 +45,7 @@ class ExpiredTokenRetryPolicy extends RetryPolicy {
     ///This is where we need to update our token on 401 response
     if (response.statusCode == 401) {
       /// Refreshing the token using the [UserService]
-      final userService = locator<UserService>();
-      await userService.refreshToken();
+      await locator<UserService>().refreshToken();
       return true;
     }
     return false;

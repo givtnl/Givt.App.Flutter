@@ -152,12 +152,16 @@ class APIService {
   }
 
   /// Returns the new access token with a new refresh_token
-  Future<dynamic> refreshToken(String refreshToken) async {
+  Future<dynamic> refreshToken(Map body) async {
     final url = Uri.https(apiURL, '/oauth2/token');
-    var response = await client.post(url, body: {
-      'grant_type': 'refresh_token',
-      'refresh_token': refreshToken,
-    });
+    var response = await client.post(
+      url,
+      body: body,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      encoding: Encoding.getByName('utf-8'),
+    );
     if (response.statusCode >= 400) {
       throw Exception('something went wrong :(');
     } else {
