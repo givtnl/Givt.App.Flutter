@@ -68,7 +68,7 @@ class _DonationPageState extends State<DonationPage> {
         content: Padding(
           padding: const EdgeInsets.fromLTRB(0, 40, 0, 10),
           child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            //autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _form,
             child: Column(
               children: <Widget>[
@@ -94,7 +94,7 @@ class _DonationPageState extends State<DonationPage> {
                         autofocus: false,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter the cardholders\' name';
+                            return 'Please enter the cardholder name';
                           }
                           if (value.length > 30) {
                             return 'Cannot exceed 30 characters';
