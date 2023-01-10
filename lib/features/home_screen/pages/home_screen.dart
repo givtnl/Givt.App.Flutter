@@ -74,7 +74,9 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                 const LogoHeaderTemplate(),
                 const SizedBox(height: 25),
                 Text(
-                  'Welcome back $firstName',
+                  (firstName.contains('givttest'))
+                      ? 'Giving in the moment'
+                      : 'Welcome back $firstName',
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
                 const SizedBox(height: 10),
