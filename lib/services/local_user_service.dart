@@ -20,10 +20,6 @@ class LocalUserService extends LocalStorageBase
       localUser.password = user.password;
       localUser.appLanguage = user.appLanguage;
       localUser.timeZoneId = user.timeZoneId;
-      localUser.accessToken = user.accessToken;
-      localUser.refreshToken = user.refreshToken;
-      localUser.expires = user.expires;
-      localUser.expiresIn = user.expiresIn;
     });
   }
 
